@@ -5,7 +5,6 @@ import com.shop.shop.repository.UserRepository;
 import com.shop.shop.service.model.AuthenticationResponse;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

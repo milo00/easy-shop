@@ -1,22 +1,19 @@
-import {
-  Box,
-  Avatar,
-  Button,
-  Checkbox,
-  Container,
-  CssBaseline,
-  FormControlLabel,
-  Grid,
-  TextField,
-  Typography,
-} from "@mui/material";
 import React from "react";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import {
+  Container,
+  FormGroup,
+  Label,
+  Input,
+  Button,
+  Row,
+  Col,
+  Form,
+} from "reactstrap";
 import { Link, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, IRootState } from "../store/store";
 import { login } from "../store/slices/accountSlice";
 import { isAuthenticated } from "../utils/authentication";
+import { IRootState, AppDispatch } from "../store/store";
 
 const Login = () => {
   const status = useSelector((state: IRootState) => state.account.status);
@@ -41,73 +38,51 @@ const Login = () => {
   }
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <Box
-        sx={{
-          marginTop: 8,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
-        {status}
-        <Box
-          component="form"
-          onSubmit={handleSubmit}
-          noValidate
-          sx={{ display: "flex", flexDirection: "column", width: 1, mt: 1 }}
-        >
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="username"
-            label="Login"
-            name="username"
-            autoComplete="username"
-            autoFocus
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" />}
-            label="Remember me"
-          />
-          {status === "failed" && (
-            <Typography variant="body2" color="error" align="center">
-              Incorrect username or password. Please try again.
-            </Typography>
-          )}
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Sign In
-          </Button>
-          <Grid container justifyContent="flex-end">
-            <Grid item>
+    <Container>
+      <Row className="justify-content-center">
+        <Col xs="12" md="8" lg="4">
+          <h1 style={{ textAlign: "center" }}>Sign in</h1>
+          {status}
+          <Form onSubmit={handleSubmit}>
+            <FormGroup>
+              <Label>Username*</Label>
+              <Input
+                type="text"
+                name="username"
+                id="username"
+                placeholder="Username"
+                required
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label>Password*</Label>
+              <Input
+                type="password"
+                name="password"
+                id="password"
+                placeholder="Password"
+                required
+              />
+            </FormGroup>
+            <FormGroup check className="mb-3">
+              <Label check>
+                <Input type="checkbox" name="remember" /> Remember me
+              </Label>
+            </FormGroup>
+            {status === "failed" && (
+              <span className="text-danger">
+                Incorrect username or password. Please try again.
+              </span>
+            )}
+            <Button className="mb-3" type="submit" color="primary" block>
+              Sign In
+            </Button>
+            <div style={{ textAlign: "right" }}>
               <Link to="/register">{"Don't have an account? Sign Up"}</Link>
-            </Grid>
-          </Grid>
-        </Box>
-      </Box>
+            </div>
+          </Form>
+        </Col>
+      </Row>
     </Container>
   );
 };

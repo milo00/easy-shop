@@ -1,14 +1,14 @@
+import React from "react";
 import {
   Container,
-  Box,
-  Avatar,
-  Typography,
-  Grid,
-  TextField,
+  Row,
+  Col,
+  Form,
+  FormGroup,
+  Input,
   Button,
-} from "@mui/material";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import React from "react";
+  Label,
+} from "reactstrap";
 import { Link } from "react-router-dom";
 import { Role } from "../models/user";
 import { useSelector, useDispatch } from "react-redux";
@@ -34,82 +34,37 @@ const Register = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <Box
-        sx={{
-          marginTop: 8,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign up
-        </Typography>
-        {status}
-        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="given-name"
-                name="firstName"
-                required
-                fullWidth
-                id="firstName"
-                label="First Name"
-                autoFocus
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="family-name"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                id="username"
-                label="Login"
-                name="username"
-                autoComplete="username"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="new-password"
-              />
-            </Grid>
-          </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Sign Up
-          </Button>
-          <Grid container justifyContent="flex-end">
-            <Grid item>
+    <Container>
+      <Row className="justify-content-center">
+        <Col xs="12" md="8" lg="4">
+          <h1 style={{ textAlign: "center" }}>Sign up</h1>
+          {status}
+          <Form noValidate onSubmit={handleSubmit}>
+            <FormGroup>
+              <Label>Firt name*</Label>
+              <Input type="text" name="firstName" id="firstName" required />
+            </FormGroup>
+            <FormGroup>
+              <Label>Last name*</Label>
+              <Input type="text" name="lastName" id="lastName" required />
+            </FormGroup>
+            <FormGroup>
+              <Label>Login*</Label>
+              <Input type="text" name="username" id="username" required />
+            </FormGroup>
+            <FormGroup>
+              <Label>Password*</Label>
+              <Input type="password" name="password" id="password" required />
+            </FormGroup>
+            <Button className="mb-3" type="submit" color="primary" block>
+              Sign Up
+            </Button>
+            <div style={{ textAlign: "right" }}>
               <Link to="/login">Already have an account? Sign in</Link>
-            </Grid>
-          </Grid>
-        </Box>
-      </Box>
+            </div>
+          </Form>
+        </Col>
+      </Row>
     </Container>
   );
 };
