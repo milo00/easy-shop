@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import IUser from "../../models/user";
-import axios from "axios";
+import api from "../../config/axiosInterceptor";
 
 const BASE_URL = "http://localhost:8080/api";
 export const ACCESS_TOKEN = "ACCESS_TOKEN";
@@ -20,7 +20,7 @@ const initialState: IAccountState = {
 export const login = createAsyncThunk(
   "account/login",
   async (data: { user: IUser; rememberMe: boolean }) => {
-    const response = await axios.post(`${BASE_URL}/login`, data.user);
+    const response = await api.post(`${BASE_URL}/login`, data.user);
     // TODO: change to get it from headers
     return { data: response.data, remember: data.rememberMe };
   }
@@ -29,7 +29,7 @@ export const login = createAsyncThunk(
 export const register = createAsyncThunk(
   "account/register",
   async (user: IUser) => {
-    const response = await axios.post(`${BASE_URL}/register`, user);
+    const response = await api.post(`${BASE_URL}/register`, user);
     return response;
   }
 );

@@ -2,12 +2,21 @@ import homepageImg from "../assets/homepage.png";
 import "../styles/home.css";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { mockedItems } from "../utils/mockedItems";
 import { ItemCard } from "../components/itemCard";
 import { Button } from "reactstrap";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { IRootState, AppDispatch } from "../store/store";
+import { fetchTop10 } from "../store/slices/itemsSlice";
 
 const Home = () => {
-  console.log(mockedItems);
+  const items = useSelector((state: IRootState) => state.items.items);
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    dispatch(fetchTop10());
+  }, []);
+
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
@@ -44,7 +53,7 @@ const Home = () => {
         autoPlaySpeed={4000}
         transitionDuration={1000}
       >
-        {mockedItems.map((item) => (
+        {items?.map((item) => (
           <ItemCard key={item.id} item={item} />
         ))}
       </Carousel>

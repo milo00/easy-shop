@@ -10,6 +10,7 @@ import {
 import logo from "../assets/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faUser } from "@fortawesome/free-solid-svg-icons";
+import { isAuthenticated } from "../utils/authentication";
 
 const Header = () => {
   return (
@@ -19,16 +20,16 @@ const Header = () => {
       </NavbarBrand>
       <Nav className="me-auto">
         <NavItem>
-          <NavLink href="/login">Kobiety</NavLink>
+          <NavLink href="/women">Kobiety</NavLink>
         </NavItem>
         <NavItem>
-          <NavLink href="#">Mężczyźni</NavLink>
+          <NavLink href="/men">Mężczyźni</NavLink>
         </NavItem>
         <NavItem>
-          <NavLink href="#">Dzieci</NavLink>
+          <NavLink href="/kids">Dzieci</NavLink>
         </NavItem>
         <NavItem>
-          <NavLink href="#">Wyprzedaż</NavLink>
+          <NavLink href="/sale">Wyprzedaż</NavLink>
         </NavItem>
       </Nav>
       <Nav className="align-items-center">
@@ -41,9 +42,9 @@ const Header = () => {
           </Button>
         </NavItem>
         <NavItem>
-          <Button color="link">
+          <NavLink href={isAuthenticated() ? "/logout" : "/login"}>
             <FontAwesomeIcon icon={faUser} />
-          </Button>
+          </NavLink>
         </NavItem>
       </Nav>
     </Navbar>
