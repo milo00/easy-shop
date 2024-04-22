@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect } from "react";
 import { Category, Gender } from "../models/item";
 import { useSelector, useDispatch } from "react-redux";
 import { IRootState, AppDispatch } from "../store/store";
@@ -8,13 +8,9 @@ import { Col, Container, Row } from "reactstrap";
 import { useParams } from "react-router-dom";
 import { breadcrumbBuilder } from "../utils/breadcrumbBuilder";
 import { isKeyOfEnum } from "../utils/functions";
-import Sidebar from "../components/sidebar";
-import IMenuData, { isMenuData } from "../models/menuData";
-import api, { BASE_URL } from "../config/axiosInterceptor";
+import Sidebar from "../components/sidebar/sidebar";
 
 const Items = () => {
-  const [menuData, setMenuData] = useState<IMenuData | undefined>(undefined);
-
   let params = useParams();
   const items = useSelector((state: IRootState) => state.items.items);
   const dispatch = useDispatch<AppDispatch>();
@@ -42,29 +38,14 @@ const Items = () => {
     }
   }, [params.subcategory, params.category, params.gender, dispatch]);
 
-  useEffect(() => {
-    const fetchMenuData = async () => {
-      const data = await api.get(`${BASE_URL}/menu-data`);
-      isMenuData(data.data) && setMenuData(data.data);
-    };
-
-    if (!menuData) {
-      fetchMenuData();
-    }
-  }, [menuData]); // Dependency array ensures this effect runs only once on mount
-
-  const memoizedCategories = useMemo(() => {
-    return menuData;
-  }, [menuData]);
-
   return (
     <Container className="ms-0">
       <Row>
         <Col xs={2} className="px-0">
-          <Sidebar menuData={memoizedCategories} />
+          <Sidebar />
         </Col>
-        <Col xs={10}>
-          <Row xs={12}>
+        <Col>
+          <Row>
             {breadcrumbBuilder([
               params.gender,
               params.category,

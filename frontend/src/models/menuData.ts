@@ -1,22 +1,12 @@
 export default interface IMenuData {
-  genders: IMenuDataGender[];
+  genders: IMenuDataInner[];
 }
 
-export interface IMenuDataGender {
+export interface IMenuDataInner {
   name: string;
-  categories: IMenuDataCategory[];
+  data: IMenuDataInner[];
 }
 
-export interface IMenuDataCategory {
-  name: string;
-  subcategories: IMenuDataSubcategory[];
-}
-
-export interface IMenuDataSubcategory {
-  name: string;
-  productTypes: string[];
-}
-
-export function isMenuData(object: any): object is IMenuData {
+export function isSidebarData(object: any): object is IMenuData {
   return "genders" in object;
 }

@@ -20,37 +20,27 @@ public class MenuDataService {
         this.itemRepository = itemRepository;
     }
 
+    private MenuData.MenuDataInner getChildrenData(MenuData.MenuDataInner parent, String childName) {
+        return parent.getData().stream()
+                .filter(c -> c.getName().equals(childName))
+                .findFirst()
+                .orElseGet(() -> {
+                    MenuData.MenuDataInner newChild = new MenuData.MenuDataInner(childName, new ArrayList<>());
+                    parent.getData().add(newChild);
+                    return newChild;
+                });
+    }
+
     public MenuData getMenuData() {
         List<Object[]> menuData = itemRepository.findMenuData();
         MenuData resultMenuData = new MenuData();
-        Map<Gender, MenuData.GenderDto> genderMap = new LinkedHashMap<>();
+        Map<Gender, MenuData.MenuDataInner> genderMap = new LinkedHashMap<>();
 
         for (Object[] row : menuData) {
-            MenuData.GenderDto genderDto = genderMap.computeIfAbsent((Gender) row[0], key -> new MenuData.GenderDto(((Gender) row[0]).name(), new ArrayList<>()));
-            Category categoryName = (Category) row[1];
-            MenuData.CategoryDto categoryDto = genderDto.getCategories()
-                    .stream()
-                    .filter(c -> c.getName().equals(categoryName.name()))
-                    .findFirst()
-                    .orElseGet(() -> {
-                        MenuData.CategoryDto newCategoryDto = new MenuData.CategoryDto(categoryName.name(), new ArrayList<>());
-                        genderDto.getCategories().add(newCategoryDto);
-                        return newCategoryDto;
-                    });
-
-            String subcategoryName = (String) row[2];
-            MenuData.SubcategoryDto subcategoryDto = categoryDto.getSubcategories()
-                    .stream()
-                    .filter(s -> s.getName().equals(subcategoryName))
-                    .findFirst()
-                    .orElseGet(() -> {
-                        MenuData.SubcategoryDto newSubcategoryDto = new MenuData.SubcategoryDto(subcategoryName, new ArrayList<>());
-                        categoryDto.getSubcategories().add(newSubcategoryDto);
-                        return newSubcategoryDto;
-                    });
-
-            ProductType productType = (ProductType) row[3];
-            subcategoryDto.getProductTypes().add(productType.getProductType());
+            MenuData.MenuDataInner gender = genderMap.computeIfAbsent((Gender) row[0], key -> new MenuData.MenuDataInner(((Gender) row[0]).name(), new ArrayList<>()));
+            var category = getChildrenData(gender, ((Category) row[1]).name());
+            var subcategory = getChildrenData(category, (String) row[2]);
+            subcategory.getData().add(new MenuData.MenuDataInner(((ProductType) row[3]).getProductType(), new ArrayList<>()));
         }
 
         resultMenuData.setGenders(new ArrayList<>(genderMap.values()));
