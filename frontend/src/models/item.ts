@@ -1,10 +1,10 @@
 export default interface IItem {
-  id: number;
-  name: string;
-  regularPrice: number;
-  imgUrl: string;
-  gender: Gender;
-  productType: IProductType;
+  id?: number;
+  name?: string;
+  regularPrice?: number;
+  imgUrl?: string;
+  gender?: Gender;
+  productType?: IProductType;
   currentPrice?: number;
 }
 
@@ -14,13 +14,13 @@ export interface IProductType {
   category: Category;
 }
 export enum Category {
-  FOOTWEAR,
-  APPAREL,
+  FOOTWEAR = "FOOTWEAR",
+  APPAREL = "APPAREL",
 }
 
 export enum Gender {
-  GIRLS,
-  BOYS,
-  MEN,
-  WOMEN,
+  GIRLS = "GIRLS",
+  BOYS = "BOYS",
+  MEN = "MEN",
+  WOMEN = "WOMEN",
 }

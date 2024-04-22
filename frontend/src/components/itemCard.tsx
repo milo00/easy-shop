@@ -1,13 +1,21 @@
+import { useNavigate } from "react-router-dom";
 import IItem from "../models/item";
 import { Card, CardBody, CardSubtitle, CardText, CardTitle } from "reactstrap";
+import "../styles/card.css";
 
 interface IItemCardProps {
   item: IItem;
 }
 
 export const ItemCard = (props: IItemCardProps) => {
+  const navigate = useNavigate();
+
+  const handleOnClick = () => {
+    navigate(`/items/${props.item?.id}`);
+  };
+
   return (
-    <Card className="mx-3 align-items-center border-0">
+    <Card className="mx-3 align-items-center border-0" onClick={handleOnClick}>
       <img
         alt={props.item.name + " image"}
         src={props.item.imgUrl}
@@ -30,9 +38,9 @@ export const ItemCard = (props: IItemCardProps) => {
           )}
         </CardSubtitle>
         <CardText className="text-muted">
-          <div>{props.item.productType.productType}</div>
+          <div>{props.item.productType?.productType}</div>
           <div style={{ fontSize: "smaller" }}>
-            {props.item.productType.subcategory}
+            {props.item.productType?.subcategory}
           </div>
         </CardText>
       </CardBody>

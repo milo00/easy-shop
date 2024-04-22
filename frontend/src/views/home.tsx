@@ -7,15 +7,15 @@ import { Button } from "reactstrap";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { IRootState, AppDispatch } from "../store/store";
-import { fetchTop10 } from "../store/slices/itemsSlice";
+import { fetchItems } from "../store/slices/itemsSlice";
 
 const Home = () => {
   const items = useSelector((state: IRootState) => state.items.items);
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    dispatch(fetchTop10());
-  }, []);
+    dispatch(fetchItems());
+  }, [dispatch]);
 
   const responsive = {
     desktop: {

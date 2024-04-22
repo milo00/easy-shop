@@ -4,8 +4,6 @@ import com.shop.shop.model.Category;
 import com.shop.shop.model.Gender;
 import com.shop.shop.model.Item;
 import com.shop.shop.repository.ItemRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,19 +17,36 @@ public class ItemService {
         this.itemRepository = itemRepository;
     }
 
-    public Optional<List<Item>> getItemsByGender(Gender gender) {
-        return itemRepository.findByGenderOrderByName(gender);
+
+    public Optional<Item> getItem(Integer id) {
+        return itemRepository.findById(id);
     }
 
-    public Optional<List<Item>> getItemsByCategory(Category category) {
-        return itemRepository.findByProductTypeCategoryOrderByName(category);
-    }
-
-    public Optional<List<Item>> getItemsOnDiscount() {
+    public Optional<List<Item>> getItemsOnSale() {
         return itemRepository.findByCurrentPriceNotNull();
     }
 
-    public Page<Item> getTop10Items() {
-        return itemRepository.findAll(PageRequest.of(0, 10));
+    public Optional<List<Item>> getItemsWithFilters(Gender gender,
+                                                    Category category,
+                                                    String subcategory,
+                                                    String productType) {
+        if (productType != null && subcategory != null && category != null && gender != null) {
+            return itemRepository
+                    .findByGenderAndProductTypeCategoryAndProductTypeSubcategoryIgnoreCaseAndProductTypeProductTypeIgnoreCaseOrderByName(
+                            gender,
+                            category,
+                            subcategory,
+                            productType);
+        } else if (subcategory != null && category != null && gender != null) {
+            return itemRepository.findByGenderAndProductTypeCategoryAndProductTypeSubcategoryIgnoreCaseOrderByName(
+                    gender,
+                    category,
+                    subcategory);
+        } else if (category != null && gender != null) {
+            return itemRepository.findByGenderAndProductTypeCategoryOrderByName(gender, category);
+        } else if (gender != null) {
+            return itemRepository.findByGenderOrderByName(gender);
+        }
+        return Optional.of(itemRepository.findAll());
     }
 }

@@ -5,9 +5,9 @@ import Home from "./views/home";
 import RequireAuth from "./utils/requireAuth";
 import Logout from "./views/logout";
 import Layout from "./utils/layout";
-import GenderItems from "./views/genderItems";
-import { Gender } from "./models/item";
+import Items from "./views/items";
 import Sale from "./views/discount";
+import Item from "./views/item";
 
 export const AppRoutes = () => {
   return (
@@ -32,26 +32,18 @@ export const AppRoutes = () => {
           }
         />
         <Route
-          path="/men"
+          path="/items/:id"
           element={
             <Layout>
-              <GenderItems gender={Gender.MEN} />
+              <Item />
             </Layout>
           }
         />
         <Route
-          path="/women"
+          path="/:gender/:category?/:subcategory?/:productType?"
           element={
             <Layout>
-              <GenderItems gender={Gender.WOMEN} />
-            </Layout>
-          }
-        />
-        <Route
-          path="/kids"
-          element={
-            <Layout>
-              <GenderItems gender={Gender.GIRLS} />
+              <Items />
             </Layout>
           }
         />
