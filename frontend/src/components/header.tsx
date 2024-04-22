@@ -5,14 +5,18 @@ import {
   NavItem,
   NavLink,
   Input,
-  Button,
+  Badge,
 } from "reactstrap";
 import logo from "../assets/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faUser } from "@fortawesome/free-solid-svg-icons";
 import { isAuthenticated } from "../utils/authentication";
+import { useSelector } from "react-redux";
+import { IRootState } from "../store/store";
 
 const Header = () => {
+  const cart = useSelector((state: IRootState) => state.cart.cart);
+
   return (
     <Navbar color="light" light expand="md">
       <NavbarBrand href="/">
@@ -37,9 +41,22 @@ const Header = () => {
           <Input placeholder="Szukaj..." />
         </NavItem>
         <NavItem>
-          <Button color="link">
+          <NavLink href="/cart" style={{ position: "relative" }}>
             <FontAwesomeIcon icon={faCartShopping} />
-          </Button>
+            {cart.items?.length ? (
+              <Badge
+                pill
+                style={{
+                  position: "absolute",
+                  bottom: "4px",
+                  right: "6px",
+                  fontSize: "xx-small",
+                }}
+              >
+                {cart.items.length}
+              </Badge>
+            ) : null}
+          </NavLink>
         </NavItem>
         <NavItem>
           <NavLink href={isAuthenticated() ? "/logout" : "/login"}>

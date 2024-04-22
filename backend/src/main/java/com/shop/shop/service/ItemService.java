@@ -26,6 +26,10 @@ public class ItemService {
         return itemRepository.findByCurrentPriceNotNull();
     }
 
+    public Optional<List<Item>> getItemsForIds(List<Integer> ids) {
+        return itemRepository.findByIdIn(ids);
+    }
+
     public Optional<List<Item>> getItemsWithFilters(Gender gender,
                                                     Category category,
                                                     String subcategory,

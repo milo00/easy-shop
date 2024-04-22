@@ -40,4 +40,10 @@ public class ItemController {
         var items = itemService.getItemsOnSale();
         return ResponseEntity.ok(items.orElse(List.of()));
     }
+
+    @GetMapping("/ids")
+    public ResponseEntity<List<Item>> getForIds(@RequestParam List<Integer> ids) {
+        var items = itemService.getItemsForIds(ids);
+        return ResponseEntity.ok(items.orElse(List.of()));
+    }
 }

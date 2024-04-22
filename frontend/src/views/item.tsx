@@ -1,12 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Col, Container, Row } from "reactstrap";
-import { useEffect } from "react";
+import { Button, Col, Container, Row } from "reactstrap";
+import { useEffect, useState } from "react";
 import { fetchById } from "../store/slices/itemsSlice";
 import { IRootState, AppDispatch } from "../store/store";
 import { useParams } from "react-router-dom";
 import { breadcrumbBuilder } from "../utils/breadcrumbBuilder";
+import { addItem } from "../store/slices/cartSlice";
 
 export const Item = () => {
+  const [cartText, setCartText] = useState("");
   const item = useSelector((state: IRootState) => state.items.item);
   const dispatch = useDispatch<AppDispatch>();
   let params = useParams();
@@ -15,7 +17,11 @@ export const Item = () => {
     dispatch(fetchById(Number(params.id)));
   }, [params.id, dispatch]);
 
-  console.log(item);
+  const onAddToCard = () => {
+    setCartText("");
+    dispatch(addItem(item.id));
+    setCartText("Item added to cart.");
+  };
 
   return (
     <Container>
@@ -59,6 +65,15 @@ export const Item = () => {
               <span className="mx-2 text-danger">{item?.currentPrice}zł</span>
             )}
           </div>
+          <Button
+            className="mt-3"
+            color="primary"
+            onClick={onAddToCard}
+            style={{ width: "fit-content" }}
+          >
+            Add to cart
+          </Button>
+          <span style={{ fontSize: "x-small" }}>{cartText}</span>
         </Col>
       </Row>
     </Container>

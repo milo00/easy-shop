@@ -1,8 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import IUser from "../../models/user";
-import api from "../../config/axiosInterceptor";
+import api, { BASE_URL } from "../../config/axiosInterceptor";
 
-const BASE_URL = "http://localhost:8080/api";
 export const ACCESS_TOKEN = "ACCESS_TOKEN";
 
 type IAccountState = {

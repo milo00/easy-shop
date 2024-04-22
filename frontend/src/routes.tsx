@@ -8,6 +8,7 @@ import Layout from "./utils/layout";
 import Items from "./views/items";
 import Sale from "./views/discount";
 import Item from "./views/item";
+import Cart from "./views/cart";
 
 export const AppRoutes = () => {
   return (
@@ -52,6 +53,14 @@ export const AppRoutes = () => {
           element={
             <Layout>
               <Sale />
+            </Layout>
+          }
+        />
+        <Route
+          path="/cart"
+          element={
+            <Layout>
+              <Cart />
             </Layout>
           }
         />

@@ -27,6 +27,8 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 
     Optional<List<Item>> findByCurrentPriceNotNull();
 
+    Optional<List<Item>> findByIdIn(List<Integer> ids);
+
     @Query("SELECT i.gender AS gender, " +
             "       i.productType.category AS category, " +
             "       i.productType.subcategory AS subcategory, " +

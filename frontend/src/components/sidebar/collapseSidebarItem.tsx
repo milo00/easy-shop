@@ -37,6 +37,7 @@ const CollapseSidebarItem = (props: ICollapseSidebarItemProps) => {
 
             return (
               <CollapseSidebarItem
+                key={newToggler}
                 parent={d}
                 toggler={newToggler}
                 path={newPath}
