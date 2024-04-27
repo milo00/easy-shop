@@ -7,6 +7,7 @@ export const ACCESS_TOKEN = "ACCESS_TOKEN";
 type IItemsState = {
   item: IItem;
   items: IItem[];
+  totalPages: number;
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | undefined;
 };
@@ -14,6 +15,7 @@ type IItemsState = {
 const initialState: IItemsState = {
   item: {},
   items: [],
+  totalPages: 1,
   status: "idle",
   error: undefined,
 };
@@ -21,6 +23,7 @@ const initialState: IItemsState = {
 export const fetchItems = createAsyncThunk(
   "items/fetchItems",
   async (data?: {
+    page?: number;
     gender?: Gender;
     category?: Category;
     subcategory?: string;
@@ -28,6 +31,8 @@ export const fetchItems = createAsyncThunk(
   }) => {
     const response = await api.get(`${BASE_URL}/items`, {
       params: {
+        size: 12,
+        page: data?.page ? data.page - 1 : 0,
         gender: data?.gender,
         category: data?.category,
         subcategory: data?.subcategory,
@@ -38,10 +43,18 @@ export const fetchItems = createAsyncThunk(
   }
 );
 
-export const fetchOnSale = createAsyncThunk("items/fetchOnSale", async () => {
-  const response = await api.get(`${BASE_URL}/items/sale`);
-  return response.data;
-});
+export const fetchOnSale = createAsyncThunk(
+  "items/fetchOnSale",
+  async (data?: { page?: number }) => {
+    const response = await api.get(`${BASE_URL}/items/sale`, {
+      params: {
+        size: 12,
+        page: data?.page ? data.page - 1 : 0,
+      },
+    });
+    return response.data;
+  }
+);
 
 export const fetchById = createAsyncThunk(
   "items/fetchById",
@@ -71,7 +84,8 @@ const itemsSlice = createSlice({
         isAnyOf(fetchItems.fulfilled, fetchOnSale.fulfilled),
         (state, action) => {
           state.status = "succeeded";
-          state.items = action.payload;
+          state.items = action.payload.content;
+          state.totalPages = action.payload.totalPages;
         }
       )
       .addMatcher(

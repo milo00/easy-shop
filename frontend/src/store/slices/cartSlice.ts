@@ -25,7 +25,6 @@ const cartSlice = createSlice({
           (i) => i.id !== action.payload
         );
       }
-
       state.cart.items = [
         ...state.cart.items,
         {
@@ -35,7 +34,7 @@ const cartSlice = createSlice({
       ];
       localStorage.setItem(CART_TOKEN, JSON.stringify(state.cart));
     },
-    removeItem(state, action) {
+    removeSingleItem(state, action) {
       const currentItem = state.cart.items.find((i) => i.id === action.payload);
       if (currentItem) {
         state.cart.items = state.cart.items.filter(
@@ -54,6 +53,16 @@ const cartSlice = createSlice({
         localStorage.setItem(CART_TOKEN, JSON.stringify(state.cart));
       }
     },
+    removeWholeItem(state, action) {
+      const currentItem = state.cart.items.find((i) => i.id === action.payload);
+      if (currentItem) {
+        state.cart.items = state.cart.items.filter(
+          (i) => i.id !== action.payload
+        );
+
+        localStorage.setItem(CART_TOKEN, JSON.stringify(state.cart));
+      }
+    },
     clear(state) {
       state.cart = { items: [] };
       localStorage.setItem(CART_TOKEN, JSON.stringify(state.cart));
@@ -62,4 +71,5 @@ const cartSlice = createSlice({
 });
 
 export default cartSlice;
-export const { addItem, removeItem, clear } = cartSlice.actions;
+export const { addItem, removeSingleItem, removeWholeItem, clear } =
+  cartSlice.actions;

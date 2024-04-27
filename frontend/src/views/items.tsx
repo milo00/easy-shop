@@ -9,10 +9,17 @@ import { useParams } from "react-router-dom";
 import { breadcrumbBuilder } from "../utils/breadcrumbBuilder";
 import { isKeyOfEnum } from "../utils/functions";
 import Sidebar from "../components/sidebar/sidebar";
+import Loader from "../components/loader";
+import Pagination from "../components/pagination";
+import usePagination from "../utils/hooks/usePagination";
 
 const Items = () => {
   let params = useParams();
   const items = useSelector((state: IRootState) => state.items.items);
+  const totalPages = useSelector((state: IRootState) => state.items.totalPages);
+  const status = useSelector((state: IRootState) => state.items.status);
+
+  const { currentPage, onPageChange } = usePagination();
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
@@ -22,6 +29,7 @@ const Items = () => {
     ) {
       dispatch(
         fetchItems({
+          page: currentPage,
           gender: Gender[params.gender!.toUpperCase() as keyof typeof Gender],
           category:
             Category[params.category!.toUpperCase() as keyof typeof Category],
@@ -32,11 +40,19 @@ const Items = () => {
     } else if (isKeyOfEnum(Object.keys(Gender), params.gender)) {
       dispatch(
         fetchItems({
+          page: currentPage,
           gender: Gender[params.gender!.toUpperCase() as keyof typeof Gender],
         })
       );
     }
-  }, [params.subcategory, params.category, params.gender, dispatch]);
+  }, [
+    params.subcategory,
+    params.category,
+    params.gender,
+    params.productType,
+    dispatch,
+    currentPage,
+  ]);
 
   return (
     <Container className="ms-0">
@@ -53,12 +69,21 @@ const Items = () => {
               params.productType,
             ])}
           </Row>
-          <Row xs={1} md={2} lg={3}>
-            {items?.map((item) => (
-              <Col key={item.id}>
-                <ItemCard key={item.id} item={item} />
-              </Col>
-            ))}
+          <Row xs={1} md={2} lg={3} className="justify-content-center">
+            <Loader loading={status === "loading"} type={"spinner"}>
+              {items?.map((item) => (
+                <Col key={item.id}>
+                  <ItemCard key={item.id} item={item} />
+                </Col>
+              ))}
+            </Loader>
+          </Row>
+          <Row className="justify-content-center mt-3">
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChanges={onPageChange}
+            />
           </Row>
         </Col>
       </Row>

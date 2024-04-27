@@ -3,6 +3,8 @@ package com.shop.shop.repository;
 import com.shop.shop.model.Category;
 import com.shop.shop.model.Gender;
 import com.shop.shop.model.Item;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -10,22 +12,24 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ItemRepository extends JpaRepository<Item, Integer> {
-    Optional<List<Item>> findByGenderAndProductTypeCategoryOrderByName(Gender gender, Category category);
+    Page<Item> findByGenderOrderByName(Pageable pageable, Gender gender);
 
-    Optional<List<Item>> findByGenderAndProductTypeCategoryAndProductTypeSubcategoryIgnoreCaseOrderByName(
+    Page<Item> findByGenderAndProductTypeCategoryOrderByName(Pageable pageable, Gender gender, Category category);
+
+    Page<Item> findByGenderAndProductTypeCategoryAndProductTypeSubcategoryIgnoreCaseOrderByName(
+            Pageable pageable,
             Gender gender,
             Category category,
             String subcategory);
 
-    Optional<List<Item>> findByGenderAndProductTypeCategoryAndProductTypeSubcategoryIgnoreCaseAndProductTypeProductTypeIgnoreCaseOrderByName(
+    Page<Item> findByGenderAndProductTypeCategoryAndProductTypeSubcategoryIgnoreCaseAndProductTypeProductTypeIgnoreCaseOrderByName(
+            Pageable pageable,
             Gender gender,
             Category category,
             String subcategory,
             String productType);
 
-    Optional<List<Item>> findByGenderOrderByName(Gender gender);
-
-    Optional<List<Item>> findByCurrentPriceNotNull();
+    Page<Item> findByCurrentPriceNotNull(Pageable pageable);
 
     Optional<List<Item>> findByIdIn(List<Integer> ids);
 

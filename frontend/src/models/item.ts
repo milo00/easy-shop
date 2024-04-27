@@ -24,3 +24,5 @@ export enum Gender {
   MEN = "MEN",
   WOMEN = "WOMEN",
 }
+
+export const getPrice = (item: IItem) => item.currentPrice ?? item.regularPrice;

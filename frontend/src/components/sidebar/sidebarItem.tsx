@@ -21,7 +21,7 @@ const SidebarMenuItem = (props: ISidebarMenuItemProps) => {
     path: string
   ) => {
     e.stopPropagation();
-    navigate(path);
+    navigate(path.toLowerCase());
   };
 
   return (
@@ -30,7 +30,7 @@ const SidebarMenuItem = (props: ISidebarMenuItemProps) => {
       onClick={props.toggleOpen}
     >
       <span onClickCapture={(e) => handleOnClick(e, props.path)}>
-        {_.capitalize(props.name).replace(/\s/g, "")}
+        {_.capitalize(props.name)}
       </span>
       <span className="icon">
         {props.displayArrow && (
