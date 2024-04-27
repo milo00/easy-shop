@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { equalsIgnoreCase, isKeyOfEnum } from "../../utils/functions";
-import { Category, Gender } from "../../models/item";
+import { Category, Gender, isKidsGender } from "../../models/item";
 import CollapseSidebarItem from "./collapseSidebarItem";
 import { useContext } from "react";
 import { SidebarDataContext } from "../../App";
@@ -19,17 +19,26 @@ export const Sidebar = () => {
   const pathSubcategory = params.subcategory;
   const pathProductType = params.productType;
 
+  console.log(pathGender);
+
   return (
     <div className="sidebar">
       {data?.genders.map((gender) => {
-        const isActive = equalsIgnoreCase(gender.name, pathGender);
+        const isActive =
+          equalsIgnoreCase(gender.name, pathGender) ||
+          (gender.name === Gender.KIDS && isKidsGender(pathGender));
         return (
           <CollapseSidebarItem
             parent={gender}
             toggler={gender.name}
             path={`/${gender.name}`}
             isParentActive={isActive}
-            pathValues={[pathCategory, pathSubcategory, pathProductType]}
+            pathValues={[
+              pathGender,
+              pathCategory,
+              pathSubcategory,
+              pathProductType,
+            ]}
           />
         );
       })}

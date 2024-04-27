@@ -12,19 +12,19 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ItemRepository extends JpaRepository<Item, Integer> {
-    Page<Item> findByGenderOrderByName(Pageable pageable, Gender gender);
+    Page<Item> findByGenderInOrderByName(Pageable pageable, List<Gender> genders);
 
-    Page<Item> findByGenderAndProductTypeCategoryOrderByName(Pageable pageable, Gender gender, Category category);
+    Page<Item> findByGenderInAndProductTypeCategoryOrderByName(Pageable pageable, List<Gender> genders, Category category);
 
-    Page<Item> findByGenderAndProductTypeCategoryAndProductTypeSubcategoryIgnoreCaseOrderByName(
+    Page<Item> findByGenderInAndProductTypeCategoryAndProductTypeSubcategoryIgnoreCaseOrderByName(
             Pageable pageable,
-            Gender gender,
+            List<Gender> genders,
             Category category,
             String subcategory);
 
-    Page<Item> findByGenderAndProductTypeCategoryAndProductTypeSubcategoryIgnoreCaseAndProductTypeProductTypeIgnoreCaseOrderByName(
+    Page<Item> findByGenderInAndProductTypeCategoryAndProductTypeSubcategoryIgnoreCaseAndProductTypeProductTypeIgnoreCaseOrderByName(
             Pageable pageable,
-            Gender gender,
+            List<Gender> genders,
             Category category,
             String subcategory,
             String productType);

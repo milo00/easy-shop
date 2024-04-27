@@ -41,6 +41,14 @@ export const AppRoutes = () => {
           }
         />
         <Route
+          path="/kids/:gender/:category?/:subcategory?/:productType?"
+          element={
+            <Layout>
+              <Items />
+            </Layout>
+          }
+        />
+        <Route
           path="/:gender/:category?/:subcategory?/:productType?"
           element={
             <Layout>

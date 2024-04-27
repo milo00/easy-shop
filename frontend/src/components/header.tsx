@@ -24,21 +24,21 @@ const Header = () => {
       </NavbarBrand>
       <Nav className="me-auto">
         <NavItem>
-          <NavLink href="/women">Kobiety</NavLink>
+          <NavLink href="/women">Women</NavLink>
         </NavItem>
         <NavItem>
-          <NavLink href="/men">Mężczyźni</NavLink>
+          <NavLink href="/men">Men</NavLink>
         </NavItem>
         <NavItem>
-          <NavLink href="/kids">Dzieci</NavLink>
+          <NavLink href="/kids">Kids</NavLink>
         </NavItem>
         <NavItem>
-          <NavLink href="/sale">Wyprzedaż</NavLink>
+          <NavLink href="/sale">Sale</NavLink>
         </NavItem>
       </Nav>
       <Nav className="align-items-center">
         <NavItem className="me-3">
-          <Input placeholder="Szukaj..." />
+          <Input placeholder="Search..." />
         </NavItem>
         <NavItem>
           <NavLink href="/cart" style={{ position: "relative" }}>

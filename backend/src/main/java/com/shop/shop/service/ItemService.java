@@ -40,26 +40,33 @@ public class ItemService {
                                           Category category,
                                           String subcategory,
                                           String productType) {
-        Pageable pageable = PageRequest.of(page, size);
-        if (productType != null && subcategory != null && category != null && gender != null) {
-            return itemRepository
-                    .findByGenderAndProductTypeCategoryAndProductTypeSubcategoryIgnoreCaseAndProductTypeProductTypeIgnoreCaseOrderByName(
-                            pageable,
-                            gender,
-                            category,
-                            subcategory,
-                            productType);
-        } else if (subcategory != null && category != null && gender != null) {
-            return itemRepository.findByGenderAndProductTypeCategoryAndProductTypeSubcategoryIgnoreCaseOrderByName(
+        var pageable = PageRequest.of(page, size);
+        if (gender == null) {
+            return itemRepository.findAll(pageable);
+        }
+
+        var genders = gender == Gender.KIDS ? List.of(Gender.GIRLS, Gender.BOYS) : List.of(gender);
+
+        if (category == null) {
+            return itemRepository.findByGenderInOrderByName(pageable, genders);
+        }
+        if (subcategory == null) {
+            return itemRepository.findByGenderInAndProductTypeCategoryOrderByName(pageable, genders, category);
+        }
+        if (productType == null) {
+            return itemRepository.findByGenderInAndProductTypeCategoryAndProductTypeSubcategoryIgnoreCaseOrderByName(
                     pageable,
-                    gender,
+                    genders,
                     category,
                     subcategory);
-        } else if (category != null && gender != null) {
-            return itemRepository.findByGenderAndProductTypeCategoryOrderByName(pageable, gender, category);
-        } else if (gender != null) {
-            return itemRepository.findByGenderOrderByName(pageable, gender);
         }
-        return itemRepository.findAll(pageable);
+        return itemRepository
+                .findByGenderInAndProductTypeCategoryAndProductTypeSubcategoryIgnoreCaseAndProductTypeProductTypeIgnoreCaseOrderByName(
+                        pageable,
+                        genders,
+                        category,
+                        subcategory,
+                        productType);
+
     }
 }

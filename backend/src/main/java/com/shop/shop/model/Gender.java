@@ -4,5 +4,6 @@ public enum Gender {
     GIRLS,
     BOYS,
     MEN,
-    WOMEN
+    WOMEN,
+    KIDS
 }

@@ -37,7 +37,16 @@ public class MenuDataService {
         Map<Gender, MenuData.MenuDataInner> genderMap = new LinkedHashMap<>();
 
         for (Object[] row : menuData) {
-            MenuData.MenuDataInner gender = genderMap.computeIfAbsent((Gender) row[0], key -> new MenuData.MenuDataInner(((Gender) row[0]).name(), new ArrayList<>()));
+            MenuData.MenuDataInner gender;
+            if (row[0] == Gender.BOYS || row[0] == Gender.GIRLS) {
+                var kidsGender = genderMap.computeIfAbsent(Gender.KIDS,
+                        __ -> new MenuData.MenuDataInner((Gender.KIDS).name(), new ArrayList<>()));
+                gender = getChildrenData(kidsGender, ((Gender) row[0]).name());
+            } else {
+                gender = genderMap.computeIfAbsent((Gender) row[0],
+                        __ -> new MenuData.MenuDataInner(((Gender) row[0]).name(), new ArrayList<>()));
+            }
+
             var category = getChildrenData(gender, ((Category) row[1]).name());
             var subcategory = getChildrenData(category, (String) row[2]);
             subcategory.getData().add(new MenuData.MenuDataInner(((ProductType) row[3]).getProductType(), new ArrayList<>()));
