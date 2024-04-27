@@ -13,7 +13,11 @@ const Loader = (props: PropsWithChildren<ILoaderProps>) => {
     ) : (
       <Progress />
     );
-  return props.loading ? getLoader() : <>{props.children}</>;
+  return props.loading ? (
+    <div className="d-flex justify-content-center">{getLoader()}</div>
+  ) : (
+    <>{props.children}</>
+  );
 };
 
 export default Loader;

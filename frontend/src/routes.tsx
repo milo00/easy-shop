@@ -6,9 +6,9 @@ import RequireAuth from "./utils/requireAuth";
 import Logout from "./views/logout";
 import Layout from "./utils/layout";
 import Items from "./views/items";
-import Sale from "./views/discount";
 import Item from "./views/item";
 import Cart from "./views/cart";
+import { fetchItems, fetchOnSale } from "./store/slices/itemsSlice";
 
 export const AppRoutes = () => {
   return (
@@ -44,7 +44,23 @@ export const AppRoutes = () => {
           path="/kids/:gender/:category?/:subcategory?/:productType?"
           element={
             <Layout>
-              <Items />
+              <Items fetchItems={fetchItems} />
+            </Layout>
+          }
+        />
+        <Route
+          path={"/sale"}
+          element={
+            <Layout>
+              <Items fetchItems={fetchOnSale} />
+            </Layout>
+          }
+        />
+        <Route
+          path={"/sale/:gender/:category?/:subcategory?/:productType?"}
+          element={
+            <Layout>
+              <Items fetchItems={fetchOnSale} />
             </Layout>
           }
         />
@@ -52,15 +68,7 @@ export const AppRoutes = () => {
           path="/:gender/:category?/:subcategory?/:productType?"
           element={
             <Layout>
-              <Items />
-            </Layout>
-          }
-        />
-        <Route
-          path="/sale"
-          element={
-            <Layout>
-              <Sale />
+              <Items fetchItems={fetchItems} />
             </Layout>
           }
         />

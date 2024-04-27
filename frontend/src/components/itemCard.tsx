@@ -19,7 +19,7 @@ export const ItemCard = (props: IItemCardProps) => {
       <img
         alt={props.item.name + " image"}
         src={props.item.imgUrl}
-        style={{ height: "300px", width: "300px" }}
+        style={{ height: "300px", width: "auto" }}
       />
       <CardBody>
         <CardTitle tag="h5">{props.item.name}</CardTitle>

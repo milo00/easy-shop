@@ -45,11 +45,21 @@ export const fetchItems = createAsyncThunk(
 
 export const fetchOnSale = createAsyncThunk(
   "items/fetchOnSale",
-  async (data?: { page?: number }) => {
+  async (data?: {
+    page?: number;
+    gender?: Gender;
+    category?: Category;
+    subcategory?: string;
+    productType?: string;
+  }) => {
     const response = await api.get(`${BASE_URL}/items/sale`, {
       params: {
         size: 12,
         page: data?.page ? data.page - 1 : 0,
+        gender: data?.gender,
+        category: data?.category,
+        subcategory: data?.subcategory,
+        productType: data?.productType,
       },
     });
     return response.data;

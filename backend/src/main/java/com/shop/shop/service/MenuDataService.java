@@ -3,7 +3,6 @@ package com.shop.shop.service;
 import com.shop.shop.model.Category;
 import com.shop.shop.model.Gender;
 import com.shop.shop.model.MenuData;
-import com.shop.shop.model.ProductType;
 import com.shop.shop.repository.ItemRepository;
 import org.springframework.stereotype.Service;
 
@@ -34,25 +33,25 @@ public class MenuDataService {
     public MenuData getMenuData() {
         List<Object[]> menuData = itemRepository.findMenuData();
         MenuData resultMenuData = new MenuData();
-        Map<Gender, MenuData.MenuDataInner> genderMap = new LinkedHashMap<>();
+        Map<String, MenuData.MenuDataInner> genderMap = new LinkedHashMap<>();
 
         for (Object[] row : menuData) {
             MenuData.MenuDataInner gender;
-            if (row[0] == Gender.BOYS || row[0] == Gender.GIRLS) {
-                var kidsGender = genderMap.computeIfAbsent(Gender.KIDS,
-                        __ -> new MenuData.MenuDataInner((Gender.KIDS).name(), new ArrayList<>()));
-                gender = getChildrenData(kidsGender, ((Gender) row[0]).name());
+            if (((String) row[0]).isEmpty()) {
+                gender = genderMap.computeIfAbsent(((Gender) row[1]).name(),
+                        __ -> new MenuData.MenuDataInner(((Gender) row[1]).name(), new ArrayList<>()));
             } else {
-                gender = genderMap.computeIfAbsent((Gender) row[0],
-                        __ -> new MenuData.MenuDataInner(((Gender) row[0]).name(), new ArrayList<>()));
+                var additionalInfo = genderMap.computeIfAbsent((String) row[0],
+                        __ -> new MenuData.MenuDataInner((String) row[0], new ArrayList<>()));
+                gender = getChildrenData(additionalInfo, ((Gender) row[1]).name());
             }
 
-            var category = getChildrenData(gender, ((Category) row[1]).name());
-            var subcategory = getChildrenData(category, (String) row[2]);
-            subcategory.getData().add(new MenuData.MenuDataInner(((ProductType) row[3]).getProductType(), new ArrayList<>()));
+            var category = getChildrenData(gender, ((Category) row[2]).name());
+            var subcategory = getChildrenData(category, (String) row[3]);
+            subcategory.getData().add(new MenuData.MenuDataInner(((String) row[4]), new ArrayList<>()));
         }
 
-        resultMenuData.setGenders(new ArrayList<>(genderMap.values()));
+        resultMenuData.setData(new ArrayList<>(genderMap.values()));
         return resultMenuData;
     }
 }

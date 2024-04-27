@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 public class MenuData {
-    private List<MenuDataInner> genders;
+    private List<MenuDataInner> data;
 
     @Data
     @AllArgsConstructor

@@ -1,5 +1,5 @@
 export default interface IMenuData {
-  genders: IMenuDataInner[];
+  data: IMenuDataInner[];
 }
 
 export interface IMenuDataInner {
@@ -8,5 +8,5 @@ export interface IMenuDataInner {
 }
 
 export function isSidebarData(object: any): object is IMenuData {
-  return "genders" in object;
+  return "data" in object && !("name" in object);
 }

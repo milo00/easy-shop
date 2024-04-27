@@ -28,7 +28,7 @@ public class ItemController {
             @RequestParam(required = false) String subcategory,
             @RequestParam(required = false) String productType
     ) {
-        var items = itemService.getItemsWithFilters(page, size, gender, category, subcategory, productType);
+        var items = itemService.getItemsWithFilters(page, size, gender, category, subcategory, productType, false);
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
@@ -46,8 +46,12 @@ public class ItemController {
     @GetMapping("/sale")
     public ResponseEntity<Page<Item>> getOnSale(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
-        var items = itemService.getItemsOnSale(page, size);
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) Gender gender,
+            @RequestParam(required = false) Category category,
+            @RequestParam(required = false) String subcategory,
+            @RequestParam(required = false) String productType) {
+        var items = itemService.getItemsWithFilters(page, size, gender, category, subcategory, productType, true);
         return ResponseEntity.ok(items);
     }
 

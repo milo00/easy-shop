@@ -32,13 +32,11 @@ const breadcrumbItemsFromPath = (paths?: (string | undefined)[]) => {
 
 export const breadcrumbBuilder = (
   paths?: (string | undefined)[]
-): JSX.Element => {
-  return (
-    <Breadcrumb>
-      <BreadcrumbItem href="/" tag="a">
-        Home
-      </BreadcrumbItem>
-      {breadcrumbItemsFromPath(paths)}
-    </Breadcrumb>
-  );
-};
+): JSX.Element => (
+  <Breadcrumb>
+    <BreadcrumbItem href="/" tag="a">
+      Home
+    </BreadcrumbItem>
+    {breadcrumbItemsFromPath(paths)}
+  </Breadcrumb>
+);

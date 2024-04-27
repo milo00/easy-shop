@@ -11,7 +11,7 @@ export const Item = () => {
   const [cartText, setCartText] = useState("");
   const item = useSelector((state: IRootState) => state.items.item);
   const dispatch = useDispatch<AppDispatch>();
-  let params = useParams();
+  const params = useParams();
 
   useEffect(() => {
     dispatch(fetchById(Number(params.id)));

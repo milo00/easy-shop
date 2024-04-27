@@ -29,7 +29,10 @@ const SidebarMenuItem = (props: ISidebarMenuItemProps) => {
       className={`item ${props.isActive ? "active" : ""}`}
       onClick={props.toggleOpen}
     >
-      <span onClickCapture={(e) => handleOnClick(e, props.path)}>
+      <span
+        className={props.name === "SALE" ? "text-danger fw-bold" : ""}
+        onClickCapture={(e) => handleOnClick(e, props.path)}
+      >
         {_.capitalize(props.name)}
       </span>
       <span className="icon">
