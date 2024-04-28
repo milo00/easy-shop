@@ -1,5 +1,4 @@
 import { Breadcrumb, BreadcrumbItem } from "reactstrap";
-var _ = require("lodash");
 
 const singleBreadItemForPath = (
   path: string,
@@ -12,7 +11,7 @@ const singleBreadItemForPath = (
     tag={isActive ? "span" : "a"}
     active={isActive}
   >
-    {_.capitalize(name)}
+    {name.toLowerCase()}
   </BreadcrumbItem>
 );
 
@@ -35,7 +34,7 @@ export const breadcrumbBuilder = (
 ): JSX.Element => (
   <Breadcrumb>
     <BreadcrumbItem href="/" tag="a">
-      Home
+      home
     </BreadcrumbItem>
     {breadcrumbItemsFromPath(paths)}
   </Breadcrumb>

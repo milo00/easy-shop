@@ -9,6 +9,7 @@ import Items from "./views/items";
 import Item from "./views/item";
 import Cart from "./views/cart";
 import { fetchItems, fetchOnSale } from "./store/slices/itemsSlice";
+import Checkout from "./views/checkout";
 
 export const AppRoutes = () => {
   return (
@@ -77,6 +78,14 @@ export const AppRoutes = () => {
           element={
             <Layout>
               <Cart />
+            </Layout>
+          }
+        />
+        <Route
+          path="/checkout"
+          element={
+            <Layout basic>
+              <Checkout />
             </Layout>
           }
         />

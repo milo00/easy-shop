@@ -59,10 +59,10 @@ export const Item = () => {
                 item?.currentPrice ? "text-decoration-line-through" : ""
               }
             >
-              {item?.regularPrice}zł
+              {item?.regularPrice} PLN
             </span>
             {item?.currentPrice && (
-              <span className="mx-2 text-danger">{item?.currentPrice}zł</span>
+              <span className="mx-2 text-danger">{item?.currentPrice} PLN</span>
             )}
           </div>
           <Button
@@ -73,7 +73,9 @@ export const Item = () => {
           >
             Add to cart
           </Button>
-          <span style={{ fontSize: "x-small" }}>{cartText}</span>
+          <span style={{ fontSize: "small", paddingTop: "0.5rem" }}>
+            {cartText}
+          </span>
         </Col>
       </Row>
     </Container>

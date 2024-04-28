@@ -2,7 +2,6 @@ import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-var _ = require("lodash");
 
 interface ISidebarMenuItemProps {
   name: string;
@@ -33,7 +32,7 @@ const SidebarMenuItem = (props: ISidebarMenuItemProps) => {
         className={props.name === "SALE" ? "text-danger fw-bold" : ""}
         onClickCapture={(e) => handleOnClick(e, props.path)}
       >
-        {_.capitalize(props.name)}
+        {(props.name).toLowerCase()}
       </span>
       <span className="icon">
         {props.displayArrow && (

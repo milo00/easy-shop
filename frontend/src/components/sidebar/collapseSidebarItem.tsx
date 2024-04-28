@@ -3,7 +3,7 @@ import { IMenuDataInner } from "../../models/menuData";
 import { Collapse } from "reactstrap";
 import { equalsIgnoreCase } from "../../utils/functions";
 import SidebarMenuItem from "./sidebarItem";
-var _ = require("lodash");
+import _ from "lodash";
 
 interface ICollapseSidebarItemProps {
   parent: IMenuDataInner;

@@ -22,18 +22,26 @@ export const ItemCard = (props: IItemCardProps) => {
         style={{ height: "300px", width: "auto" }}
       />
       <CardBody>
-        <CardTitle tag="h5">{props.item.name}</CardTitle>
-        <CardSubtitle className="mb-2" tag="h6">
+        <CardTitle tag="h5" style={{ fontWeight: "normal" }}>
+          {props.item.name}
+        </CardTitle>
+        <CardSubtitle
+          className="mb-2"
+          tag="h6"
+          style={{ fontWeight: props.item.currentPrice ? "bolder" : "normal" }}
+        >
           <span
             className={
-              props.item.currentPrice ? "text-decoration-line-through" : ""
+              props.item.currentPrice
+                ? "text-decoration-line-through font-weight-bold"
+                : "font-weight-medium"
             }
           >
-            {props.item.regularPrice}zł
+            {props.item.regularPrice} PLN
           </span>
           {props.item.currentPrice && (
-            <span className="mx-2 text-danger">
-              {props.item.currentPrice}zł
+            <span className="mx-2 text-danger font-weight-bold">
+              {props.item.currentPrice} PLN
             </span>
           )}
         </CardSubtitle>

@@ -3,7 +3,7 @@ import {
   PaginationItem,
   PaginationLink,
 } from "reactstrap";
-var _ = require("lodash");
+import _ from "lodash";
 
 interface IPaginationProps {
   currentPage: number;

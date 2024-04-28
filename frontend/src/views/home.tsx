@@ -7,16 +7,18 @@ import { Button } from "reactstrap";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { IRootState, AppDispatch } from "../store/store";
-import { fetchItems } from "../store/slices/itemsSlice";
+import { fetchOnSale } from "../store/slices/itemsSlice";
 import Loader from "../components/loader";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const items = useSelector((state: IRootState) => state.items.items);
   const status = useSelector((state: IRootState) => state.items.status);
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(fetchItems());
+    dispatch(fetchOnSale());
   }, [dispatch]);
 
   const responsive = {
@@ -43,7 +45,12 @@ const Home = () => {
       />
       <div className="m-5">
         <h2>Wyprzedaż</h2>
-        <Button className="mt-2" color="primary" size="small">
+        <Button
+          className="mt-2"
+          color="primary"
+          size="small"
+          onClick={() => navigate("/sale")}
+        >
           Przeglądaj
         </Button>
       </div>

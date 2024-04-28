@@ -1,72 +1,74 @@
-import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { IRootState } from "../store/store";
-import api, { BASE_URL } from "../config/axiosInterceptor";
-import IItem, { getPrice } from "../models/item";
-import CartItem from "../components/cartItem";
-import { Button, Container, Row } from "reactstrap";
+import CartItem from "../components/checkout/cartItem";
+import { Button, Col, Container, Row } from "reactstrap";
 import { clear } from "../store/slices/cartSlice";
-var _ = require("lodash");
+import EmptyCart from "./emptyCart";
+import { useNavigate } from "react-router-dom";
+import OrderSummary from "../components/checkout/orderSummary";
+import useCartItems from "../utils/hooks/useCartItems";
+import { IRootState } from "../store/store";
 
 const Cart = () => {
-  const cartItems = useSelector((state: IRootState) => state.cart.cart);
-  const [items, setItems] = useState<Map<IItem, number>>(new Map());
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    const fetchItems = async () => {
-      const params = {
-        params: { ids: cartItems.items.map((i) => i.id).join(",") },
-      };
-      const data = await api.get(`${BASE_URL}/items/ids`, params);
-      const newItems = new Map<IItem, number>();
-      data.data.forEach((d: IItem) => {
-        const quantity = cartItems.items.find((i) => i.id === d.id)?.quantity;
-        quantity && newItems.set(d, quantity);
-      });
-      setItems(newItems);
-    };
-
-    fetchItems();
-  }, [cartItems]);
+  const navigate = useNavigate();
+  const cartItems = useSelector((state: IRootState) => state.cart.cart);
+  const { items, totalCost } = useCartItems();
 
   const itemsArray = Array.from(items.entries());
 
-  return (
-    <Container className="mx-0">
-      <Row
-        className="py-3 mt-3 mb-5"
-        style={{ height: (window.innerHeight * 2) / 3, overflow: "auto" }}
-      >
-        {itemsArray.map((i) => (
-          <CartItem item={i[0]} quantity={i[1]} />
-        ))}
-      </Row>
+  if (cartItems.items.length === 0) {
+    return <EmptyCart />;
+  }
 
-      {_.isEmpty(itemsArray) ? (
-        <span>{"Your cart is empty :("}</span>
-      ) : (
-        <>
-          <Row>
-            <span>
-              Total:{" "}
-              {itemsArray
-                .map((i) => (getPrice(i[0]) ?? 0) * i[1])
-                .reduce((prev, next) => prev + next)}
-              zł
-            </span>
-          </Row>
-          <Row>
+  return (
+    <Container className="mx-0 mt-5" fluid>
+      <Row>
+        <Col xs={0} md={1}></Col>
+        <Col className="me-5">
+          <Row className="justify-content-between">
+            <h1 className="w-auto">YOUR CART</h1>
             <Button
               color="primary"
+              outline
+              role="button"
               onClick={() => dispatch(clear())}
-              style={{ width: "fit-content" }}
+              style={{
+                width: "fit-content",
+                height: "fit-content",
+              }}
             >
-              Clear cart
+              clear
             </Button>
           </Row>
-        </>
-      )}
+          <Row style={{ fontSize: "smaller" }}>
+            <span>{`in total (${items.size} items): ${totalCost} PLN`}</span>
+            <span>
+              remember, adding items to Your cart does not automatically reserve
+              them
+            </span>
+          </Row>
+          <Row className="py-3 mt-3 mb-5 gap-4">
+            {itemsArray.map((i) => (
+              <CartItem item={i[0]} quantity={i[1]} />
+            ))}
+          </Row>
+        </Col>
+        <Col xs={12} md={4}>
+          <Button
+            className="mb-5"
+            color="primary"
+            role="button"
+            onClick={() => navigate("/checkout")}
+            style={{ width: "fit-content" }}
+          >
+            go to checkout
+          </Button>
+          <Row className="gap-3">
+            <OrderSummary numOfItems={items.size} totalCost={totalCost} />
+          </Row>
+        </Col>
+        <Col xs={0} md={1}></Col>
+      </Row>
     </Container>
   );
 };

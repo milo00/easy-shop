@@ -35,7 +35,7 @@ export const Sidebar = () => {
     isSale(menuData) || (!isSalePath(location) && isCurrentGender(menuData));
 
   return (
-    <div className="sidebar">
+    <div className="sidebar border-right">
       {data?.data.map((gender) => (
         <CollapseSidebarItem
           parent={gender}

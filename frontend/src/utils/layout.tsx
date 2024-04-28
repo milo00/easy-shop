@@ -1,13 +1,13 @@
-import { ReactNode } from "react";
+import { PropsWithChildren } from "react";
 import Header from "../components/header";
 
 interface ILayoutProps {
-  children: ReactNode;
+  basic?: boolean;
 }
 
-const Layout = (props: ILayoutProps) => (
+const Layout = (props: PropsWithChildren<ILayoutProps>) => (
   <div>
-    <Header />
+    <Header basic={props.basic} />
     {props.children}
   </div>
 );
