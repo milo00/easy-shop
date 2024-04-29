@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Container,
   FormGroup,
@@ -11,13 +11,17 @@ import {
 } from "reactstrap";
 import { Link, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../store/slices/accountSlice";
+import { login, reset } from "../store/slices/accountSlice";
 import { isAuthenticated } from "../utils/authentication";
 import { IRootState, AppDispatch } from "../store/store";
 
 const Login = () => {
   const status = useSelector((state: IRootState) => state.account.status);
   const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    dispatch(reset());
+  }, []);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -41,11 +45,10 @@ const Login = () => {
     <Container>
       <Row className="justify-content-center">
         <Col xs="12" md="8" lg="4">
-          <h1 style={{ textAlign: "center" }}>Sign in</h1>
-          {status}
+          <h1 style={{ textAlign: "center" }}>sign in</h1>
           <Form onSubmit={handleSubmit}>
             <FormGroup>
-              <Label>Username*</Label>
+              <span style={{ fontSize: "small" }}>username*</span>
               <Input
                 type="text"
                 name="username"
@@ -55,7 +58,7 @@ const Login = () => {
               />
             </FormGroup>
             <FormGroup>
-              <Label>Password*</Label>
+              <span style={{ fontSize: "small" }}>password*</span>
               <Input
                 type="password"
                 name="password"
@@ -64,21 +67,24 @@ const Login = () => {
                 required
               />
             </FormGroup>
-            <FormGroup check className="mb-3">
-              <Label check>
-                <Input type="checkbox" name="remember" /> Remember me
-              </Label>
+            <FormGroup check>
+              <Input type="checkbox" name="remember" />
+              <span style={{ fontSize: "medium" }}>remember me</span>
             </FormGroup>
             {status === "failed" && (
-              <span className="text-danger">
-                Incorrect username or password. Please try again.
+              <span className="text-danger" style={{ fontSize: "small" }}>
+                incorrect username or password. please try again.
               </span>
             )}
-            <Button className="mb-3" type="submit" color="primary" block>
-              Sign In
+            <Button className="my-3" type="submit" color="primary" block>
+              sign In
             </Button>
             <div style={{ textAlign: "right" }}>
-              <Link to="/register">{"Don't have an account? Sign Up"}</Link>
+              <Link to="/register">
+                <span style={{ fontSize: "medium" }}>
+                  don't have an account? sign up"
+                </span>
+              </Link>
             </div>
           </Form>
         </Col>

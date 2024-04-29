@@ -6,7 +6,7 @@ import {
 } from "../../utils/functions";
 import { Category, Gender, isKidsGender } from "../../models/item";
 import CollapseSidebarItem from "./collapseSidebarItem";
-import { useContext } from "react";
+import { Fragment, useContext } from "react";
 import { SidebarDataContext } from "../../App";
 import "../../styles/sidebar.css";
 
@@ -37,18 +37,20 @@ export const Sidebar = () => {
   return (
     <div className="sidebar border-right">
       {data?.data.map((gender) => (
-        <CollapseSidebarItem
-          parent={gender}
-          toggler={gender.name}
-          path={`/${gender.name}`}
-          isParentActive={isActive(gender.name)}
-          pathValues={[
-            pathGender,
-            pathCategory,
-            pathSubcategory,
-            pathProductType,
-          ]}
-        />
+        <Fragment key={gender.name}>
+          <CollapseSidebarItem
+            parent={gender}
+            toggler={gender.name}
+            path={`/${gender.name}`}
+            isParentActive={isActive(gender.name)}
+            pathValues={[
+              pathGender,
+              pathCategory,
+              pathSubcategory,
+              pathProductType,
+            ]}
+          />
+        </Fragment>
       ))}
     </div>
   );

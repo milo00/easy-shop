@@ -5,10 +5,11 @@ import CheckoutItem from "../components/checkout/checkoutItem";
 import { ReactNode, useState } from "react";
 import CheckoutFormElement from "../components/checkout/checkoutFormElement";
 import CheckoutCollapse from "../components/checkout/checkoutCollapse";
+import Loader from "../components/loader";
 
 const Checkout = () => {
   const [submittedForms, setSubmittedForms] = useState<boolean[]>([]);
-  const { items, totalCost } = useCartItems();
+  const { items, totalCost, loading } = useCartItems();
 
   const onReset = (index: number) => {
     let newValidForm = [...submittedForms];
@@ -148,11 +149,15 @@ const Checkout = () => {
         <Col xs={0} md={1}></Col>
         <Col xs={12} md={4}>
           <Row className="gap-3">
-            <OrderSummary numOfItems={items.size} totalCost={totalCost} />
+            <OrderSummary numOfItems={items.length} totalCost={totalCost} />
             <div className="border border-bottom my-2" />
-            {Array.from(items).map((i) => (
-              <CheckoutItem item={i[0]} quantity={i[1]} />
-            ))}
+            <div className="d-flex justify-content-center">
+              <Loader loading={loading} type={"progressBar"} advanced={false}>
+                {items.map((i) => (
+                  <CheckoutItem item={i} />
+                ))}
+              </Loader>
+            </div>
           </Row>
         </Col>
         <Col xs={0} md={1}></Col>

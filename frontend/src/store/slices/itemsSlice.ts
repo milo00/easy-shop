@@ -101,8 +101,10 @@ const itemsSlice = createSlice({
       .addMatcher(
         isAnyOf(fetchItems.rejected, fetchOnSale.rejected, fetchById.rejected),
         (state, action) => {
-          state.status = "failed";
-          state.error = action.error.message;
+          if (action.error.message !== "Aborted") {
+            state.status = "failed";
+            state.error = action.error.message;
+          }
         }
       );
   },

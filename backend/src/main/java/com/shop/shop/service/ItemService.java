@@ -22,10 +22,20 @@ public class ItemService {
 
 
     public Optional<Item> getItem(Integer id) {
+        try {
+            Thread.sleep(12000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return itemRepository.findById(id);
     }
 
     public Optional<List<Item>> getItemsForIds(List<Integer> ids) {
+        try {
+            Thread.sleep(12000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return itemRepository.findByIdIn(ids);
     }
 
@@ -37,6 +47,11 @@ public class ItemService {
                                           String productType,
                                           Boolean onSale) {
         var pageable = PageRequest.of(page, size);
+        try {
+            Thread.sleep(12000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         if (gender == null) {
             return itemRepository.findAll(pageable, onSale);
         }

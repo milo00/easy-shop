@@ -38,6 +38,7 @@ const useFetchItems = (currentPage: number, action: any) => {
         })
       );
     }
+
   }, [params, dispatch, currentPage, action]);
 
   return params;

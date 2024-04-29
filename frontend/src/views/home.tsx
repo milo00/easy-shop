@@ -44,31 +44,30 @@ const Home = () => {
         alt="Woman with a shopping bag"
       />
       <div className="m-5">
-        <h2>Wyprzedaż</h2>
+        <h2 className="text-danger fw-bolder">sale</h2>
         <Button
           className="mt-2"
           color="primary"
+          outline
           size="small"
           onClick={() => navigate("/sale")}
         >
-          Przeglądaj
+          browse
         </Button>
       </div>
-      <Loader loading={status === "loading"} type={"spinner"}>
-        <Carousel
-          responsive={responsive}
-          swipeable={false}
-          draggable={false}
-          infinite
-          autoPlay
-          autoPlaySpeed={4000}
-          transitionDuration={1000}
-        >
-          {items?.map((item) => (
-            <ItemCard key={item.id} item={item} />
-          ))}
-        </Carousel>
-      </Loader>
+      <Carousel
+        responsive={responsive}
+        swipeable={false}
+        draggable={false}
+        infinite
+        autoPlay
+        autoPlaySpeed={4000}
+        transitionDuration={1000}
+      >
+        {items?.map((item) => (
+          <ItemCard key={item.id} item={item} />
+        ))}
+      </Carousel>
     </div>
   );
 };

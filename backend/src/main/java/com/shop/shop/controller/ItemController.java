@@ -29,11 +29,6 @@ public class ItemController {
             @RequestParam(required = false) String productType
     ) {
         var items = itemService.getItemsWithFilters(page, size, gender, category, subcategory, productType, false);
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         return ResponseEntity.ok(items);
     }
 

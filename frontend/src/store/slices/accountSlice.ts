@@ -46,6 +46,9 @@ const accountSlice = createSlice({
         sessionStorage.removeItem(ACCESS_TOKEN);
       }
     },
+    reset(state) {
+      state = initialState;
+    },
   },
   extraReducers(builder) {
     builder
@@ -81,4 +84,4 @@ const accountSlice = createSlice({
 });
 
 export default accountSlice;
-export const { logout } = accountSlice.actions;
+export const { logout, reset } = accountSlice.actions;

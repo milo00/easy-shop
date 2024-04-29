@@ -1,8 +1,8 @@
-import IItem, { getPrice } from "../../models/item";
+import { ICheckoutItem } from "../../models/cart";
+import { getPrice } from "../../models/item";
 
 interface ICheckoutItemProps {
-  item: IItem;
-  quantity: number;
+  item: ICheckoutItem;
 }
 
 const CheckoutItem = (props: ICheckoutItemProps) => {
@@ -22,7 +22,10 @@ const CheckoutItem = (props: ICheckoutItemProps) => {
         <span>{props.item.name}</span>
         <span>{getPrice(props.item)} PLN</span>
         <span className="text-secondary" style={{ fontSize: "smaller" }}>
-          quantity: {props.quantity}
+          size: {props.item.size}
+        </span>
+        <span className="text-secondary" style={{ fontSize: "smaller" }}>
+          quantity: {props.item.quantity}
         </span>
       </div>
     </div>

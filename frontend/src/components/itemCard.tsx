@@ -46,10 +46,10 @@ export const ItemCard = (props: IItemCardProps) => {
           )}
         </CardSubtitle>
         <CardText className="text-muted">
-          <div>{props.item.productType?.productType}</div>
-          <div style={{ fontSize: "smaller" }}>
-            {props.item.productType?.subcategory}
-          </div>
+          <span>{props.item.productType?.productType?.toLowerCase()}</span>
+          <span style={{ fontSize: "smaller", display: "block" }}>
+            {props.item.productType?.subcategory?.toLowerCase()}
+          </span>
         </CardText>
       </CardBody>
     </Card>

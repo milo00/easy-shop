@@ -4,35 +4,78 @@ import IItem, { getPrice } from "../../models/item";
 import { IRootState } from "../../store/store";
 import { useSelector } from "react-redux";
 import bigDecimal from "js-big-decimal";
+import ICart, { ICheckoutItem } from "../../models/cart";
+import _ from "lodash";
+
+const applyChanges = (cartItems: ICart, items: IItem[]) => {
+  const newItems: ICheckoutItem[] = [];
+  let currentCost = "0";
+  let newTotalItems = 0;
+  items.forEach((d: IItem) => {
+    const currentCartItems = cartItems.items.filter((i) => i.id === d.id);
+    currentCartItems.forEach((i) => {
+      currentCost = bigDecimal.add(
+        currentCost,
+        bigDecimal.multiply(getPrice(d), i.quantity)
+      );
+      newTotalItems += i.quantity;
+      newItems.push({ ...d, ...i });
+    });
+  });
+
+  return { currentCost, newItems, newTotalItems };
+};
 
 const useCartItems = () => {
   const cartItems = useSelector((state: IRootState) => state.cart.cart);
-  const [items, setItems] = useState<Map<IItem, number>>(new Map());
+  const [items, setItems] = useState<ICheckoutItem[]>([]);
+  const [loading, setLoading] = useState(false);
   const [totalCost, setTotalCost] = useState(0);
+  const [totalItems, setTotalItems] = useState(0);
 
   useEffect(() => {
     const fetchItems = async () => {
       const params = {
-        params: { ids: cartItems.items.map((i) => i.id).join(",") },
+        params: { ids: _.uniq(cartItems.items.map((i) => i.id)).join(",") },
       };
+      setLoading(true);
       const data = await api.get(`${BASE_URL}/items/ids`, params);
 
-      const newItems = new Map<IItem, number>();
-      let currentCost = "0";
-      data.data.forEach((d: IItem) => {
-        const quantity = cartItems.items.find((i) => i.id === d.id)?.quantity;
-        quantity && newItems.set(d, quantity);
-        currentCost = bigDecimal.add(currentCost, getPrice(d));
-      });
+      const { currentCost, newItems, newTotalItems } = applyChanges(
+        cartItems,
+        data.data
+      );
 
       setItems(newItems);
       setTotalCost(Number.parseFloat(currentCost));
+      setTotalItems(newTotalItems);
+      setLoading(false);
     };
 
-    fetchItems();
+    if (
+      _.uniqBy(cartItems.items, "id").length !== _.uniqBy(items, "id").length
+    ) {
+      fetchItems();
+    } else {
+      console.log(cartItems);
+      console.log(_.uniqBy(items, "id"));
+
+      const { currentCost, newItems, newTotalItems } = applyChanges(
+        cartItems,
+        _.uniqBy(items, "id")
+      );
+      setItems(newItems);
+      setTotalItems(newTotalItems);
+      setTotalCost(Number.parseFloat(currentCost));
+    }
   }, [cartItems]);
 
-  return { items, totalCost };
+  return {
+    items: _.sortBy(items, ["id", "size"]),
+    loading,
+    totalCost,
+    totalItems,
+  };
 };
 
 export default useCartItems;

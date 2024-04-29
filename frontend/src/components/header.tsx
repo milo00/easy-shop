@@ -51,10 +51,6 @@ const Header = (props: { basic?: boolean }) => {
             </NavItem>
           </Nav>
           <Nav className="align-items-center">
-            <NavItem className="me-3">
-              <Input placeholder="search..." />
-            </NavItem>
-
             <NavItem>
               <NavLink href="/cart" style={{ position: "relative" }}>
                 <FontAwesomeIcon icon={faCartShopping} />

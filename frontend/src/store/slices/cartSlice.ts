@@ -19,33 +19,39 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addItem(state, action) {
-      const currentItem = state.cart.items.find((i) => i.id === action.payload);
+      const currentItem = state.cart.items.find(
+        (i) => i.id === action.payload.id && i.size === action.payload.size
+      );
       if (currentItem) {
         state.cart.items = state.cart.items.filter(
-          (i) => i.id !== action.payload
+          (i) => i.id !== action.payload && i.size !== action.payload.size
         );
       }
       state.cart.items = [
         ...state.cart.items,
         {
-          id: action.payload,
+          id: action.payload.id,
+          size: action.payload.size,
           quantity: (currentItem?.quantity ?? 0) + 1,
         },
       ];
       localStorage.setItem(CART_TOKEN, JSON.stringify(state.cart));
     },
     removeSingleItem(state, action) {
-      const currentItem = state.cart.items.find((i) => i.id === action.payload);
+      const currentItem = state.cart.items.find(
+        (i) => i.id === action.payload.id && i.size === action.payload.size
+      );
       if (currentItem) {
         state.cart.items = state.cart.items.filter(
-          (i) => i.id !== action.payload
+          (i) => i.id !== action.payload && i.size !== action.payload.size
         );
 
         if (currentItem.quantity > 1) {
           state.cart.items = [
             ...state.cart.items,
             {
-              id: action.payload,
+              id: action.payload.id,
+              size: action.payload.size,
               quantity: currentItem.quantity - 1,
             },
           ];
@@ -54,10 +60,12 @@ const cartSlice = createSlice({
       }
     },
     removeWholeItem(state, action) {
-      const currentItem = state.cart.items.find((i) => i.id === action.payload);
+      const currentItem = state.cart.items.find(
+        (i) => i.id === action.payload.id && i.size === action.payload.size
+      );
       if (currentItem) {
         state.cart.items = state.cart.items.filter(
-          (i) => i.id !== action.payload
+          (i) => i.id !== action.payload && i.size !== action.payload.size
         );
 
         localStorage.setItem(CART_TOKEN, JSON.stringify(state.cart));

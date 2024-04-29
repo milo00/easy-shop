@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { IRootState } from "../store/store";
 import { ItemCard } from "../components/itemCard";
-import { Col, Container, Row } from "reactstrap";
+import { Col, Container, Progress, Row } from "reactstrap";
 import { breadcrumbBuilder } from "../utils/breadcrumbBuilder";
 import Sidebar from "../components/sidebar/sidebar";
 import Loader from "../components/loader";
@@ -10,6 +10,7 @@ import usePagination from "../utils/hooks/usePagination";
 import useFetchItems from "../utils/hooks/useFetchItems";
 import { useLocation } from "react-router-dom";
 import { isSalePath } from "../utils/functions";
+import { useEffect } from "react";
 
 interface IItemsProps {
   fetchItems: any;
@@ -40,24 +41,31 @@ const Items = (props: IItemsProps) => {
               params.productType,
             ])}
           </Row>
-          <Row xs={1} md={2} lg={3} className="justify-content-center">
-            <Loader loading={status === "loading"} type={"spinner"}>
-              {items?.map((item) => (
-                <Col key={item.id}>
-                  <ItemCard key={item.id} item={item} />
-                </Col>
-              ))}
-            </Loader>
+          <Row>
+            <Col className="d-flex flex-column align-items-center mt-5">
+              <Loader loading={status === "loading"} type={"progressBar"}>
+                <Row xs={1} md={2} lg={3}>
+                  {items?.map((item) => (
+                    <Col key={item.id}>
+                      <ItemCard key={item.id} item={item} />
+                    </Col>
+                  ))}
+                </Row>
+              </Loader>
+            </Col>
+            {status === "loading" ? <Col xs={2} /> : null}
           </Row>
         </Col>
       </Row>
-      <Row className="justify-content-center mt-3">
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChanges={onPageChange}
-        />
-      </Row>
+      {status === "loading" ? null : (
+        <Row className="justify-content-center mt-5">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChanges={onPageChange}
+          />
+        </Row>
+      )}
     </Container>
   );
 };

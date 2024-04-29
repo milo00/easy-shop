@@ -9,10 +9,10 @@ import {
   removeWholeItem,
 } from "../../store/slices/cartSlice";
 import { useNavigate } from "react-router-dom";
+import { ICheckoutItem } from "../../models/cart";
 
 interface ICartItemProps {
-  item: IItem;
-  quantity: number;
+  item: ICheckoutItem;
 }
 
 const CartItem = (props: ICartItemProps) => {
@@ -20,7 +20,7 @@ const CartItem = (props: ICartItemProps) => {
   const navigate = useNavigate();
 
   return (
-    <div className="d-flex w-100 border">
+    <div className="d-flex gap-1 w-100 border">
       <div role="button" onClick={() => navigate(`/items/${props.item.id}`)}>
         <img
           alt={props.item.name + " image"}
@@ -38,7 +38,11 @@ const CartItem = (props: ICartItemProps) => {
           </span>
           <FontAwesomeIcon
             icon={faClose}
-            onClick={() => dispatch(removeWholeItem(props.item.id))}
+            onClick={() =>
+              dispatch(
+                removeWholeItem({ id: props.item.id, size: props.item.size })
+              )
+            }
             style={{
               cursor: "pointer",
               marginLeft: "auto",
@@ -47,20 +51,27 @@ const CartItem = (props: ICartItemProps) => {
           />
         </div>
         <div>{getPrice(props.item)} PLN</div>
+        <div>size: {props.item.size}</div>
         <div className="d-flex align-items-center justify-content-start gap-2">
           <FontAwesomeIcon
             icon={faMinus}
-            onClick={() => dispatch(removeSingleItem(props.item.id))}
+            onClick={() =>
+              dispatch(
+                removeSingleItem({ id: props.item.id, size: props.item.size })
+              )
+            }
           />
           <Input
-            value={props.quantity}
+            value={props.item.quantity}
             type="number"
             disabled
             style={{ width: "4rem", backgroundColor: "white" }}
           />
           <FontAwesomeIcon
             icon={faPlus}
-            onClick={() => dispatch(addItem(props.item.id))}
+            onClick={() =>
+              dispatch(addItem({ id: props.item.id, size: props.item.size }))
+            }
           />
         </div>
       </div>
