@@ -4,7 +4,12 @@ import {
   isKeyOfEnum,
   isSalePath,
 } from "../../utils/functions";
-import { Category, Gender, isKidsGender } from "../../models/item";
+import {
+  Category,
+  Gender,
+  isBoysOrGirlsGender,
+  isGender,
+} from "../../models/item";
 import CollapseSidebarItem from "./collapseSidebarItem";
 import { Fragment, useContext } from "react";
 import { SidebarDataContext } from "../../App";
@@ -29,20 +34,22 @@ export const Sidebar = () => {
 
   const isCurrentGender = (gender: string) =>
     equalsIgnoreCase(gender, pathGender) ||
-    (gender === Gender.KIDS && isKidsGender(pathGender));
+    (gender === Gender.KIDS && isBoysOrGirlsGender(pathGender));
 
   const isActive = (menuData: string) =>
     isSale(menuData) || (!isSalePath(location) && isCurrentGender(menuData));
 
   return (
     <div className="sidebar border-right">
-      {data?.data.map((gender) => (
-        <Fragment key={gender.name}>
+      {data?.data.map((menuData) => (
+        <Fragment key={menuData.name}>
           <CollapseSidebarItem
-            parent={gender}
-            toggler={gender.name}
-            path={`/${gender.name}`}
-            isParentActive={isActive(gender.name)}
+            parent={menuData}
+            toggler={menuData.name}
+            path={`${isGender(menuData.name) ? "/items/categories/" : "/"}${
+              menuData.name
+            }`}
+            isParentActive={isActive(menuData.name)}
             pathValues={[
               pathGender,
               pathCategory,

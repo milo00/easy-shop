@@ -10,6 +10,7 @@ import { IRootState, AppDispatch } from "../store/store";
 import { fetchOnSale } from "../store/slices/itemsSlice";
 import Loader from "../components/loader";
 import { useNavigate } from "react-router-dom";
+import { reset } from "../store/slices/accountSlice";
 
 const Home = () => {
   const items = useSelector((state: IRootState) => state.items.items);
@@ -55,19 +56,21 @@ const Home = () => {
           browse
         </Button>
       </div>
-      <Carousel
-        responsive={responsive}
-        swipeable={false}
-        draggable={false}
-        infinite
-        autoPlay
-        autoPlaySpeed={4000}
-        transitionDuration={1000}
-      >
-        {items?.map((item) => (
-          <ItemCard key={item.id} item={item} />
-        ))}
-      </Carousel>
+      <Loader loading={status === "loading"} type={"spinner"}>
+        <Carousel
+          responsive={responsive}
+          swipeable={false}
+          draggable={false}
+          infinite
+          autoPlay
+          autoPlaySpeed={4000}
+          transitionDuration={1000}
+        >
+          {items?.map((item) => (
+            <ItemCard key={item.id} item={item} />
+          ))}
+        </Carousel>
+      </Loader>
     </div>
   );
 };

@@ -6,14 +6,13 @@ import FastSlowProgress from "./fastSlowProgress";
 interface ILoaderProps {
   loading: boolean;
   type: "spinner" | "progressBar";
-  advanced?: boolean;
+  basic?: boolean;
 }
 
 const Loader = (props: PropsWithChildren<ILoaderProps>) => {
   const [text, setText] = useState("fetching data");
   const [dots, setDots] = useState(0);
   const [animationClass, setAnimationClass] = useState("");
-  const [progressBarFinished, setProgressBarFinished] = useState(false);
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -75,19 +74,15 @@ const Loader = (props: PropsWithChildren<ILoaderProps>) => {
 
   const getLoader = () =>
     props.type === "spinner" ? (
-      <Spinner color="primary" size="large" />
+      <Spinner color="primary" />
     ) : (
-      <FastSlowProgress
-        dataLoaded={!props.loading}
-        onFinish={() => setProgressBarFinished(true)}
-      />
+      <FastSlowProgress dataLoaded={!props.loading} />
     );
 
-  return props.loading ||
-    (props.type === "progressBar" && !progressBarFinished) ? (
+  return props.loading ? (
     <>
       {getLoader()}
-      {props.advanced ? (
+      {props.basic ? null : (
         <div className={`loader-text ${animationClass}`}>
           <span>{text}</span>
           <span>
@@ -95,7 +90,7 @@ const Loader = (props: PropsWithChildren<ILoaderProps>) => {
             <span style={{ visibility: "hidden" }}>{".".repeat(3 - dots)}</span>
           </span>
         </div>
-      ) : null}
+      )}
     </>
   ) : (
     <>{props.children}</>

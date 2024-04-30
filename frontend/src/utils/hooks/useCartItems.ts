@@ -57,9 +57,6 @@ const useCartItems = () => {
     ) {
       fetchItems();
     } else {
-      console.log(cartItems);
-      console.log(_.uniqBy(items, "id"));
-
       const { currentCost, newItems, newTotalItems } = applyChanges(
         cartItems,
         _.uniqBy(items, "id")

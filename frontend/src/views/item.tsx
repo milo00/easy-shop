@@ -30,7 +30,11 @@ export const Item = () => {
   const params = useParams();
 
   useEffect(() => {
-    dispatch(fetchById(Number(params.id)));
+    const actionPromise = dispatch(fetchById(Number(params.id)));
+
+    return () => {
+      actionPromise.abort();
+    };
   }, [params.id, dispatch]);
 
   const onAddToCard = () => {
@@ -48,7 +52,7 @@ export const Item = () => {
   };
 
   const onSizeChange = (size: string | number) => {
-    setChosenSize(size);
+    setChosenSize(chosenSize === size ? "" : size);
     setCartText("");
   };
 
@@ -63,7 +67,7 @@ export const Item = () => {
             isLoading ? "center mt-5" : "start"
           }`}
         >
-          <Loader loading={isLoading} type={"progressBar"}>
+          <Loader loading={isLoading} type={"spinner"}>
             <Row className="justify-content-flex-start">
               <Col>
                 {item &&
@@ -115,6 +119,7 @@ export const Item = () => {
                   {getSizes(item.productType?.category, item.gender).map(
                     (i) => (
                       <Button
+                        key={i}
                         color="secondary"
                         outline
                         active={chosenSize === i}

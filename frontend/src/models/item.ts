@@ -28,5 +28,8 @@ export enum Gender {
 
 export const getPrice = (item: IItem) => item.currentPrice ?? item.regularPrice;
 
-export const isKidsGender = (gender?: Gender) =>
+export const isBoysOrGirlsGender = (gender?: Gender) =>
   gender === Gender.BOYS || gender === Gender.GIRLS;
+
+export const isGender = (value?: string) =>
+  Object.values(Gender).includes(value?.toUpperCase() as Gender);

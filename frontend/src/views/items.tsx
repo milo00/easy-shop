@@ -10,7 +10,7 @@ import usePagination from "../utils/hooks/usePagination";
 import useFetchItems from "../utils/hooks/useFetchItems";
 import { useLocation } from "react-router-dom";
 import { isSalePath } from "../utils/functions";
-import { useEffect } from "react";
+import { Fragment, useEffect } from "react";
 
 interface IItemsProps {
   fetchItems: any;
@@ -43,15 +43,17 @@ const Items = (props: IItemsProps) => {
           </Row>
           <Row>
             <Col className="d-flex flex-column align-items-center mt-5">
-              <Loader loading={status === "loading"} type={"progressBar"}>
-                <Row xs={1} md={2} lg={3}>
-                  {items?.map((item) => (
-                    <Col key={item.id}>
-                      <ItemCard key={item.id} item={item} />
-                    </Col>
-                  ))}
-                </Row>
-              </Loader>
+              <Fragment key={location.pathname}>
+                <Loader loading={status === "loading"} type={"spinner"}>
+                  <Row xs={1} md={2} lg={3}>
+                    {items?.map((item) => (
+                      <Col key={item.id}>
+                        <ItemCard key={item.id} item={item} />
+                      </Col>
+                    ))}
+                  </Row>
+                </Loader>
+              </Fragment>
             </Col>
             {status === "loading" ? <Col xs={2} /> : null}
           </Row>

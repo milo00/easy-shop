@@ -10,7 +10,11 @@ import {
 import logo from "../assets/logo.png";
 import logoIcon from "../assets/logo-icon.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartShopping, faUser } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCartShopping,
+  faUser,
+  faArrowRightFromBracket,
+} from "@fortawesome/free-solid-svg-icons";
 import { isAuthenticated } from "../utils/authentication";
 import { useSelector } from "react-redux";
 import { IRootState } from "../store/store";
@@ -38,13 +42,13 @@ const Header = (props: { basic?: boolean }) => {
         <>
           <Nav className="me-auto">
             <NavItem>
-              <NavLink href="/women">women</NavLink>
+              <NavLink href="/items/categories/women">women</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/men">men</NavLink>
+              <NavLink href="/items/categories/men">men</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/kids">kids</NavLink>
+              <NavLink href="/items/categories/kids">kids</NavLink>
             </NavItem>
             <NavItem>
               <NavLink href="/sale">sale</NavLink>
@@ -72,7 +76,9 @@ const Header = (props: { basic?: boolean }) => {
 
             <NavItem>
               <NavLink href={isAuthenticated() ? "/logout" : "/login"}>
-                <FontAwesomeIcon icon={faUser} />
+                <FontAwesomeIcon
+                  icon={isAuthenticated() ? faArrowRightFromBracket : faUser}
+                />
               </NavLink>
             </NavItem>
           </Nav>

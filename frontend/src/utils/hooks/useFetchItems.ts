@@ -4,17 +4,19 @@ import { useParams } from "react-router-dom";
 import { Category, Gender } from "../../models/item";
 import { AppDispatch } from "../../store/store";
 import { isKeyOfEnum } from "../functions";
+import { reset } from "../../store/slices/itemsSlice";
 
 const useFetchItems = (currentPage: number, action: any) => {
   const params = useParams();
   const dispatch = useDispatch<AppDispatch>();
+  let actionPromise: { abort: () => any };
 
   useEffect(() => {
     if (
       isKeyOfEnum(Object.keys(Category), params.category) &&
       isKeyOfEnum(Object.keys(Gender), params.gender)
     ) {
-      dispatch(
+      actionPromise = dispatch(
         action({
           page: currentPage,
           gender: Gender[params.gender!.toUpperCase() as keyof typeof Gender],
@@ -25,20 +27,26 @@ const useFetchItems = (currentPage: number, action: any) => {
         })
       );
     } else if (isKeyOfEnum(Object.keys(Gender), params.gender)) {
-      dispatch(
+      actionPromise = dispatch(
         action({
           page: currentPage,
           gender: Gender[params.gender!.toUpperCase() as keyof typeof Gender],
         })
       );
     } else {
-      dispatch(
+      actionPromise = dispatch(
         action({
           page: currentPage,
         })
-      );
+    );
     }
 
+    return () => {
+      if (actionPromise) {
+        actionPromise.abort();
+        dispatch(reset());
+      }
+    };
   }, [params, dispatch, currentPage, action]);
 
   return params;

@@ -77,7 +77,12 @@ export const fetchById = createAsyncThunk(
 const itemsSlice = createSlice({
   name: "items",
   initialState,
-  reducers: {},
+  reducers: {
+    reset(state) {
+      console.log("reset");
+      state = initialState;
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchById.fulfilled, (state, action) => {
@@ -88,6 +93,7 @@ const itemsSlice = createSlice({
         isAnyOf(fetchItems.pending, fetchOnSale.pending, fetchById.pending),
         (state) => {
           state.status = "loading";
+          console.log("loading");
         }
       )
       .addMatcher(
@@ -111,3 +117,4 @@ const itemsSlice = createSlice({
 });
 
 export default itemsSlice;
+export const { reset } = itemsSlice.actions;

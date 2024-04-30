@@ -8,6 +8,7 @@ import Layout from "./utils/layout";
 import Items from "./views/items";
 import Item from "./views/item";
 import Cart from "./views/cart";
+import Error from "./views/error";
 import { fetchItems, fetchOnSale } from "./store/slices/itemsSlice";
 import Checkout from "./views/checkout";
 
@@ -32,19 +33,19 @@ export const AppRoutes = () => {
           }
         />
         <Route
-          path="/"
-          element={
-            <Layout>
-              <Home />
-            </Layout>
-          }
-        />
-        <Route
           path="/logout"
           element={
             <RequireAuth>
               <Logout />
             </RequireAuth>
+          }
+        />
+        <Route
+          path="/"
+          element={
+            <Layout>
+              <Home />
+            </Layout>
           }
         />
         <Route
@@ -56,7 +57,7 @@ export const AppRoutes = () => {
           }
         />
         <Route
-          path="/kids/:gender/:category?/:subcategory?/:productType?"
+          path="/items/categories/:gender/:category?/:subcategory?/:productType?"
           element={
             <Layout>
               <Items fetchItems={fetchItems} />
@@ -64,26 +65,18 @@ export const AppRoutes = () => {
           }
         />
         <Route
-          path={"/sale"}
-          element={
-            <Layout>
-              <Items fetchItems={fetchOnSale} />
-            </Layout>
-          }
-        />
-        <Route
-          path={"/sale/:gender/:category?/:subcategory?/:productType?"}
-          element={
-            <Layout>
-              <Items fetchItems={fetchOnSale} />
-            </Layout>
-          }
-        />
-        <Route
-          path="/:gender/:category?/:subcategory?/:productType?"
+          path="/items/categories/kids/:gender/:category?/:subcategory?/:productType?"
           element={
             <Layout>
               <Items fetchItems={fetchItems} />
+            </Layout>
+          }
+        />
+        <Route
+          path="/sale/:gender?/:category?/:subcategory?/:productType?"
+          element={
+            <Layout>
+              <Items fetchItems={fetchOnSale} />
             </Layout>
           }
         />
@@ -103,7 +96,14 @@ export const AppRoutes = () => {
             </Layout>
           }
         />
-        {/* <Route component={NotFound} /> */}
+        <Route
+          path="*"
+          element={
+            <Layout>
+              <Error message={"page not found"} />
+            </Layout>
+          }
+        />
       </Routes>
     </Router>
   );

@@ -1,4 +1,5 @@
 import { Breadcrumb, BreadcrumbItem } from "reactstrap";
+import { Gender } from "../models/item";
 
 const singleBreadItemForPath = (
   path: string,
@@ -15,9 +16,11 @@ const singleBreadItemForPath = (
   </BreadcrumbItem>
 );
 
-const breadcrumbItemsFromPath = (paths?: (string | undefined)[]) => {
+const breadcrumbItemsFromPath = (paths: (string | undefined)[]) => {
   const items: JSX.Element[] = [];
-  let path = "";
+  let path = Object.values(Gender).includes(paths[0]?.toUpperCase() as Gender)
+    ? "/items/categories"
+    : "";
 
   paths?.forEach((p, index) => {
     if (p) {
@@ -36,6 +39,6 @@ export const breadcrumbBuilder = (
     <BreadcrumbItem href="/" tag="a">
       home
     </BreadcrumbItem>
-    {breadcrumbItemsFromPath(paths)}
+    {paths ? breadcrumbItemsFromPath(paths) : null}
   </Breadcrumb>
 );

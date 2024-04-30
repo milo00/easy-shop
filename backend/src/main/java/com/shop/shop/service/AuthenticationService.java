@@ -28,12 +28,22 @@ public class AuthenticationService {
         var user = new User(requestUser);
         user.setPassword(passwordEncoder.encode(requestUser.getPassword()));
         userRepository.save(user);
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public AuthenticationResponse authenticate(User requestUser) {
         var authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 requestUser.getUsername(), requestUser.getPassword()));
         var token = jwtService.generateToken(requestUser.getUsername());
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return new AuthenticationResponse(token, (User) authentication.getPrincipal());
     }
 }

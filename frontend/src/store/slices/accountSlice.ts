@@ -5,13 +5,13 @@ import api, { BASE_URL } from "../../config/axiosInterceptor";
 export const ACCESS_TOKEN = "ACCESS_TOKEN";
 
 type IAccountState = {
-  account: IUser;
+  user: IUser;
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | undefined;
 };
 
 const initialState: IAccountState = {
-  account: {},
+  user: {},
   status: "idle",
   error: undefined,
 };
@@ -64,7 +64,7 @@ const accountSlice = createSlice({
             sessionStorage.setItem(ACCESS_TOKEN, action.payload.data.token);
           }
         }
-        state.account = action.payload.data.user;
+        state.user = action.payload.data.user;
       })
       .addCase(login.rejected, (state, action) => {
         state.status = "failed";

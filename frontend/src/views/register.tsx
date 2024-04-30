@@ -13,6 +13,7 @@ import { Role } from "../models/user";
 import { useSelector, useDispatch } from "react-redux";
 import { register } from "../store/slices/accountSlice";
 import { IRootState, AppDispatch } from "../store/store";
+import Loader from "../components/loader";
 
 const Register = () => {
   const status = useSelector((state: IRootState) => state.account.status);
@@ -65,8 +66,8 @@ const Register = () => {
       ) : (
         <Row className="justify-content-center">
           <Col xs={12} md={8} xl={4}>
-            <>
-              <h1 style={{ textAlign: "center" }}>sign up</h1>
+            <h1 style={{ textAlign: "center" }}>sign up</h1>
+            <Loader type={"spinner"} loading={status === "loading"}>
               <Form noValidate onSubmit={handleSubmit}>
                 <FormGroup>
                   <span style={{ fontSize: "small" }}>firt name*</span>
@@ -105,7 +106,7 @@ const Register = () => {
                   </Link>
                 </div>
               </Form>
-            </>
+            </Loader>
           </Col>
         </Row>
       )}
