@@ -1,12 +1,4 @@
-import {
-  Navbar,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
-  Input,
-  Badge,
-} from "reactstrap";
+import { Navbar, NavbarBrand, Nav, NavItem, NavLink, Badge } from "reactstrap";
 import logo from "../assets/logo.png";
 import logoIcon from "../assets/logo-icon.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

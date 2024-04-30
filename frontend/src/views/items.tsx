@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { IRootState } from "../store/store";
 import { ItemCard } from "../components/itemCard";
-import { Col, Container, Progress, Row } from "reactstrap";
+import { Col, Container, Row } from "reactstrap";
 import { breadcrumbBuilder } from "../utils/breadcrumbBuilder";
 import Sidebar from "../components/sidebar/sidebar";
 import Loader from "../components/loader";
@@ -9,8 +9,8 @@ import Pagination from "../components/pagination";
 import usePagination from "../utils/hooks/usePagination";
 import useFetchItems from "../utils/hooks/useFetchItems";
 import { useLocation } from "react-router-dom";
-import { isSalePath } from "../utils/functions";
-import { Fragment, useEffect } from "react";
+import { isKidsPath, isSalePath } from "../utils/functions";
+import { Fragment } from "react";
 
 interface IItemsProps {
   fetchItems: any;
@@ -35,6 +35,7 @@ const Items = (props: IItemsProps) => {
           <Row>
             {breadcrumbBuilder([
               isSalePath(location) ? "sale" : undefined,
+              isKidsPath(location) ? "kids" : undefined,
               params.gender,
               params.category,
               params.subcategory,

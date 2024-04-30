@@ -35,13 +35,9 @@ const Loader = (props: PropsWithChildren<ILoaderProps>) => {
   }, [props.loading]);
 
   useEffect(() => {
-    let timer: NodeJS.Timeout;
-
-    if (text === "processing data") {
-      timer = setTimeout(() => {
-        setAnimationClass("fade-out");
-      }, 4000);
-    }
+    const timer = setTimeout(() => {
+      setAnimationClass("fade-out");
+    }, 4000);
 
     return () => {
       clearTimeout(timer);
@@ -49,10 +45,10 @@ const Loader = (props: PropsWithChildren<ILoaderProps>) => {
   }, [text]);
 
   useEffect(() => {
-    let timer: NodeJS.Timeout;
+    let timeout: NodeJS.Timeout;
 
     if (animationClass === "fade-out") {
-      timer = setTimeout(() => {
+      timeout = setTimeout(() => {
         setAnimationClass("fade-in");
         if (text === "fetching data") {
           setText("processing data");
@@ -62,15 +58,15 @@ const Loader = (props: PropsWithChildren<ILoaderProps>) => {
         setDots(0);
       }, 300);
     } else if (animationClass === "fade-in") {
-      timer = setTimeout(() => {
+      timeout = setTimeout(() => {
         setAnimationClass("");
       }, 300);
     }
 
     return () => {
-      clearTimeout(timer);
+      clearTimeout(timeout);
     };
-  }, [animationClass]);
+  }, [animationClass, text]);
 
   const getLoader = () =>
     props.type === "spinner" ? (

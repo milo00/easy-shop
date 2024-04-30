@@ -9,9 +9,10 @@ import { reset } from "../../store/slices/itemsSlice";
 const useFetchItems = (currentPage: number, action: any) => {
   const params = useParams();
   const dispatch = useDispatch<AppDispatch>();
-  let actionPromise: { abort: () => any };
 
   useEffect(() => {
+    let actionPromise: { abort: () => any };
+
     if (
       isKeyOfEnum(Object.keys(Category), params.category) &&
       isKeyOfEnum(Object.keys(Gender), params.gender)
@@ -38,7 +39,7 @@ const useFetchItems = (currentPage: number, action: any) => {
         action({
           page: currentPage,
         })
-    );
+      );
     }
 
     return () => {

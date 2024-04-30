@@ -39,6 +39,6 @@ export const breadcrumbBuilder = (
     <BreadcrumbItem href="/" tag="a">
       home
     </BreadcrumbItem>
-    {paths ? breadcrumbItemsFromPath(paths) : null}
+    {paths ? breadcrumbItemsFromPath(paths.filter(Boolean)) : null}
   </Breadcrumb>
 );

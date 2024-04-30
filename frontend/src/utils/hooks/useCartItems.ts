@@ -65,7 +65,7 @@ const useCartItems = () => {
       setTotalItems(newTotalItems);
       setTotalCost(Number.parseFloat(currentCost));
     }
-  }, [cartItems]);
+  }, [cartItems]); // eslint-disable-line
 
   return {
     items: _.sortBy(items, ["id", "size"]),

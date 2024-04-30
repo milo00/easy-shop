@@ -10,7 +10,6 @@ import { IRootState, AppDispatch } from "../store/store";
 import { fetchOnSale } from "../store/slices/itemsSlice";
 import Loader from "../components/loader";
 import { useNavigate } from "react-router-dom";
-import { reset } from "../store/slices/accountSlice";
 
 const Home = () => {
   const items = useSelector((state: IRootState) => state.items.items);

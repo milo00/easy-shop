@@ -79,7 +79,6 @@ const itemsSlice = createSlice({
   initialState,
   reducers: {
     reset(state) {
-      console.log("reset");
       state = initialState;
     },
   },
@@ -93,7 +92,6 @@ const itemsSlice = createSlice({
         isAnyOf(fetchItems.pending, fetchOnSale.pending, fetchById.pending),
         (state) => {
           state.status = "loading";
-          console.log("loading");
         }
       )
       .addMatcher(

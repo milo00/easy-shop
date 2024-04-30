@@ -1,15 +1,16 @@
 import { PropsWithChildren } from "react";
 import Header from "../components/header";
+import CatchKey from "./catchKey";
 
 interface ILayoutProps {
   basic?: boolean;
 }
 
 const Layout = (props: PropsWithChildren<ILayoutProps>) => (
-  <div>
+  <CatchKey>
     <Header basic={props.basic} />
     {props.children}
-  </div>
+  </CatchKey>
 );
 
 export default Layout;
