@@ -3,15 +3,20 @@ import IUser from "../../models/user";
 import api, { BASE_URL } from "../../config/axiosInterceptor";
 
 export const ACCESS_TOKEN = "ACCESS_TOKEN";
+const USER_TOKEN = "USER_TOKEN";
 
 type IAccountState = {
-  user: IUser;
+  userId: number;
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | undefined;
 };
 
 const initialState: IAccountState = {
-  user: {},
+  userId: Number(
+    localStorage.getItem(USER_TOKEN) ??
+      sessionStorage.getItem(USER_TOKEN) ??
+      undefined
+  ),
   status: "idle",
   error: undefined,
 };
@@ -41,13 +46,12 @@ const accountSlice = createSlice({
       state = initialState;
       if (localStorage.getItem(ACCESS_TOKEN)) {
         localStorage.removeItem(ACCESS_TOKEN);
+        localStorage.removeItem(USER_TOKEN);
       }
       if (sessionStorage.getItem(ACCESS_TOKEN)) {
         sessionStorage.removeItem(ACCESS_TOKEN);
+        sessionStorage.removeItem(USER_TOKEN);
       }
-    },
-    reset(state) {
-      state = initialState;
     },
   },
   extraReducers(builder) {
@@ -60,11 +64,13 @@ const accountSlice = createSlice({
         if (action.payload.data.token) {
           if (action.payload.data.rememberMe) {
             localStorage.setItem(ACCESS_TOKEN, action.payload.data.token);
+            localStorage.setItem(USER_TOKEN, action.payload.data.user.id);
           } else {
             sessionStorage.setItem(ACCESS_TOKEN, action.payload.data.token);
+            sessionStorage.setItem(USER_TOKEN, action.payload.data.user.id);
           }
         }
-        state.user = action.payload.data.user;
+        state.userId = action.payload.data.user.id;
       })
       .addCase(login.rejected, (state, action) => {
         state.status = "failed";
@@ -84,4 +90,4 @@ const accountSlice = createSlice({
 });
 
 export default accountSlice;
-export const { logout, reset } = accountSlice.actions;
+export const { logout } = accountSlice.actions;

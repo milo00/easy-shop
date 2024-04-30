@@ -8,5 +8,6 @@ export const equalsIgnoreCase = (fst?: string, snd?: string) =>
 
 export const isSalePath = (location: Location) =>
   location.pathname.includes("/sale");
+
 export const isKidsPath = (location: Location) =>
   location.pathname.includes("/kids/");

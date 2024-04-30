@@ -2,6 +2,8 @@ import { PropsWithChildren, useEffect, useState } from "react";
 import { Spinner } from "reactstrap";
 import "../styles/loader.css";
 import FastSlowProgress from "./fastSlowProgress";
+import { useDispatch } from "react-redux";
+import { startTimer } from "../store/slices/irritationTimeSlice";
 
 interface ILoaderProps {
   loading: boolean;
@@ -13,6 +15,11 @@ const Loader = (props: PropsWithChildren<ILoaderProps>) => {
   const [text, setText] = useState("fetching data");
   const [dots, setDots] = useState(0);
   const [animationClass, setAnimationClass] = useState("");
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(startTimer());
+  }, [dispatch]);
 
   useEffect(() => {
     let timer: NodeJS.Timeout;

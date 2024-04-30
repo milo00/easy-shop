@@ -6,7 +6,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { createContext, useEffect, useState } from "react";
 import api, { BASE_URL } from "./config/axiosInterceptor";
 import IMenuData, { isSidebarData } from "./models/menuData";
-import CatchKey from "./utils/catchKey";
 
 export const SidebarDataContext = createContext<IMenuData | null>(null);
 

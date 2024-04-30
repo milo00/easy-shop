@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   Container,
   FormGroup,
-  Label,
   Input,
   Button,
   Row,
@@ -11,7 +10,7 @@ import {
 } from "reactstrap";
 import { Link, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { login, reset } from "../store/slices/accountSlice";
+import { login } from "../store/slices/accountSlice";
 import { isAuthenticated } from "../utils/authentication";
 import { IRootState, AppDispatch } from "../store/store";
 import Loader from "../components/loader";
@@ -19,10 +18,6 @@ import Loader from "../components/loader";
 const Login = () => {
   const status = useSelector((state: IRootState) => state.account.status);
   const dispatch = useDispatch<AppDispatch>();
-
-  useEffect(() => {
-    // dispatch(reset());
-  }, []);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
