@@ -15,14 +15,12 @@ const CatchKey = (props: PropsWithChildren<ICatchKeyProps>) => {
   const location = useLocation();
   const dispatch = useDispatch();
 
-  console.log(userId);
-
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.target === document.body) {
         event.preventDefault();
-        if (event.key === " " && userId) {
-          toast("Space clicked at " + location.pathname, { type: "info" });
+        if (event.key === "Enter" && userId) {
+          toast("Enter clicked at " + location.pathname, { type: "info" });
           dispatch(endTimer({ userId, location: location.pathname }));
         }
       }

@@ -1,13 +1,20 @@
-import { PropsWithChildren, useEffect, useState } from "react";
+import {
+  PropsWithChildren,
+  ReactNode,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { Spinner } from "reactstrap";
 import "../styles/loader.css";
 import FastSlowProgress from "./fastSlowProgress";
 import { useDispatch } from "react-redux";
 import { startTimer } from "../store/slices/irritationTimeSlice";
+import DinoGame from "./dino/dinoGame";
 
 interface ILoaderProps {
   loading: boolean;
-  type: "spinner" | "progressBar";
+  type: "spinner" | "progressBar" | "dino";
   basic?: boolean;
 }
 
@@ -75,17 +82,31 @@ const Loader = (props: PropsWithChildren<ILoaderProps>) => {
     };
   }, [animationClass, text]);
 
-  const getLoader = () =>
-    props.type === "spinner" ? (
-      <Spinner color="primary" />
-    ) : (
-      <FastSlowProgress dataLoaded={!props.loading} />
-    );
+  const loader = useMemo(() => {
+    let loader: ReactNode;
+    switch (props.type) {
+      case "spinner":
+        loader = <Spinner color="primary" />;
+        break;
+      case "progressBar":
+        loader = <FastSlowProgress dataLoaded={!props.loading} />;
+        break;
+      case "dino":
+        loader = <DinoGame />;
+    }
+    return loader;
+  }, [props.type, props.loading]);
 
   return props.loading ? (
     <>
-      {getLoader()}
-      {props.basic ? null : (
+      {/* {props.type === "dino" ? (
+        <div style={{ textAlign: "start" }}>
+          <div>while You wait, we have a small surpirise for you...</div>
+          <div>enjoy the game :)</div>
+        </div>
+      ) : null} */}
+      {loader}
+      {props.basic || props.type === "dino" ? null : (
         <div className={`loader-text ${animationClass}`}>
           <span>{text}</span>
           <span>

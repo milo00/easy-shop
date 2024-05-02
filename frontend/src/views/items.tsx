@@ -45,7 +45,7 @@ const Items = (props: IItemsProps) => {
           <Row>
             <Col className="d-flex flex-column align-items-center mt-5">
               <Fragment key={location.pathname}>
-                <Loader loading={status === "loading"} type={"spinner"}>
+                <Loader loading={status === "loading"} type={"dino"}>
                   <Row xs={1} md={2} lg={3}>
                     {items?.map((item) => (
                       <Col key={item.id}>
@@ -61,7 +61,7 @@ const Items = (props: IItemsProps) => {
         </Col>
       </Row>
       {status === "loading" ? null : (
-        <Row className="justify-content-center mt-5">
+        <Row className="justify-content-center mt-5 mb-3">
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}
