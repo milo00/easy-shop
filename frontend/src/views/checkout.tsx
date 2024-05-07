@@ -152,7 +152,7 @@ const Checkout = () => {
             <OrderSummary numOfItems={items.length} totalCost={totalCost} />
             <div className="border border-bottom my-2" />
             <div className="d-flex justify-content-center">
-              <Loader loading={loading} type={"spinner"} basic>
+              <Loader loading={loading} basic>
                 {items.map((i) => (
                   <CheckoutItem item={i} />
                 ))}

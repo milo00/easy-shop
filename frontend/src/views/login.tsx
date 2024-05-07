@@ -42,7 +42,7 @@ const Login = () => {
       <Row className="justify-content-center">
         <Col xs="12" md="8" lg="4">
           <h1 style={{ textAlign: "center" }}>sign in</h1>
-          <Loader type="spinner" loading={status === "loading"}>
+          <Loader loading={status === "loading"}>
             <Form onSubmit={handleSubmit}>
               <FormGroup>
                 <span style={{ fontSize: "small" }}>username*</span>

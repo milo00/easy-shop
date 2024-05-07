@@ -67,7 +67,7 @@ const Register = () => {
         <Row className="justify-content-center">
           <Col xs={12} md={8} xl={4}>
             <h1 style={{ textAlign: "center" }}>sign up</h1>
-            <Loader type={"spinner"} loading={status === "loading"}>
+            <Loader loading={status === "loading"}>
               <Form noValidate onSubmit={handleSubmit}>
                 <FormGroup>
                   <span style={{ fontSize: "small" }}>firt name*</span>

@@ -67,7 +67,7 @@ export const Item = () => {
             isLoading ? "center mt-5" : "start"
           }`}
         >
-          <Loader loading={isLoading} type={"spinner"}>
+          <Loader loading={isLoading}>
             <Row className="justify-content-flex-start">
               <Col>
                 {item &&

@@ -44,7 +44,7 @@ const Cart = () => {
           </Row>
           <Row>
             <Col className="d-flex flex-column align-items-center">
-              <Loader loading={loading} type={"spinner"}>
+              <Loader loading={loading}>
                 <Row style={{ fontSize: "smaller" }}>
                   <span>{`in total (${totalItems} items): ${totalCost} PLN`}</span>
                   <span>

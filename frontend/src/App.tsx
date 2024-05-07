@@ -6,8 +6,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { createContext, useEffect, useState } from "react";
 import api, { BASE_URL } from "./config/axiosInterceptor";
 import IMenuData, { isSidebarData } from "./models/menuData";
+import LoaderType from "./models/loader";
 
 export const SidebarDataContext = createContext<IMenuData | null>(null);
+export const LoaderTypeDataContext = createContext<LoaderType>(
+  LoaderType.SPINNER
+);
 
 function App() {
   const [sidebarData, setSidebarData] = useState<IMenuData | null>(null);
@@ -24,9 +28,11 @@ function App() {
   return (
     <Provider store={store}>
       <SidebarDataContext.Provider value={sidebarData}>
-        <div className="App">
-          <AppRoutes />
-        </div>
+        <LoaderTypeDataContext.Provider value={LoaderType.SPINNER}>
+          <div className="App">
+            <AppRoutes />
+          </div>
+        </LoaderTypeDataContext.Provider>
       </SidebarDataContext.Provider>
     </Provider>
   );

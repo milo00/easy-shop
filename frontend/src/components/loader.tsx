@@ -1,6 +1,7 @@
 import {
   PropsWithChildren,
   ReactNode,
+  useContext,
   useEffect,
   useMemo,
   useState,
@@ -11,10 +12,11 @@ import FastSlowProgress from "./fastSlowProgress";
 import { useDispatch } from "react-redux";
 import { startTimer } from "../store/slices/irritationTimeSlice";
 import DinoGame from "./dino/dinoGame";
+import LoaderType from "../models/loader";
+import { LoaderTypeDataContext } from "../App";
 
 interface ILoaderProps {
   loading: boolean;
-  type: "spinner" | "progressBar" | "dino";
   basic?: boolean;
 }
 
@@ -22,6 +24,7 @@ const Loader = (props: PropsWithChildren<ILoaderProps>) => {
   const [text, setText] = useState("fetching data");
   const [dots, setDots] = useState(0);
   const [animationClass, setAnimationClass] = useState("");
+  const type = useContext(LoaderTypeDataContext);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -84,18 +87,18 @@ const Loader = (props: PropsWithChildren<ILoaderProps>) => {
 
   const loader = useMemo(() => {
     let loader: ReactNode;
-    switch (props.type) {
-      case "spinner":
+    switch (type) {
+      case LoaderType.SPINNER:
         loader = <Spinner color="primary" />;
         break;
-      case "progressBar":
+      case LoaderType.PROGRESS_BAR:
         loader = <FastSlowProgress dataLoaded={!props.loading} />;
         break;
-      case "dino":
+      case LoaderType.GAME:
         loader = <DinoGame />;
     }
     return loader;
-  }, [props.type, props.loading]);
+  }, [type, props.loading]);
 
   return props.loading ? (
     <>
@@ -106,7 +109,7 @@ const Loader = (props: PropsWithChildren<ILoaderProps>) => {
         </div>
       ) : null} */}
       {loader}
-      {props.basic || props.type === "dino" ? null : (
+      {props.basic || type === LoaderType.GAME ? null : (
         <div className={`loader-text ${animationClass}`}>
           <span>{text}</span>
           <span>

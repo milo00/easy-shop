@@ -55,7 +55,7 @@ const Home = () => {
           browse
         </Button>
       </div>
-      <Loader loading={status === "loading"} type={"spinner"}>
+      <Loader loading={status === "loading"}>
         <Carousel
           responsive={responsive}
           swipeable={false}
