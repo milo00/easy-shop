@@ -40,7 +40,7 @@ export const Item = () => {
   const onAddToCard = () => {
     setCartText("");
     dispatch(addItem({ id: item.id, size: chosenSize }));
-    setCartText("item added to cart.");
+    setCartText("item added to cart");
   };
 
   const isLoading = status === "loading";

@@ -52,8 +52,12 @@ const useCartItems = () => {
       setLoading(false);
     };
 
+    const itemsIds = _.uniq(items.map((i) => i.id));
+
     if (
-      _.uniqBy(cartItems.items, "id").length !== _.uniqBy(items, "id").length
+      _.uniq(cartItems.items.map((i) => i.id)).some(
+        (ci) => !itemsIds.includes(ci)
+      )
     ) {
       fetchItems();
     } else {

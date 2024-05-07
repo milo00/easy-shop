@@ -151,13 +151,13 @@ const Checkout = () => {
           <Row className="gap-3">
             <OrderSummary numOfItems={items.length} totalCost={totalCost} />
             <div className="border border-bottom my-2" />
-            <div className="d-flex justify-content-center">
-              <Loader loading={loading} basic>
+            {items.length ? (
+              <div className="d-flex align-items-center flex-column">
                 {items.map((i) => (
                   <CheckoutItem item={i} />
                 ))}
-              </Loader>
-            </div>
+              </div>
+            ) : null}
           </Row>
         </Col>
         <Col xs={0} md={1}></Col>
