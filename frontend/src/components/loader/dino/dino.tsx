@@ -1,8 +1,4 @@
-import { forwardRef, useEffect, useRef, useState } from "react";
-import dinoStationaryImg from "../../assets/dino/dino-stationary.png";
-import dinoRun1Img from "../../assets/dino/dino-run-1.png";
-import dinoRun2Img from "../../assets/dino/dino-run-2.png";
-import dinoLost from "../../assets/dino/dino-lose.png";
+import { forwardRef, useEffect, useState } from "react";
 
 const JUMP_SPEED = 0.4;
 const GRAVITY = 0.0015;
@@ -20,19 +16,19 @@ const Dino = forwardRef<HTMLImageElement, IDinoProps>(function Dino(
   props,
   ref
 ) {
-  const [dinoImg, setDinoImg] = useState(dinoStationaryImg);
+  const [dinoImg, setDinoImg] = useState("dino-stationary");
   const [currentDinoImgTime, setCurrentDinoImgTime] = useState(0);
   const [jumpVelocity, setJumpVelocity] = useState(0);
   const [bottom, setBottom] = useState(0);
 
   useEffect(() => {
-    props.isLost ? setDinoImg(dinoLost) : setBottom(0);
+    props.isLost ? setDinoImg("dino-lose") : setBottom(0);
   }, [props.isLost]);
 
   useEffect(() => {
     handleImage();
     handleJump();
-  }, [props.delta, props.speedScale]);
+  }, [props.delta, props.speedScale]); // eslint-disable-line
 
   useEffect(() => {
     props.isJumping && setJumpVelocity(JUMP_SPEED);
@@ -40,13 +36,15 @@ const Dino = forwardRef<HTMLImageElement, IDinoProps>(function Dino(
 
   const handleImage = () => {
     if (props.isJumping) {
-      setDinoImg(dinoStationaryImg);
+      setDinoImg("dino-stationary");
       return;
     }
 
     let newDinoImgTime = currentDinoImgTime;
     if (currentDinoImgTime >= FRAME_TIME) {
-      setDinoImg((prev) => (prev === dinoRun1Img ? dinoRun2Img : dinoRun1Img));
+      setDinoImg((prev) =>
+        prev === "dino-run-1" ? "dino-run-2" : "dino-run-1"
+      );
       newDinoImgTime -= FRAME_TIME;
     }
 
@@ -69,8 +67,8 @@ const Dino = forwardRef<HTMLImageElement, IDinoProps>(function Dino(
   return (
     <img
       ref={ref}
-      alt="dino image"
-      src={dinoImg}
+      alt="dino"
+      src={`${process.env.PUBLIC_URL}/assets/dino/${dinoImg}.png`}
       className="dino"
       style={{ "--bottom": bottom } as React.CSSProperties}
     />

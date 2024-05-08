@@ -4,7 +4,7 @@ import { ItemCard } from "../components/itemCard";
 import { Col, Container, Row } from "reactstrap";
 import { breadcrumbBuilder } from "../utils/breadcrumbBuilder";
 import Sidebar from "../components/sidebar/sidebar";
-import Loader from "../components/loader";
+import Loader from "../components/loader/loader";
 import Pagination from "../components/pagination";
 import usePagination from "../utils/hooks/usePagination";
 import useFetchItems from "../utils/hooks/useFetchItems";
@@ -45,7 +45,7 @@ const Items = (props: IItemsProps) => {
           <Row>
             <Col className="d-flex flex-column align-items-center mt-5">
               <Fragment key={location.pathname}>
-                <Loader loading={status === "loading"}>
+                <Loader loading={true}>
                   <Row xs={1} md={2} lg={3}>
                     {items?.map((item) => (
                       <Col key={item.id}>

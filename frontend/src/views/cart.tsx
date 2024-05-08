@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import OrderSummary from "../components/checkout/orderSummary";
 import useCartItems from "../utils/hooks/useCartItems";
 import { IRootState } from "../store/store";
-import Loader from "../components/loader";
+import Loader from "../components/loader/loader";
 import { Fragment } from "react/jsx-runtime";
 import { useState } from "react";
 import api, { BASE_URL } from "../config/axiosInterceptor";

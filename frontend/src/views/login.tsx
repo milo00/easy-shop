@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { login } from "../store/slices/accountSlice";
 import { isAuthenticated } from "../utils/authentication";
 import { IRootState, AppDispatch } from "../store/store";
-import Loader from "../components/loader";
+import Loader from "../components/loader/loader";
 
 const Login = () => {
   const status = useSelector((state: IRootState) => state.account.status);

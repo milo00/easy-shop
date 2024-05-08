@@ -28,7 +28,7 @@ function App() {
   return (
     <Provider store={store}>
       <SidebarDataContext.Provider value={sidebarData}>
-        <LoaderTypeDataContext.Provider value={LoaderType.SPINNER}>
+        <LoaderTypeDataContext.Provider value={LoaderType.MEMES}>
           <div className="App">
             <AppRoutes />
           </div>

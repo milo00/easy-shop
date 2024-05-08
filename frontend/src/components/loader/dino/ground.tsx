@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import groundImg from "../../assets/dino/ground.png";
 
 interface IGroundProps {
   left: number;
@@ -24,12 +23,12 @@ const Ground = (props: IGroundProps) => {
         Math.max(prev + props.delta * props.speedScale * SPEED * -1, -300)
       );
     }
-  }, [props.delta, props.speedScale]);
+  }, [props.delta, props.speedScale]); // eslint-disable-line
 
   return (
     <img
-      alt="ground image"
-      src={groundImg}
+      alt="ground"
+      src={`${process.env.PUBLIC_URL}/assets/dino/ground.png`}
       className="ground"
       style={{ "--left": left } as React.CSSProperties}
     />

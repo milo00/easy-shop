@@ -1,6 +1,4 @@
 import { Navbar, NavbarBrand, Nav, NavItem, NavLink, Badge } from "reactstrap";
-import logo from "../assets/logo.png";
-import logoIcon from "../assets/logo-icon.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCartShopping,
@@ -24,7 +22,11 @@ const Header = (props: { basic?: boolean }) => {
     >
       <NavbarBrand href="/">
         <img
-          src={props.basic ? logoIcon : logo}
+          src={
+            props.basic
+              ? `${process.env.PUBLIC_URL}/assets/logo-icon.png`
+              : `${process.env.PUBLIC_URL}/assets/logo.png`
+          }
           alt="Logo"
           style={{ maxHeight: "50px" }}
         />

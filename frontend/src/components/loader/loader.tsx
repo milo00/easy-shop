@@ -7,19 +7,22 @@ import {
   useState,
 } from "react";
 import { Spinner } from "reactstrap";
-import "../styles/loader.css";
-import FastSlowProgress from "./fastSlowProgress";
+import "../../styles/loader.css";
+import FastSlowProgress from "../fastSlowProgress";
 import { useDispatch } from "react-redux";
-import { startTimer } from "../store/slices/irritationTimeSlice";
+import { startTimer } from "../../store/slices/irritationTimeSlice";
 import DinoGame from "./dino/dinoGame";
-import LoaderType from "../models/loader";
-import { LoaderTypeDataContext } from "../App";
+import LoaderType from "../../models/loader";
+import { LoaderTypeDataContext } from "../../App";
+import MemeCarousel from "./memeCarousel";
 
 interface ILoaderProps {
   loading: boolean;
   basic?: boolean;
   type?: LoaderType;
 }
+
+const loadersWithProcessText = [LoaderType.PROGRESS_BAR, LoaderType.SPINNER];
 
 const Loader = (props: PropsWithChildren<ILoaderProps>) => {
   const [text, setText] = useState("fetching data");
@@ -97,6 +100,9 @@ const Loader = (props: PropsWithChildren<ILoaderProps>) => {
         break;
       case LoaderType.GAME:
         loader = <DinoGame />;
+        break;
+      case LoaderType.MEMES:
+        loader = <MemeCarousel />;
     }
     return loader;
   }, [type, props.loading, props.type]);
@@ -110,7 +116,7 @@ const Loader = (props: PropsWithChildren<ILoaderProps>) => {
         </div>
       ) : null} */}
       {loader}
-      {props.basic || (props.type ?? type) === LoaderType.GAME ? null : (
+      {props.basic || loadersWithProcessText.includes(props.type ?? type) ? (
         <div className={`loader-text ${animationClass}`}>
           <span>{text}</span>
           <span>
@@ -118,7 +124,7 @@ const Loader = (props: PropsWithChildren<ILoaderProps>) => {
             <span style={{ visibility: "hidden" }}>{".".repeat(3 - dots)}</span>
           </span>
         </div>
-      )}
+      ) : null}
     </div>
   ) : (
     <>{props.children}</>

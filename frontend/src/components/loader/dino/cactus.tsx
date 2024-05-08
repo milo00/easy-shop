@@ -1,5 +1,4 @@
 import React, { forwardRef, useEffect, useState } from "react";
-import cactusImg from "../../assets/dino/cactus.png";
 
 const SPEED = 0.1;
 
@@ -20,13 +19,13 @@ const Cactus = forwardRef<HTMLImageElement, ICactusProps>(function Cactus(
     if (left <= -100) {
       props.removeCactus();
     }
-  }, [props.delta, props.speedScale]);
+  }, [props]); // eslint-disable-line
 
   return (
     <img
       ref={ref}
-      alt="cactus image"
-      src={cactusImg}
+      alt="cactus"
+      src={`${process.env.PUBLIC_URL}/assets/dino/cactus.png`}
       className="cactus"
       style={
         {

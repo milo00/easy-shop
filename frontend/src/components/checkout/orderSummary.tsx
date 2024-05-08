@@ -1,6 +1,6 @@
 import bigDecimal from "js-big-decimal";
 import React from "react";
-import Loader from "../loader";
+import Loader from "../loader/loader";
 
 interface IOrderSummaryProps {
   numOfItems: number;

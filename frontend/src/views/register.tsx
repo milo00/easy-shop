@@ -13,7 +13,7 @@ import { Role } from "../models/user";
 import { useSelector, useDispatch } from "react-redux";
 import { register } from "../store/slices/accountSlice";
 import { IRootState, AppDispatch } from "../store/store";
-import Loader from "../components/loader";
+import Loader from "../components/loader/loader";
 
 const Register = () => {
   const status = useSelector((state: IRootState) => state.account.status);

@@ -6,7 +6,7 @@ import { IRootState, AppDispatch } from "../store/store";
 import { useParams } from "react-router-dom";
 import { breadcrumbBuilder } from "../utils/breadcrumbBuilder";
 import { addItem } from "../store/slices/cartSlice";
-import Loader from "../components/loader";
+import Loader from "../components/loader/loader";
 import Sidebar from "../components/sidebar/sidebar";
 import { Category, Gender } from "../models/item";
 import _ from "lodash";

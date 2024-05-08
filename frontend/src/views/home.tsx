@@ -1,4 +1,3 @@
-import homepageImg from "../assets/homepage.png";
 import "../styles/home.css";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
@@ -8,7 +7,7 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { IRootState, AppDispatch } from "../store/store";
 import { fetchOnSale } from "../store/slices/itemsSlice";
-import Loader from "../components/loader";
+import Loader from "../components/loader/loader";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
@@ -40,7 +39,7 @@ const Home = () => {
     <div>
       <img
         className="home-image"
-        src={homepageImg}
+        src={`${process.env.PUBLIC_URL}/assets/homepage.png`}
         alt="Woman with a shopping bag"
       />
       <div className="m-5">

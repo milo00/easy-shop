@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import "../../styles/dino.css";
+import "../../../styles/dino.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowUp,
@@ -53,7 +53,7 @@ const DinoGame = () => {
         }
       }
     },
-    [gameState]
+    [gameState, isJumping]
   );
 
   useEffect(() => {
@@ -67,36 +67,54 @@ const DinoGame = () => {
     };
   }, [onKeyDown]);
 
-  const update = (time: number) => {
-    if (lastTime === 0) {
-      setLastTime(time);
-    } else if (gameState === GameState.RUNNING) {
-      if (checkIfLost()) {
-        handleLost();
-        return;
+  const update = useCallback(
+    (time: number) => {
+      const checkIfLost = () => {
+        const dinoRect = dinoRef.current?.getBoundingClientRect();
+        const cactuses = [...cactusRefs.current?.values()];
+
+        return (
+          dinoRect &&
+          cactuses.some((c) => {
+            if (c && "current" in c && c.current) {
+              return isCollision(c.current.getBoundingClientRect(), dinoRect);
+            }
+            return false;
+          })
+        );
+      };
+
+      if (lastTime === 0) {
+        setLastTime(time);
+      } else if (gameState === GameState.RUNNING) {
+        if (checkIfLost()) {
+          handleLost();
+          return;
+        }
+
+        if (time - lastTime < 10) {
+          window.requestAnimationFrame(update);
+          return;
+        }
+        setDelta(time - lastTime);
+        setLastTime(time !== lastTime ? time : time + 0.001);
+        score.current += delta * 0.01;
+        setSpeedScale((prev) => prev + delta * SPEED_SCALE_INCREASE);
+
+        let newNextCactusTime = nextCactusTime - delta;
+
+        if (nextCactusTime <= 0) {
+          const newCactusRef = React.createRef<HTMLImageElement>();
+          cactusRefs.current.set(cactusIdCounter.current++, newCactusRef);
+          newNextCactusTime =
+            _.random(CACTUS_INTERVAL_MIN, CACTUS_INTERVAL_MAX) / speedScale;
+        }
+
+        setNextCactusTime(newNextCactusTime);
       }
-
-      if (time - lastTime < 10) {
-        window.requestAnimationFrame(update);
-        return;
-      }
-      setDelta(time - lastTime);
-      setLastTime(time !== lastTime ? time : time + 0.001);
-      score.current += delta * 0.01;
-      setSpeedScale((prev) => prev + delta * SPEED_SCALE_INCREASE);
-
-      let newNextCactusTime = nextCactusTime - delta;
-
-      if (nextCactusTime <= 0) {
-        const newCactusRef = React.createRef<HTMLImageElement>();
-        cactusRefs.current.set(cactusIdCounter.current++, newCactusRef);
-        newNextCactusTime =
-          _.random(CACTUS_INTERVAL_MIN, CACTUS_INTERVAL_MAX) / speedScale;
-      }
-
-      setNextCactusTime(newNextCactusTime);
-    }
-  };
+    },
+    [lastTime, gameState, nextCactusTime, delta, speedScale]
+  );
 
   useEffect(() => {
     gameState === GameState.RUNNING && window.requestAnimationFrame(update);
@@ -116,21 +134,6 @@ const DinoGame = () => {
     cactusRefs.current = new Map();
     score.current = 0;
     setGameState(GameState.RUNNING);
-  };
-
-  const checkIfLost = () => {
-    const dinoRect = dinoRef.current?.getBoundingClientRect();
-    const cactuses = [...cactusRefs.current?.values()];
-
-    return (
-      dinoRect &&
-      cactuses.some((c) => {
-        if (c && "current" in c && c.current) {
-          return isCollision(c.current.getBoundingClientRect(), dinoRect);
-        }
-        return false;
-      })
-    );
   };
 
   const isCollision = (fst: DOMRect, snd: DOMRect) =>
