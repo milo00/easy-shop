@@ -6,7 +6,6 @@ import com.shop.shop.model.Item;
 import com.shop.shop.repository.ItemRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,7 +22,7 @@ public class ItemService {
 
     public Optional<Item> getItem(Integer id) {
         try {
-            Thread.sleep(12000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -32,7 +31,7 @@ public class ItemService {
 
     public Optional<List<Item>> getItemsForIds(List<Integer> ids) {
         try {
-            Thread.sleep(12000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -48,7 +47,7 @@ public class ItemService {
                                           Boolean onSale) {
         var pageable = PageRequest.of(page, size);
         try {
-            Thread.sleep(12000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

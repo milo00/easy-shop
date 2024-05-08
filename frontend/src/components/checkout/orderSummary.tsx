@@ -5,9 +5,14 @@ import Loader from "../loader";
 interface IOrderSummaryProps {
   numOfItems: number;
   totalCost: number;
+  discount?: number;
 }
 
 const OrderSummary = (props: IOrderSummaryProps) => {
+  const discountValue =
+    Number(bigDecimal.multiply(props.discount, props.totalCost))?.toFixed(2) ??
+    0;
+
   return (
     <>
       <h2>ORDER SUMMARY:</h2>
@@ -21,10 +26,22 @@ const OrderSummary = (props: IOrderSummaryProps) => {
             <span>shipping</span>
             <span>9.99 PLN</span>
           </div>
+          {props.discount ? (
+            <div className="d-flex justify-content-between text-primary fw-bolder">
+              <span>discount</span>
+              <span>-{discountValue} PLN</span>
+            </div>
+          ) : null}
         </div>
         <div className="d-flex justify-content-between fw-bolder">
           <span>total cost</span>
-          <span>{bigDecimal.add(9.99, props.totalCost)} PLN</span>
+          <span>
+            {bigDecimal.add(
+              9.99,
+              bigDecimal.subtract(props.totalCost, discountValue)
+            )}{" "}
+            PLN
+          </span>
         </div>
       </Loader>
     </>

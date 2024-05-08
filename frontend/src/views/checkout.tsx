@@ -5,11 +5,12 @@ import CheckoutItem from "../components/checkout/checkoutItem";
 import { ReactNode, useState } from "react";
 import CheckoutFormElement from "../components/checkout/checkoutFormElement";
 import CheckoutCollapse from "../components/checkout/checkoutCollapse";
-import Loader from "../components/loader";
+import { DISCOUNT_PERCENT_TOKEN } from "./cart";
 
 const Checkout = () => {
   const [submittedForms, setSubmittedForms] = useState<boolean[]>([]);
-  const { items, totalCost, loading } = useCartItems();
+  const { items, totalCost } = useCartItems();
+  const discount = sessionStorage.getItem(DISCOUNT_PERCENT_TOKEN);
 
   const onReset = (index: number) => {
     let newValidForm = [...submittedForms];
@@ -149,12 +150,16 @@ const Checkout = () => {
         <Col xs={0} md={1}></Col>
         <Col xs={12} md={4}>
           <Row className="gap-3">
-            <OrderSummary numOfItems={items.length} totalCost={totalCost} />
+            <OrderSummary
+              numOfItems={items.length}
+              totalCost={totalCost}
+              discount={Number(discount)}
+            />
             <div className="border border-bottom my-2" />
             {items.length ? (
               <div className="d-flex align-items-center flex-column">
                 {items.map((i) => (
-                  <CheckoutItem item={i} />
+                  <CheckoutItem key={i.id} item={i} />
                 ))}
               </div>
             ) : null}

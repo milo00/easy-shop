@@ -18,6 +18,7 @@ import { LoaderTypeDataContext } from "../App";
 interface ILoaderProps {
   loading: boolean;
   basic?: boolean;
+  type?: LoaderType;
 }
 
 const Loader = (props: PropsWithChildren<ILoaderProps>) => {
@@ -87,7 +88,7 @@ const Loader = (props: PropsWithChildren<ILoaderProps>) => {
 
   const loader = useMemo(() => {
     let loader: ReactNode;
-    switch (type) {
+    switch (props.type ?? type) {
       case LoaderType.SPINNER:
         loader = <Spinner color="primary" />;
         break;
@@ -98,7 +99,7 @@ const Loader = (props: PropsWithChildren<ILoaderProps>) => {
         loader = <DinoGame />;
     }
     return loader;
-  }, [type, props.loading]);
+  }, [type, props.loading, props.type]);
 
   return props.loading ? (
     <div className="d-flex flex-column align-items-center">
@@ -109,7 +110,7 @@ const Loader = (props: PropsWithChildren<ILoaderProps>) => {
         </div>
       ) : null} */}
       {loader}
-      {props.basic || type === LoaderType.GAME ? null : (
+      {props.basic || (props.type ?? type) === LoaderType.GAME ? null : (
         <div className={`loader-text ${animationClass}`}>
           <span>{text}</span>
           <span>
