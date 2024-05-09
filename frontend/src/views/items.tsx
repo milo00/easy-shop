@@ -45,7 +45,7 @@ const Items = (props: IItemsProps) => {
           <Row>
             <Col className="d-flex flex-column align-items-center mt-5">
               <Fragment key={location.pathname}>
-                <Loader loading={true}>
+                <Loader loading={status === "loading"}>
                   <Row xs={1} md={2} lg={3}>
                     {items?.map((item) => (
                       <Col key={item.id}>

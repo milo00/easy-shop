@@ -58,21 +58,30 @@ const MemeCarousel = () => {
         onExited={() => setAnimating(false)}
         key={item.key}
       >
-        <img
-          src={item.src}
-          alt={item.altText}
-          style={{
-            width: window.innerWidth * 0.5,
-            height: window.innerHeight * 0.75,
-            objectFit: "fill",
-          }}
-        />
+        <div className="d-flex justify-content-center w-100">
+          <img
+            src={item.src}
+            alt={item.altText}
+            style={{
+              width: window.innerWidth * 0.5,
+              height: window.innerHeight * 0.75,
+              objectFit: "fill",
+            }}
+          />
+        </div>
       </CarouselItem>
     );
   });
 
   return (
-    <Carousel activeIndex={activeIndex} next={next} previous={previous}>
+    <Carousel
+      className="w-100"
+      activeIndex={activeIndex}
+      next={next}
+      previous={previous}
+      interval={4000}
+      dark
+    >
       <CarouselIndicators
         items={items}
         activeIndex={activeIndex}

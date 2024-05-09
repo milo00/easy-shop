@@ -108,7 +108,7 @@ const Loader = (props: PropsWithChildren<ILoaderProps>) => {
   }, [type, props.loading, props.type]);
 
   return props.loading ? (
-    <div className="d-flex flex-column align-items-center">
+    <div className="d-flex flex-column align-items-center w-100">
       {/* {props.type === "dino" ? (
         <div style={{ textAlign: "start" }}>
           <div>while You wait, we have a small surpirise for you...</div>
