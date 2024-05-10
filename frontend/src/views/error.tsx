@@ -1,12 +1,34 @@
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Container, Row, Col, Button } from "reactstrap";
+import { IRootState } from "../store/store";
+import { resetError as resetAccountError } from "../store/slices/accountSlice";
+import { resetError as resetItemsError } from "../store/slices/itemsSlice";
+import { resetError as resetIrritationTimeError } from "../store/slices/userIrritationTimeSlice";
 
 interface IErrorProps {
-  message: string;
+  message?: string;
 }
 
 const Error = (props: IErrorProps) => {
+  const accountError =
+    useSelector((state: IRootState) => state.account.status) === "failed";
+  const itemsError =
+    useSelector((state: IRootState) => state.items.status) === "failed";
+  const userIrritationTimeError =
+    useSelector((state: IRootState) => state.userIrritationTime.status) ===
+    "failed";
+
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const onGoBackToHomePage = () => {
+    navigate("/");
+
+    accountError && dispatch(resetAccountError());
+    itemsError && dispatch(resetItemsError());
+    userIrritationTimeError && dispatch(resetIrritationTimeError());
+  };
 
   return (
     <Container className="mx-0 mt-5" fluid>
@@ -25,7 +47,7 @@ const Error = (props: IErrorProps) => {
             <Button
               color="primary"
               role="button"
-              onClick={() => navigate("/")}
+              onClick={onGoBackToHomePage}
               style={{
                 width: "fit-content",
                 marginLeft: "12px",

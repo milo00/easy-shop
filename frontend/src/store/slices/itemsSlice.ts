@@ -9,7 +9,6 @@ type IItemsState = {
   items: IItem[];
   totalPages: number;
   status: "idle" | "loading" | "succeeded" | "failed";
-  error: string | undefined;
 };
 
 const initialState: IItemsState = {
@@ -17,7 +16,6 @@ const initialState: IItemsState = {
   items: [],
   totalPages: 1,
   status: "idle",
-  error: undefined,
 };
 
 export const fetchItems = createAsyncThunk(
@@ -78,6 +76,9 @@ const itemsSlice = createSlice({
   name: "items",
   initialState,
   reducers: {
+    resetError(state) {
+      state.status = "idle";
+    },
     reset(state) {
       state = initialState;
     },
@@ -107,7 +108,6 @@ const itemsSlice = createSlice({
         (state, action) => {
           if (action.error.message !== "Aborted") {
             state.status = "failed";
-            state.error = action.error.message;
           }
         }
       );
@@ -115,4 +115,4 @@ const itemsSlice = createSlice({
 });
 
 export default itemsSlice;
-export const { reset } = itemsSlice.actions;
+export const { reset, resetError } = itemsSlice.actions;

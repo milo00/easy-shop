@@ -1,24 +1,18 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import IUser from "../../models/user";
+import IUser, { getUserFromStorage } from "../../models/user";
 import api, { BASE_URL } from "../../config/axiosInterceptor";
 
 export const ACCESS_TOKEN = "ACCESS_TOKEN";
-const USER_TOKEN = "USER_TOKEN";
+export const USER_TOKEN = "USER_TOKEN";
 
 type IAccountState = {
   userId: number;
   status: "idle" | "loading" | "succeeded" | "failed";
-  error: string | undefined;
 };
 
 const initialState: IAccountState = {
-  userId: Number(
-    localStorage.getItem(USER_TOKEN) ??
-      sessionStorage.getItem(USER_TOKEN) ??
-      undefined
-  ),
+  userId: getUserFromStorage(),
   status: "idle",
-  error: undefined,
 };
 
 export const login = createAsyncThunk(
@@ -42,6 +36,9 @@ const accountSlice = createSlice({
   name: "account",
   initialState,
   reducers: {
+    resetError(state) {
+      state.status = "idle";
+    },
     logout(state) {
       state = initialState;
       if (localStorage.getItem(ACCESS_TOKEN)) {
@@ -74,20 +71,18 @@ const accountSlice = createSlice({
       })
       .addCase(login.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.error.message;
       })
       .addCase(register.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(register.fulfilled, (state, action) => {
+      .addCase(register.fulfilled, (state) => {
         state.status = "succeeded";
       })
       .addCase(register.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.error.message;
       });
   },
 });
 
 export default accountSlice;
-export const { logout } = accountSlice.actions;
+export const { logout, resetError } = accountSlice.actions;

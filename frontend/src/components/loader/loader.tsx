@@ -10,7 +10,7 @@ import { Spinner } from "reactstrap";
 import "../../styles/loader.css";
 import FastSlowProgress from "../fastSlowProgress";
 import { useDispatch } from "react-redux";
-import { startTimer } from "../../store/slices/irritationTimeSlice";
+import { startTimer } from "../../store/slices/userIrritationTimeSlice";
 import DinoGame from "./dino/dinoGame";
 import LoaderType from "../../models/loader";
 import { LoaderTypeDataContext } from "../../App";

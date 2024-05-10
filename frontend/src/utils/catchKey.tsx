@@ -3,8 +3,11 @@ import { useLocation } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
-import { IRootState } from "../store/store";
-import { endTimer, startTimer } from "../store/slices/irritationTimeSlice";
+import { AppDispatch, IRootState } from "../store/store";
+import {
+  endTimerGlobally,
+  endTimerLocally,
+} from "../store/slices/userIrritationTimeSlice";
 
 interface ICatchKeyProps {
   key?: string;
@@ -12,20 +15,20 @@ interface ICatchKeyProps {
 
 const CatchKey = (props: PropsWithChildren<ICatchKeyProps>) => {
   const userId = useSelector((state: IRootState) => state.account.userId);
-  const hasTimerStarted = useSelector(
-    (state: IRootState) => state.irritationTime.startTime
-  );
   const location = useLocation();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      event.key === " " && console.log(event.target);
       if (event.target === document.body) {
         event.preventDefault();
-        if (event.key === " " && userId && hasTimerStarted) {
+        if (event.key === " ") {
           toast("Enter clicked at " + location.pathname, { type: "info" });
-          dispatch(endTimer({ userId, location: location.pathname }));
+          if (userId) {
+            dispatch(endTimerGlobally({ userId, location: location.pathname }));
+          } else {
+            dispatch(endTimerLocally({ location: location.pathname }));
+          }
         }
       }
     };
@@ -35,7 +38,7 @@ const CatchKey = (props: PropsWithChildren<ICatchKeyProps>) => {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [location, userId, dispatch, hasTimerStarted]);
+  }, [location, userId, dispatch]);
 
   return (
     <>

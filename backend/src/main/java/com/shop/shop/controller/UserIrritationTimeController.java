@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/user-irritation-time")
@@ -21,6 +23,12 @@ public class UserIrritationTimeController {
     @PostMapping()
     public ResponseEntity<UserIrritationTime> create(@RequestBody UserIrritationTimeDto userIrritationTimeDto) {
         var result = userIrritationTimeService.create(userIrritationTimeDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(result);
+    }
+
+    @PostMapping("/batch")
+    public ResponseEntity<List<UserIrritationTime>> createBatch(@RequestBody List<UserIrritationTimeDto> userIrritationTimeDtos) {
+        var result = userIrritationTimeService.createBatch(userIrritationTimeDtos);
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 }

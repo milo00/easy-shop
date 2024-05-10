@@ -11,7 +11,7 @@ const Logout = () => {
     dispatch(logout());
   }, [dispatch]);
 
-  return <Navigate to="/login" replace />;
+  return <Navigate to="/" replace />;
 };
 
 export default Logout;

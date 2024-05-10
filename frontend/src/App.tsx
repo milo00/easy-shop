@@ -7,7 +7,6 @@ import { createContext, useEffect, useState } from "react";
 import api, { BASE_URL } from "./config/axiosInterceptor";
 import IMenuData, { isSidebarData } from "./models/menuData";
 import LoaderType from "./models/loader";
-
 export const SidebarDataContext = createContext<IMenuData | null>(null);
 export const LoaderTypeDataContext = createContext<LoaderType>(
   LoaderType.SPINNER

@@ -2,7 +2,6 @@ package com.shop.shop.model;
 
 import com.shop.shop.model.dto.UserIrritationTimeDto;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data

@@ -14,6 +14,7 @@ import { login } from "../store/slices/accountSlice";
 import { isAuthenticated } from "../utils/authentication";
 import { IRootState, AppDispatch } from "../store/store";
 import Loader from "../components/loader/loader";
+import { sendBatch } from "../store/slices/userIrritationTimeSlice";
 
 const Login = () => {
   const status = useSelector((state: IRootState) => state.account.status);
@@ -30,7 +31,9 @@ const Login = () => {
         },
         rememberMe: !!data.get("remember"),
       })
-    );
+    ).then(() => {
+      dispatch(sendBatch());
+    });
   };
 
   if (isAuthenticated()) {

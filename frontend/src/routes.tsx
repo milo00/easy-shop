@@ -11,6 +11,15 @@ import Cart from "./views/cart";
 import Error from "./views/error";
 import { fetchItems, fetchOnSale } from "./store/slices/itemsSlice";
 import Checkout from "./views/checkout";
+import ErrorBoundary from "./utils/errorBoundary";
+
+const errorBoundaryWrapper = (children: JSX.Element) => (
+  <ErrorBoundary>{children}</ErrorBoundary>
+);
+
+const layoutWrapper = (children: JSX.Element, basic?: boolean) => (
+  <Layout basic={basic}>{children}</Layout>
+);
 
 export const AppRoutes = () => {
   return (
@@ -18,83 +27,53 @@ export const AppRoutes = () => {
       <Routes>
         <Route
           path="/login"
-          element={
-            <Layout basic>
-              <Login />
-            </Layout>
-          }
+          element={errorBoundaryWrapper(layoutWrapper(<Login />, true))}
         />
         <Route
           path="/register"
-          element={
-            <Layout basic>
-              <Register />
-            </Layout>
-          }
+          element={errorBoundaryWrapper(layoutWrapper(<Register />, true))}
         />
         <Route
           path="/logout"
-          element={
+          element={errorBoundaryWrapper(
             <RequireAuth>
               <Logout />
             </RequireAuth>
-          }
+          )}
         />
         <Route
           path="/"
-          element={
-            <Layout>
-              <Home />
-            </Layout>
-          }
+          element={errorBoundaryWrapper(layoutWrapper(<Home />))}
         />
         <Route
           path="/items/:id"
-          element={
-            <Layout>
-              <Item />
-            </Layout>
-          }
+          element={errorBoundaryWrapper(layoutWrapper(<Item />))}
         />
         <Route
           path="/items/categories/:gender/:category?/:subcategory?/:productType?"
-          element={
-            <Layout>
-              <Items fetchItems={fetchItems} />
-            </Layout>
-          }
+          element={errorBoundaryWrapper(
+            layoutWrapper(<Items fetchItems={fetchItems} />)
+          )}
         />
         <Route
           path="/items/categories/kids/:gender/:category?/:subcategory?/:productType?"
-          element={
-            <Layout>
-              <Items fetchItems={fetchItems} />
-            </Layout>
-          }
+          element={errorBoundaryWrapper(
+            layoutWrapper(<Items fetchItems={fetchItems} />)
+          )}
         />
         <Route
           path="/sale/:gender?/:category?/:subcategory?/:productType?"
-          element={
-            <Layout>
-              <Items fetchItems={fetchOnSale} />
-            </Layout>
-          }
+          element={errorBoundaryWrapper(
+            layoutWrapper(<Items fetchItems={fetchOnSale} />)
+          )}
         />
         <Route
           path="/cart"
-          element={
-            <Layout>
-              <Cart />
-            </Layout>
-          }
+          element={errorBoundaryWrapper(layoutWrapper(<Cart />))}
         />
         <Route
           path="/checkout"
-          element={
-            <Layout basic>
-              <Checkout />
-            </Layout>
-          }
+          element={errorBoundaryWrapper(layoutWrapper(<Checkout />, true))}
         />
         <Route
           path="*"
