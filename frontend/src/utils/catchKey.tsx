@@ -15,6 +15,9 @@ interface ICatchKeyProps {
 
 const CatchKey = (props: PropsWithChildren<ICatchKeyProps>) => {
   const userId = useSelector((state: IRootState) => state.account.userId);
+  const canRegisterIrritationTime =
+    useSelector((state: IRootState) => state.userIrritationTime.startTime) !==
+    0;
   const location = useLocation();
   const dispatch = useDispatch<AppDispatch>();
 
@@ -22,7 +25,7 @@ const CatchKey = (props: PropsWithChildren<ICatchKeyProps>) => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.target === document.body) {
         event.preventDefault();
-        if (event.key === " ") {
+        if (event.key === " " && canRegisterIrritationTime) {
           toast("Enter clicked at " + location.pathname, { type: "info" });
           if (userId) {
             dispatch(endTimerGlobally({ userId, location: location.pathname }));
@@ -38,7 +41,7 @@ const CatchKey = (props: PropsWithChildren<ICatchKeyProps>) => {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [location, userId, dispatch]);
+  }, [location, userId, dispatch, canRegisterIrritationTime]);
 
   return (
     <>
