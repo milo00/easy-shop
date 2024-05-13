@@ -4,15 +4,18 @@ import com.shop.shop.model.dto.UserIrritationTimeDto;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDate;
+
 @Data
 @Entity
 public class UserIrritationTime {
 
-    public UserIrritationTime(UserIrritationTimeDto userIrritationTimeDto, User user) {
+    public UserIrritationTime(UserIrritationTimeDto userIrritationTimeDto, User user, LocalDate date) {
         this.id = userIrritationTimeDto.getId();
         this.location = userIrritationTimeDto.getLocation();
         this.elapsedTime = userIrritationTimeDto.getElapsedTime();
         this.user = user;
+        this.date = date;
     }
 
     @Id
@@ -28,4 +31,7 @@ public class UserIrritationTime {
 
     @Column(nullable = false)
     private Double elapsedTime;
+
+    @Column(nullable = false)
+    private LocalDate date;
 }

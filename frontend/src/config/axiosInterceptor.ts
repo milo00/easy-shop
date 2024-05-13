@@ -1,6 +1,7 @@
 import axios from "axios";
 import { ACCESS_TOKEN } from "../store/slices/accountSlice";
 
+// export const BASE_URL = "https://easy-shop-backend-xuhxahyhha-lm.a.run.app/api";
 export const BASE_URL = "http://localhost:8080/api";
 
 const api = axios.create({
