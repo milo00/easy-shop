@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -22,7 +23,7 @@ public class UserIrritationTimeService {
     public UserIrritationTime create(UserIrritationTimeDto userIrritationTimeDto) {
         var user = userRepository.findById(userIrritationTimeDto.getUserId());
         return user.map(value -> userIrritationTimeRepository.save(
-                        new UserIrritationTime(userIrritationTimeDto, value, LocalDate.now())))
+                        new UserIrritationTime(userIrritationTimeDto, value, LocalDateTime.now())))
                 .orElseThrow(() -> new NoSuchElementException("Wrong user id" + userIrritationTimeDto.getUserId()));
     }
 

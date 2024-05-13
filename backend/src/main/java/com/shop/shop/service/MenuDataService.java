@@ -1,7 +1,7 @@
 package com.shop.shop.service;
 
-import com.shop.shop.model.Category;
-import com.shop.shop.model.Gender;
+import com.shop.shop.model.enums.Category;
+import com.shop.shop.model.enums.Gender;
 import com.shop.shop.model.MenuData;
 import com.shop.shop.repository.ItemRepository;
 import org.springframework.stereotype.Service;

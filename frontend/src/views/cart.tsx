@@ -9,8 +9,9 @@ import useCartItems from "../utils/hooks/useCartItems";
 import { IRootState } from "../store/store";
 import Loader from "../components/loader/loader";
 import { Fragment } from "react/jsx-runtime";
-import { useState } from "react";
+import { MouseEvent, useState } from "react";
 import api, { BASE_URL } from "../config/axiosInterceptor";
+import { startTimer } from "../store/slices/userIrritationTimeSlice";
 
 export const DISCOUNT_PERCENT_TOKEN = "DISCOUNT_PERCENT_TOKEN";
 
@@ -29,10 +30,12 @@ const Cart = () => {
     return <EmptyCart />;
   }
 
-  const validateCode = async () => {
+  const validateCode = async (e: MouseEvent<HTMLButtonElement>) => {
     if (loadingDiscount) return;
 
     try {
+      e.currentTarget.blur();
+      dispatch(startTimer());
       setLoadingDiscount(true);
       const response = await api.post(
         `${BASE_URL}/promo-code/validate`,
@@ -81,9 +84,9 @@ const Cart = () => {
           <Row>
             <Col className="d-flex flex-column align-items-center">
               <Loader loading={loading}>
-                <Row style={{ fontSize: "smaller" }}>
-                  <span>{`in total (${totalItems} items): ${totalCost} PLN`}</span>
-                  <span>
+                <Row style={{ fontSize: "smaller", width: "100%" }}>
+                  <span className="ps-0">{`in total (${totalItems} items): ${totalCost} PLN`}</span>
+                  <span className="ps-0">
                     remember, adding items to Your cart does not automatically
                     reserve them
                   </span>

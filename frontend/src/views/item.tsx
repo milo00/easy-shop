@@ -87,9 +87,9 @@ export const Item = () => {
                   alt={item?.name + " image"}
                   src={item?.imgUrl}
                   style={{
-                    width: "auto",
-                    maxHeight: window.innerHeight * 0.75,
-                    objectFit: "cover",
+                    width: "100%",
+                    height: window.innerHeight * 0.75,
+                    objectFit: "contain",
                   }}
                 />
               </Col>

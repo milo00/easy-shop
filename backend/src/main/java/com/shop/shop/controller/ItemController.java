@@ -1,7 +1,7 @@
 package com.shop.shop.controller;
 
-import com.shop.shop.model.Category;
-import com.shop.shop.model.Gender;
+import com.shop.shop.model.enums.Category;
+import com.shop.shop.model.enums.Gender;
 import com.shop.shop.model.Item;
 import com.shop.shop.service.ItemService;
 import org.springframework.data.domain.Page;

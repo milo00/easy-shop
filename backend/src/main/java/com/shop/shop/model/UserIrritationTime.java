@@ -1,19 +1,21 @@
 package com.shop.shop.model;
 
 import com.shop.shop.model.dto.UserIrritationTimeDto;
+import com.shop.shop.model.enums.LoaderType;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
 public class UserIrritationTime {
 
-    public UserIrritationTime(UserIrritationTimeDto userIrritationTimeDto, User user, LocalDate date) {
+    public UserIrritationTime(UserIrritationTimeDto userIrritationTimeDto, User user, LocalDateTime date) {
         this.id = userIrritationTimeDto.getId();
         this.location = userIrritationTimeDto.getLocation();
         this.elapsedTime = userIrritationTimeDto.getElapsedTime();
+        this.loaderType = userIrritationTimeDto.getLoaderType();
         this.user = user;
         this.date = date;
     }
@@ -33,5 +35,10 @@ public class UserIrritationTime {
     private Double elapsedTime;
 
     @Column(nullable = false)
-    private LocalDate date;
+    private LocalDateTime date;
+
+    @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING)
+    private LoaderType loaderType;
+
 }

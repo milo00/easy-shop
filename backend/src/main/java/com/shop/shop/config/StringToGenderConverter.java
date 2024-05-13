@@ -1,7 +1,7 @@
 package com.shop.shop.config;
 
 import org.springframework.core.convert.converter.Converter;
-import com.shop.shop.model.Gender;
+import com.shop.shop.model.enums.Gender;
 
 public class StringToGenderConverter implements Converter<String, Gender> {
 

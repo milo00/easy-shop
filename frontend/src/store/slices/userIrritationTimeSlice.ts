@@ -30,13 +30,10 @@ export const endTimerGlobally = createAsyncThunk<
   async (userIrritationTime, { getState }) => {
     const startTime = getState().userIrritationTime.startTime;
     const elapsedTime = (Date.now() - startTime) / 1000;
-    const location = userIrritationTime.location;
-    const userId = userIrritationTime.userId;
 
     return await api.post(`${BASE_URL}/user-irritation-time`, {
-      userId,
-      location,
-      elapsedTime, 
+      ...userIrritationTime,
+      elapsedTime,
     });
   },
   {
@@ -96,8 +93,9 @@ const userIrritationTimeSlice = createSlice({
       if (state.startTime) {
         const elapsedTime = (Date.now() - state.startTime) / 1000;
         const location = action.payload.location;
+        const loaderType = action.payload.loaderType; 
 
-        if (!elapsedTime || !location) return;
+        if (!elapsedTime || !location || !loaderType) return;
         const savedIrritationTimes = getIrrittaionTimeFromSessionStorage();
         sessionStorage.setItem(
           IRRITATION_TIME_TOKEN,
@@ -106,6 +104,7 @@ const userIrritationTimeSlice = createSlice({
             {
               location,
               elapsedTime,
+              loaderType,
             },
           ])
         );
@@ -139,6 +138,7 @@ const userIrritationTimeSlice = createSlice({
   },
 });
 
-export const { startTimer, endTimerLocally, resetError } = userIrritationTimeSlice.actions;
+export const { startTimer, endTimerLocally, resetError } =
+  userIrritationTimeSlice.actions;
 
 export default userIrritationTimeSlice;

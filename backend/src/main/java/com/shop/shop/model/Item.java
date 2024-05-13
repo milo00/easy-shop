@@ -1,5 +1,6 @@
 package com.shop.shop.model;
 
+import com.shop.shop.model.enums.Gender;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

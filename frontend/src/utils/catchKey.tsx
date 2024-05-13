@@ -1,4 +1,4 @@
-import { PropsWithChildren, useEffect } from "react";
+import { PropsWithChildren, useContext, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -8,6 +8,7 @@ import {
   endTimerGlobally,
   endTimerLocally,
 } from "../store/slices/userIrritationTimeSlice";
+import { LoaderTypeDataContext } from "../App";
 
 interface ICatchKeyProps {
   key?: string;
@@ -18,6 +19,9 @@ const CatchKey = (props: PropsWithChildren<ICatchKeyProps>) => {
   const canRegisterIrritationTime =
     useSelector((state: IRootState) => state.userIrritationTime.startTime) !==
     0;
+
+  const loaderType = useContext(LoaderTypeDataContext);
+
   const location = useLocation();
   const dispatch = useDispatch<AppDispatch>();
 
@@ -28,9 +32,17 @@ const CatchKey = (props: PropsWithChildren<ICatchKeyProps>) => {
         if (event.key === " " && canRegisterIrritationTime) {
           toast("Enter clicked at " + location.pathname, { type: "info" });
           if (userId) {
-            dispatch(endTimerGlobally({ userId, location: location.pathname }));
+            dispatch(
+              endTimerGlobally({
+                userId,
+                location: location.pathname,
+                loaderType,
+              })
+            );
           } else {
-            dispatch(endTimerLocally({ location: location.pathname }));
+            dispatch(
+              endTimerLocally({ location: location.pathname, loaderType })
+            );
           }
         }
       }
@@ -41,7 +53,7 @@ const CatchKey = (props: PropsWithChildren<ICatchKeyProps>) => {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [location, userId, dispatch, canRegisterIrritationTime]);
+  }, [location, userId, dispatch, canRegisterIrritationTime, loaderType]);
 
   return (
     <>

@@ -1,7 +1,6 @@
 package com.shop.shop.model.dto;
 
-import com.shop.shop.model.User;
-import jakarta.persistence.*;
+import com.shop.shop.model.enums.LoaderType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -12,4 +11,6 @@ public class UserIrritationTimeDto {
     private Integer userId;
     private String location;
     private Double elapsedTime;
+
+    private LoaderType loaderType;
 }
