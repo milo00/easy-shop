@@ -1,4 +1,4 @@
-import IItem, { getPrice } from "../../models/item";
+import IItem from "../../models/item";
 import { Input } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose, faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -50,7 +50,7 @@ const CartItem = (props: ICartItemProps) => {
             }}
           />
         </div>
-        <div>{getPrice(props.item)} PLN</div>
+        <div>{props.item.currentPrice} PLN</div>
         <div>size: {props.item.size}</div>
         <div className="d-flex align-items-center justify-content-start gap-2">
           <FontAwesomeIcon

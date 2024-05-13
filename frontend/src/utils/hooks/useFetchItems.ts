@@ -5,8 +5,13 @@ import { Category, Gender } from "../../models/item";
 import { AppDispatch } from "../../store/store";
 import { isKeyOfEnum } from "../functions";
 import { reset } from "../../store/slices/itemsSlice";
+import ItemSortingType from "../../models/itemSortingType";
 
-const useFetchItems = (currentPage: number, action: any) => {
+const useFetchItems = (
+  currentPage: number,
+  currentSorting: ItemSortingType,
+  action: any
+) => {
   const params = useParams();
   const dispatch = useDispatch<AppDispatch>();
 
@@ -20,6 +25,7 @@ const useFetchItems = (currentPage: number, action: any) => {
       actionPromise = dispatch(
         action({
           page: currentPage,
+          sortingType: currentSorting,
           gender: Gender[params.gender!.toUpperCase() as keyof typeof Gender],
           category:
             Category[params.category!.toUpperCase() as keyof typeof Category],
@@ -31,6 +37,7 @@ const useFetchItems = (currentPage: number, action: any) => {
       actionPromise = dispatch(
         action({
           page: currentPage,
+          sortingType: currentSorting,
           gender: Gender[params.gender!.toUpperCase() as keyof typeof Gender],
         })
       );
@@ -38,6 +45,7 @@ const useFetchItems = (currentPage: number, action: any) => {
       actionPromise = dispatch(
         action({
           page: currentPage,
+          sortingType: currentSorting,
         })
       );
     }
@@ -48,7 +56,7 @@ const useFetchItems = (currentPage: number, action: any) => {
         dispatch(reset());
       }
     };
-  }, [params, dispatch, currentPage, action]);
+  }, [params, dispatch, currentPage, currentSorting, action]);
 
   return params;
 };

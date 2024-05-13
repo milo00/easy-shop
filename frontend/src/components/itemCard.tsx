@@ -28,7 +28,12 @@ export const ItemCard = (props: IItemCardProps) => {
         <CardSubtitle
           className="mb-2"
           tag="h6"
-          style={{ fontWeight: props.item.currentPrice ? "bolder" : "normal" }}
+          style={{
+            fontWeight:
+              props.item.currentPrice === props.item.regularPrice
+                ? "normal"
+                : "bolder",
+          }}
         >
           <span
             className={

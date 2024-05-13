@@ -104,7 +104,9 @@ export const Item = () => {
                 <div>
                   <span
                     className={
-                      item?.currentPrice ? "text-decoration-line-through" : ""
+                      item?.currentPrice === item?.regularPrice
+                        ? ""
+                        : "text-decoration-line-through"
                     }
                   >
                     {item?.regularPrice} PLN

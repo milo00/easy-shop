@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import api, { BASE_URL } from "../../config/axiosInterceptor";
-import IItem, { getPrice } from "../../models/item";
+import IItem from "../../models/item";
 import { IRootState } from "../../store/store";
 import { useSelector } from "react-redux";
 import bigDecimal from "js-big-decimal";
@@ -16,7 +16,7 @@ const applyChanges = (cartItems: ICart, items: IItem[]) => {
     currentCartItems.forEach((i) => {
       currentCost = bigDecimal.add(
         currentCost,
-        bigDecimal.multiply(getPrice(d), i.quantity)
+        bigDecimal.multiply(d.currentPrice, i.quantity)
       );
       newTotalItems += i.quantity;
       newItems.push({ ...d, ...i });

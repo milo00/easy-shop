@@ -15,8 +15,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 
     @Query("SELECT i FROM Item i " +
             "JOIN i.productType pt " +
-            "WHERE (:onSale = true AND i.currentPrice IS NOT NULL OR :onSale = false) " +
-            "ORDER BY i.name")
+            "WHERE (:onSale = true AND i.currentPrice IS NOT NULL OR :onSale = false)")
     Page<Item> findAll(
             Pageable pageable,
             @Param("onSale") Boolean onSale);
@@ -24,8 +23,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
     @Query("SELECT i FROM Item i " +
             "JOIN i.productType pt " +
             "WHERE (i.gender IN :genders) " +
-            "AND (:onSale = true AND i.currentPrice IS NOT NULL OR :onSale = false) " +
-            "ORDER BY i.name")
+            "AND (:onSale = true AND i.currentPrice IS NOT NULL OR :onSale = false)")
     Page<Item> findByGender(
             Pageable pageable,
             @Param("genders") List<Gender> genders,
@@ -35,8 +33,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
             "JOIN i.productType pt " +
             "WHERE (i.gender IN :genders) " +
             "AND LOWER(pt.category) = LOWER(:category) " +
-            "AND (:onSale = true AND i.currentPrice IS NOT NULL OR :onSale = false) " +
-            "ORDER BY i.name")
+            "AND (:onSale = true AND i.currentPrice IS NOT NULL OR :onSale = false)")
     Page<Item> findByGenderAndCategory(
             Pageable pageable,
             @Param("genders") List<Gender> genders,
@@ -48,8 +45,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
             "WHERE i.gender IN :genders " +
             "AND LOWER(pt.category) = LOWER(:category) " +
             "AND LOWER(pt.subcategory) = LOWER(:subcategory) " +
-            "AND (:onSale = true AND i.currentPrice IS NOT NULL OR :onSale = false) " +
-            "ORDER BY i.name")
+            "AND (:onSale = true AND i.currentPrice IS NOT NULL OR :onSale = false)")
     Page<Item> findByGenderAndCategoryAndSubcategory(
             Pageable pageable,
             @Param("genders") List<Gender> genders,
@@ -64,8 +60,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
             "AND LOWER(pt.category) = LOWER(:category) " +
             "AND LOWER(pt.subcategory) = LOWER(:subcategory) " +
             "AND LOWER(pt.productType) = LOWER(:productType) " +
-            "AND (:onSale = true AND i.currentPrice IS NOT NULL OR :onSale = false) " +
-            "ORDER BY i.name")
+            "AND (:onSale = true AND i.currentPrice IS NOT NULL OR :onSale = false)")
     Page<Item> findByGenderAndCategoryAndSubcategoryAndProductType(
             Pageable pageable,
             @Param("genders") List<Gender> genders,
@@ -79,7 +74,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
     Optional<List<Item>> findByIdIn(List<Integer> ids);
 
     @Query("SELECT CASE " +
-            "  WHEN i.currentPrice IS NOT NULL THEN 'SALE' " +
+            "  WHEN i.currentPrice != i.regularPrice THEN 'SALE' " +
             "  WHEN i.gender = 'BOYS' OR i.gender = 'GIRLS' THEN 'KIDS' " +
             "  ELSE '' " +
             "END AS additional, " +

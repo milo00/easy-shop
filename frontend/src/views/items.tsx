@@ -11,6 +11,8 @@ import useFetchItems from "../utils/hooks/useFetchItems";
 import { useLocation } from "react-router-dom";
 import { isKidsPath, isSalePath } from "../utils/functions";
 import { Fragment } from "react";
+import ItemSorter from "../components/itemSorter";
+import useSorting from "../utils/hooks/useSorting";
 
 interface IItemsProps {
   fetchItems: any;
@@ -22,7 +24,8 @@ const Items = (props: IItemsProps) => {
   const status = useSelector((state: IRootState) => state.items.status);
 
   const { currentPage, onPageChange } = usePagination();
-  const params = useFetchItems(currentPage, props.fetchItems);
+  const { currentSorting, onSortingChange } = useSorting();
+  const params = useFetchItems(currentPage, currentSorting, props.fetchItems);
   const location = useLocation();
 
   return (
@@ -33,14 +36,22 @@ const Items = (props: IItemsProps) => {
         </Col>
         <Col>
           <Row>
-            {breadcrumbBuilder([
-              isSalePath(location) ? "sale" : undefined,
-              isKidsPath(location) ? "kids" : undefined,
-              params.gender,
-              params.category,
-              params.subcategory,
-              params.productType,
-            ])}
+            <Col>
+              {breadcrumbBuilder([
+                isSalePath(location) ? "sale" : undefined,
+                isKidsPath(location) ? "kids" : undefined,
+                params.gender,
+                params.category,
+                params.subcategory,
+                params.productType,
+              ])}
+            </Col>
+            <Col style={{ flex: "0 1", marginRight: "2rem" }}>
+              <ItemSorter
+                currentSorting={currentSorting}
+                onSortingChange={onSortingChange}
+              />
+            </Col>
           </Row>
           <Row>
             <Col className="d-flex flex-column align-items-center mt-5">

@@ -4,8 +4,10 @@ import com.shop.shop.model.enums.Category;
 import com.shop.shop.model.enums.Gender;
 import com.shop.shop.model.Item;
 import com.shop.shop.repository.ItemRepository;
+import com.shop.shop.service.model.ItemSortingType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,12 +42,14 @@ public class ItemService {
 
     public Page<Item> getItemsWithFilters(int page,
                                           int size,
+                                          ItemSortingType sortingType,
                                           Gender gender,
                                           Category category,
                                           String subcategory,
                                           String productType,
                                           Boolean onSale) {
-        var pageable = PageRequest.of(page, size);
+        var sorting = sortingType.isDescending() ? Sort.by(sortingType.toString()).descending() : Sort.by(sortingType.toString());
+        var pageable = PageRequest.of(page, size, sorting);
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {

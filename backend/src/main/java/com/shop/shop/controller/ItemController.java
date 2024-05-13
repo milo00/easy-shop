@@ -4,6 +4,7 @@ import com.shop.shop.model.enums.Category;
 import com.shop.shop.model.enums.Gender;
 import com.shop.shop.model.Item;
 import com.shop.shop.service.ItemService;
+import com.shop.shop.service.model.ItemSortingType;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,12 +24,13 @@ public class ItemController {
     public ResponseEntity<Page<Item>> getAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "DEFAULT") ItemSortingType sortingType,
             @RequestParam(required = false) Gender gender,
             @RequestParam(required = false) Category category,
             @RequestParam(required = false) String subcategory,
             @RequestParam(required = false) String productType
     ) {
-        var items = itemService.getItemsWithFilters(page, size, gender, category, subcategory, productType, false);
+        var items = itemService.getItemsWithFilters(page, size, sortingType, gender, category, subcategory, productType, false);
         return ResponseEntity.ok(items);
     }
 
@@ -42,11 +44,12 @@ public class ItemController {
     public ResponseEntity<Page<Item>> getOnSale(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "DEFAULT") ItemSortingType sortingType,
             @RequestParam(required = false) Gender gender,
             @RequestParam(required = false) Category category,
             @RequestParam(required = false) String subcategory,
             @RequestParam(required = false) String productType) {
-        var items = itemService.getItemsWithFilters(page, size, gender, category, subcategory, productType, true);
+        var items = itemService.getItemsWithFilters(page, size, sortingType, gender, category, subcategory, productType, true);
         return ResponseEntity.ok(items);
     }
 

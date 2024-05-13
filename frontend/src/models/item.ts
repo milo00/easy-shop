@@ -26,8 +26,6 @@ export enum Gender {
   KIDS = "KIDS",
 }
 
-export const getPrice = (item: IItem) => item.currentPrice ?? item.regularPrice;
-
 export const isBoysOrGirlsGender = (gender?: Gender) =>
   gender === Gender.BOYS || gender === Gender.GIRLS;
 

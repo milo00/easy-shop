@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, isAnyOf } from "@reduxjs/toolkit";
 import IItem, { Category, Gender } from "../../models/item";
 import api, { BASE_URL } from "../../config/axiosInterceptor";
+import ItemSortingType from "../../models/itemSortingType";
 
 export const ACCESS_TOKEN = "ACCESS_TOKEN";
 
@@ -22,6 +23,7 @@ export const fetchItems = createAsyncThunk(
   "items/fetchItems",
   async (data?: {
     page?: number;
+    sortingType?: ItemSortingType;
     gender?: Gender;
     category?: Category;
     subcategory?: string;
@@ -31,6 +33,7 @@ export const fetchItems = createAsyncThunk(
       params: {
         size: 12,
         page: data?.page ? data.page - 1 : 0,
+        sortingType: data?.sortingType,
         gender: data?.gender,
         category: data?.category,
         subcategory: data?.subcategory,
@@ -45,6 +48,7 @@ export const fetchOnSale = createAsyncThunk(
   "items/fetchOnSale",
   async (data?: {
     page?: number;
+    sortingType?: ItemSortingType;
     gender?: Gender;
     category?: Category;
     subcategory?: string;
@@ -54,6 +58,7 @@ export const fetchOnSale = createAsyncThunk(
       params: {
         size: 12,
         page: data?.page ? data.page - 1 : 0,
+        sortingType: data?.sortingType,
         gender: data?.gender,
         category: data?.category,
         subcategory: data?.subcategory,
