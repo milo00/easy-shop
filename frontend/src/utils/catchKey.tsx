@@ -25,12 +25,13 @@ const CatchKey = (props: PropsWithChildren<ICatchKeyProps>) => {
   const location = useLocation();
   const dispatch = useDispatch<AppDispatch>();
 
+  console.log(canRegisterIrritationTime);
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.target === document.body) {
         event.preventDefault();
         if (event.key === " " && canRegisterIrritationTime) {
-          toast("Enter clicked at " + location.pathname, { type: "info" });
+          toast("Irritation time registered");
           if (userId) {
             dispatch(
               endTimerGlobally({
