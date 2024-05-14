@@ -97,7 +97,7 @@ const userIrritationTimeSlice = createSlice({
         const location = action.payload.location;
         const loaderType = action.payload.loaderType;
 
-        if (!elapsedTime || !location || loaderType === undefined ) return;
+        if (!elapsedTime || !location || loaderType === undefined) return;
         const savedIrritationTimes = getIrrittaionTimeFromSessionStorage();
         sessionStorage.setItem(
           IRRITATION_TIME_TOKEN,
