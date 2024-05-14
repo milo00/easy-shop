@@ -1,8 +1,14 @@
-import React, { PropsWithChildren, ReactNode, useState } from "react";
+import React, {
+  PropsWithChildren,
+  ReactNode,
+  useEffect,
+  useState,
+} from "react";
 import { Button, Form } from "reactstrap";
 import CheckoutCollapse from "./checkoutCollapse";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
+import Loader from "../loader/loader";
 
 interface ICheckoutFormElementProps {
   isOpen: boolean;
@@ -15,12 +21,27 @@ interface ICheckoutFormElementProps {
 const CheckoutFormElement = (
   props: PropsWithChildren<ICheckoutFormElementProps>
 ) => {
-  const [submittedData, setsubmittedData] = useState<ReactNode>();
+  const [submittedData, setSubmittedData] = useState<ReactNode>();
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (props.header === "payment") {
+      setIsLoading(true);
+      timer = setTimeout(() => {
+        setIsLoading(false);
+      }, 10000);
+    }
+
+    return () => {
+      timer && clearTimeout(timer);
+    };
+  }, [submittedData, props.header]);
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
-    setsubmittedData(props.onSubmitCallback(data));
+    setSubmittedData(props.onSubmitCallback(data));
   };
 
   if (props.wasSubmitted) {
@@ -28,13 +49,17 @@ const CheckoutFormElement = (
       <div className="text-secondary">
         <div className="d-flex justify-content-between">
           <h4>{props.header}</h4>
-          <FontAwesomeIcon
-            icon={faPen}
-            onClick={props.onResetCallback}
-            role="button"
-          />
+          {!isLoading && (
+            <FontAwesomeIcon
+              icon={faPen}
+              onClick={props.onResetCallback}
+              role="button"
+            />
+          )}
         </div>
-        <span style={{ fontSize: "smaller" }}>{submittedData}</span>
+        <Loader loading={isLoading} basic>
+          <span style={{ fontSize: "smaller" }}>{submittedData}</span>
+        </Loader>
       </div>
     );
   }

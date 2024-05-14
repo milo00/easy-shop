@@ -23,7 +23,7 @@ interface ILoaderProps {
   width?: number;
 }
 
-const loadersWithProcessText = [LoaderType.PROGRESS_BAR, LoaderType.SPINNER];
+// const loadersWithProcessText = [LoaderType.PROGRESS_BAR, LoaderType.SPINNER];
 
 const Loader = (props: PropsWithChildren<ILoaderProps>) => {
   const [text, setText] = useState("fetching data");
@@ -116,7 +116,7 @@ const Loader = (props: PropsWithChildren<ILoaderProps>) => {
       }`}
     >
       {loader}
-      {props.basic || loadersWithProcessText.includes(props.type ?? type) ? (
+      {!props.basic ? (
         <div className={`loader-text ${animationClass}`}>
           <span>{text}</span>
           <span>

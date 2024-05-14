@@ -1,4 +1,4 @@
-import { Container, Row, Col, Input, Button } from "reactstrap";
+import { Container, Row, Col, Button } from "reactstrap";
 import OrderSummary from "../components/checkout/orderSummary";
 import useCartItems from "../utils/hooks/useCartItems";
 import CheckoutItem from "../components/checkout/checkoutItem";
@@ -8,9 +8,13 @@ import { DISCOUNT_PERCENT_TOKEN } from "./cart";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, IRootState } from "../store/store";
 import { fetchById } from "../store/slices/accountSlice";
-import CreditCardForm from "../components/checkout/creditCardForm";
+import CreditCardForm from "../components/checkout/forms/creditCardForm";
+import { clear } from "../store/slices/cartSlice";
+import ContactForm from "../components/checkout/forms/contactForm";
+import AddressForm from "../components/checkout/forms/addressForm";
 
 const Checkout = () => {
+  const [wasBought, setWasBought] = useState(false);
   const [submittedForms, setSubmittedForms] = useState<boolean[]>([]);
   const user = useSelector((state: IRootState) => state.account.user);
 
@@ -93,6 +97,37 @@ const Checkout = () => {
     );
   };
 
+  const onBuy = () => {
+    dispatch(clear());
+    setWasBought(true);
+  };
+
+  if (wasBought)
+    return (
+      <Container>
+        <Row style={{ marginTop: "80px", alignItems: "flex-start" }}>
+          <h1>thank You so much for participating in my research</h1>
+          <h4>now it is time for a short questionaire :)</h4>
+          <Button
+            color="primary"
+            onClick={() =>
+              window.open(
+                "https://www.google.pl/intl/pl/forms/about/",
+                "_blank"
+              )
+            }
+            style={{
+              width: "auto",
+              marginLeft: "0.75rem",
+              marginTop: "0.75rem",
+            }}
+          >
+            go to questionaire
+          </Button>
+        </Row>
+      </Container>
+    );
+
   return (
     <Container className="mx-0 mt-5" fluid>
       <Row>
@@ -109,8 +144,7 @@ const Checkout = () => {
               onSubmitCallback={(data: FormData) => onSubmitCallback(data, 0)}
               onResetCallback={() => onReset(0)}
             >
-              <span style={{ fontSize: "small" }}>e-mail</span>
-              <Input type="email" name="email" />
+              <ContactForm />
             </CheckoutFormElement>
             <CheckoutFormElement
               isOpen={submittedForms[0]}
@@ -119,64 +153,7 @@ const Checkout = () => {
               onSubmitCallback={(data: FormData) => onSubmitCallback(data, 1)}
               onResetCallback={() => onReset(1)}
             >
-              <Col>
-                <Row className="gap-2">
-                  <Col xs={12} md={6}>
-                    <span style={{ fontSize: "small" }}>first name*</span>
-                    <Input
-                      type="text"
-                      name="firstName"
-                      required
-                      defaultValue={user?.firstName}
-                    />
-                  </Col>
-                  <Col>
-                    <span style={{ fontSize: "small" }}>last name*</span>
-                    <Input
-                      type="text"
-                      name="lastName"
-                      required
-                      defaultValue={user?.lastName}
-                    />
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <span style={{ fontSize: "small" }}>adress*</span>
-                    <Input type="text" name="adress" required />
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <span style={{ fontSize: "small" }}>
-                      adress additional info
-                    </span>
-                    <Input type="text" name="adressAdditional" />
-                  </Col>
-                </Row>
-                <Row className="gap-2">
-                  <Col xs={12} md={6}>
-                    <span style={{ fontSize: "small" }}>postal code*</span>
-                    <Input
-                      type="text"
-                      name="postCode"
-                      required
-                      pattern="[0-9]{2}-[0-9]{3}"
-                    />
-                  </Col>
-                  <Col>
-                    <span style={{ fontSize: "small" }}>city*</span>
-                    <Input type="text" name="city" required />
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <span style={{ fontSize: "small" }}>phone number*</span>
-                    <Input type="tel" name="tel" required />
-                  </Col>
-                  <Col xs={12} md={6} />
-                </Row>
-              </Col>
+              <AddressForm user={user} />
             </CheckoutFormElement>
             <CheckoutFormElement
               isOpen={submittedForms[1]}
@@ -190,7 +167,9 @@ const Checkout = () => {
             {submittedForms[0] && submittedForms[1] && submittedForms[2] && (
               <Row>
                 <Col>
-                  <Button color="primary">buy</Button>
+                  <Button color="primary" onClick={onBuy}>
+                    buy
+                  </Button>
                 </Col>
               </Row>
             )}

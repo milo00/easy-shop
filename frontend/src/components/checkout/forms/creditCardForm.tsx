@@ -50,7 +50,9 @@ const CreditCardForm = () => {
             name="cardNumber"
             value={cardNumber}
             maxLength={19}
+            minLength={19}
             placeholder="---- ---- ---- ----"
+            required
             onChange={(e) => handleCardNumberChange(e)}
           />
         </Col>
@@ -64,19 +66,25 @@ const CreditCardForm = () => {
             name="expiryDate"
             value={expiryDate}
             maxLength={5}
+            minLength={5}
             placeholder="MM/YY"
+            required
             onChange={(e) => handleExpiryDateChange(e)}
           />
         </Col>
         <Col>
           <span style={{ fontSize: "small" }}>CVV*</span>
           <Input
-            type="number"
+            type="text"
             id="cvc"
             name="cvc"
             value={cvc}
             maxLength={3}
-            onChange={(e) => e.target.value.length < 4 && setCvc(e.target.value)}
+            minLength={3}
+            required
+            onChange={(e) =>
+              e.target.value.length < 4 && setCvc(e.target.value)
+            }
           />
         </Col>
       </Row>
