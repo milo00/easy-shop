@@ -25,6 +25,7 @@ public class User implements UserDetails {
         this.lastName = other.lastName;
         this.username = other.username;
         this.password = other.password;
+        this.yearOfBirth = other.yearOfBirth;
         this.role = other.role;
     }
 
@@ -37,9 +38,14 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
     private String lastName;
 
+    @Column(nullable = false)
     private String firstName;
+
+    @Column(nullable = false)
+    private String yearOfBirth;
     @Enumerated(value = EnumType.STRING)
     private Role role;
 

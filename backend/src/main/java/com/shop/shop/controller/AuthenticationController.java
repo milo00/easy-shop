@@ -1,7 +1,6 @@
 package com.shop.shop.controller;
 
 import com.shop.shop.filter.JwtAuthenticationFilter;
-import com.shop.shop.model.Item;
 import com.shop.shop.model.User;
 import com.shop.shop.repository.UserRepository;
 import com.shop.shop.service.AuthenticationService;
@@ -27,12 +26,14 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<Void> register(@RequestBody User user) {
+        user.setUsername(user.getFirstName().toLowerCase() + "_" + user.getLastName().toLowerCase());
         authenticationService.register(user);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login(@RequestBody User user) {
+        user.setUsername(user.getFirstName().toLowerCase() + "_" + user.getLastName().toLowerCase());
         var authenticationResponse = authenticationService.authenticate(user);
         var httpHeaders = new HttpHeaders();
         httpHeaders.add(JwtAuthenticationFilter.AUTHORIZATION_HEADER,
@@ -45,6 +46,7 @@ public class AuthenticationController {
         var users = userRepository.findAll();
         return ResponseEntity.ok(users);
     }
+
     @GetMapping("/users/{id}")
     public ResponseEntity<User> getUser(@PathVariable Integer id) {
         var user = userRepository.findById(id);

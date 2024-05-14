@@ -43,14 +43,19 @@ const Register = () => {
     }
     dispatch(
       register({
-        username: data.get("email")?.toString(),
         password: data.get("password")?.toString(),
         firstName: data.get("firstName")?.toString(),
         lastName: data.get("lastName")?.toString(),
+        yearOfBirth: Number(data.get("yearOfBirth")),
         role: Role.USER,
       })
     );
   };
+
+  const years = Array.from(
+    { length: 100 },
+    (_, index) => new Date().getFullYear() - index
+  );
 
   return (
     <Container>
@@ -96,13 +101,19 @@ const Register = () => {
                   <Input type="text" name="lastName" id="lastName" required />
                 </FormGroup>
                 <FormGroup>
-                  <span style={{ fontSize: "small" }}>email*</span>
-                  <Input type="email" name="email" id="email" required />
-                  {status === "failed" ? (
-                    <span className="text-danger" style={{ fontSize: "small" }}>
-                      this email is already in use
-                    </span>
-                  ) : null}
+                  <span style={{ fontSize: "small" }}>year of birth*</span>
+                  <Input
+                    type="select"
+                    name="yearOfBirth"
+                    id="yearOfBirth"
+                    required
+                  >
+                    {years.map((year, index) => (
+                      <option key={index} value={year}>
+                        {year}
+                      </option>
+                    ))}
+                  </Input>
                 </FormGroup>
                 <FormGroup>
                   <span style={{ fontSize: "small" }}>password*</span>

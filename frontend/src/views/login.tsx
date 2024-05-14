@@ -38,7 +38,8 @@ const Login = () => {
     dispatch(
       login({
         user: {
-          username: data.get("username")?.toString(),
+          firstName: data.get("firstName")?.toString(),
+          lastName: data.get("lastName")?.toString(),
           password: data.get("password")?.toString(),
         },
         rememberMe: !!data.get("remember"),
@@ -60,13 +61,12 @@ const Login = () => {
           <Loader loading={status === "loading"}>
             <Form onSubmit={handleSubmit}>
               <FormGroup>
-                <span style={{ fontSize: "small" }}>username*</span>
-                <Input
-                  type="text"
-                  name="username"
-                  id="username"
-                  required
-                />
+                <span style={{ fontSize: "small" }}>first name*</span>
+                <Input type="text" name="firstName" id="firstName" required />
+              </FormGroup>
+              <FormGroup>
+                <span style={{ fontSize: "small" }}>last name*</span>
+                <Input type="text" name="lastName" id="lastName" required />
               </FormGroup>
               <FormGroup>
                 <span style={{ fontSize: "small" }}>password*</span>
