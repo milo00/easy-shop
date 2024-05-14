@@ -36,14 +36,14 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse authenticate(User requestUser) {
-        var authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                requestUser.getUsername(), requestUser.getPassword()));
-        var token = jwtService.generateToken(requestUser.getUsername());
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        var authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                requestUser.getUsername(), requestUser.getPassword()));
+        var token = jwtService.generateToken(requestUser.getUsername());
         return new AuthenticationResponse(token, (User) authentication.getPrincipal());
     }
 }

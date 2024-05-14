@@ -38,7 +38,7 @@ const FastSlowProgress = (props: IFastSlowProgressProps) => {
       color="primary"
       value={progress}
       max={100}
-      style={{ width: "30%" }}
+      style={{ width: "100%" }}
     />
   );
 };

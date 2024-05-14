@@ -20,7 +20,15 @@ const CartItem = (props: ICartItemProps) => {
   const navigate = useNavigate();
 
   return (
-    <div className="d-flex gap-1 w-100 border">
+    <div
+      className="d-flex gap-1 w-100 border"
+      style={{
+        maxWidth:
+          window.innerWidth > 720
+            ? (window.innerWidth / 5) * 2
+            : window.innerWidth,
+      }}
+    >
       <div role="button" onClick={() => navigate(`/items/${props.item.id}`)}>
         <img
           alt={props.item.name + " image"}

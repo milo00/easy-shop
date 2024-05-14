@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Container,
   Row,
@@ -7,6 +7,8 @@ import {
   FormGroup,
   Input,
   Button,
+  InputGroup,
+  InputGroupText,
 } from "reactstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { Role } from "../models/user";
@@ -14,15 +16,31 @@ import { useSelector, useDispatch } from "react-redux";
 import { register } from "../store/slices/accountSlice";
 import { IRootState, AppDispatch } from "../store/store";
 import Loader from "../components/loader/loader";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Register = () => {
+  const [errorMessage, setErrorMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
   const status = useSelector((state: IRootState) => state.account.status);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
+  const validatePassword = (password?: string) => {
+    const validPasswordRegex = /^(?=.*[A-Z])(?=.*\d)[\w!@#$%^&*]{6,}$/;
+    return password && validPasswordRegex.test(password);
+  };
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    if (!validatePassword(data.get("password")?.toString())) {
+      setErrorMessage(
+        "password must have at least 6 characters, 1 uppercase letter and 1 number"
+      );
+      return;
+    }
     dispatch(
       register({
         username: data.get("email")?.toString(),
@@ -88,13 +106,28 @@ const Register = () => {
                 </FormGroup>
                 <FormGroup>
                   <span style={{ fontSize: "small" }}>password*</span>
-                  <Input
-                    type="password"
-                    name="password"
-                    id="password"
-                    required
-                  />
+                  <InputGroup>
+                    <Input
+                      type={showPassword ? "text" : "password"}
+                      name="password"
+                      id="password"
+                      required
+                    />
+                    <InputGroupText
+                      onClick={() => setShowPassword((prev) => !prev)}
+                    >
+                      <FontAwesomeIcon
+                        color="primary"
+                        icon={showPassword ? faEyeSlash : faEye}
+                      />
+                    </InputGroupText>
+                  </InputGroup>
                 </FormGroup>
+                {errorMessage && (
+                  <span className="text-danger" style={{ fontSize: "small" }}>
+                    {errorMessage}
+                  </span>
+                )}
                 <Button className="mb-3" type="submit" color="primary" block>
                   sign up
                 </Button>

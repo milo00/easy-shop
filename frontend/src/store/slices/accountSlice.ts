@@ -7,7 +7,7 @@ export const USER_TOKEN = "USER_TOKEN";
 
 type IAccountState = {
   userId: number;
-  status: "idle" | "loading" | "succeeded" | "failed";
+  status: "idle" | "loading" | "succeeded" | "failed" | "unauthenticated";
 };
 
 const initialState: IAccountState = {
@@ -70,7 +70,11 @@ const accountSlice = createSlice({
         state.userId = action.payload.data.user.id;
       })
       .addCase(login.rejected, (state, action) => {
-        state.status = "failed";
+        if (action.error.message === "Request failed with status code 403") {
+          state.status = "unauthenticated";
+        } else {
+          state.status = "failed";
+        }
       })
       .addCase(register.pending, (state) => {
         state.status = "loading";

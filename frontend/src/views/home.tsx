@@ -54,7 +54,7 @@ const Home = () => {
           browse
         </Button>
       </div>
-      <Loader loading={status === "loading"}>
+      <Loader loading={status === "loading"} width={50}>
         <Carousel
           responsive={responsive}
           swipeable={false}

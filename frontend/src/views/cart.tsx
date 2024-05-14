@@ -83,7 +83,7 @@ const Cart = () => {
           </Row>
           <Row>
             <Col className="d-flex flex-column align-items-center">
-              <Loader loading={loading}>
+              <Loader loading={loading} width={50}>
                 <Row style={{ fontSize: "smaller", width: "100%" }}>
                   <span className="ps-0">{`in total (${totalItems} items): ${totalCost} PLN`}</span>
                   <span className="ps-0">
@@ -91,7 +91,7 @@ const Cart = () => {
                     reserve them
                   </span>
                 </Row>
-                <Row className="py-3 mt-3 mb-5 gap-4">
+                <Row className="py-3 mt-3 mb-5 gap-4 w-100">
                   {items.map((i) => (
                     <Fragment key={`${i.id}-${i.size}`}>
                       <CartItem item={i} />
