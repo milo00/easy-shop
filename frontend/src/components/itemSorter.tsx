@@ -83,6 +83,7 @@ const ItemSorter = (props: IItemSorterProps) => {
             ItemSortingType[i as keyof typeof ItemSortingType];
           return (
             <DropdownItem
+              key={i}
               onClick={() => handleSortChange(sortingType)}
               active={selectedSort === sortingType}
             >

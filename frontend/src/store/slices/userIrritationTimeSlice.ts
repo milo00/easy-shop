@@ -90,12 +90,14 @@ const userIrritationTimeSlice = createSlice({
       state,
       action: { payload: IUserIrritationTime; type: string }
     ) {
-      if (state.startTime) {
+      console.log("in reducer");
+      console.log(state.startTime);
+      if (state.startTime !== 0) {
         const elapsedTime = (Date.now() - state.startTime) / 1000;
         const location = action.payload.location;
-        const loaderType = action.payload.loaderType; 
+        const loaderType = action.payload.loaderType;
 
-        if (!elapsedTime || !location || !loaderType) return;
+        if (!elapsedTime || !location || loaderType === undefined) return;
         const savedIrritationTimes = getIrrittaionTimeFromSessionStorage();
         sessionStorage.setItem(
           IRRITATION_TIME_TOKEN,

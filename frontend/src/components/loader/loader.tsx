@@ -41,6 +41,7 @@ const Loader = (props: PropsWithChildren<ILoaderProps>) => {
     let dotsTimer: NodeJS.Timeout;
 
     if (props.loading) {
+      setText("fetching data");
       timer = setTimeout(() => {
         setAnimationClass("fade-out");
       }, 4000);
@@ -114,12 +115,6 @@ const Loader = (props: PropsWithChildren<ILoaderProps>) => {
         props.width ?? 100
       }`}
     >
-      {/* {props.type === "dino" ? (
-        <div style={{ textAlign: "start" }}>
-          <div>while You wait, we have a small surpirise for you...</div>
-          <div>enjoy the game :)</div>
-        </div>
-      ) : null} */}
       {loader}
       {props.basic || loadersWithProcessText.includes(props.type ?? type) ? (
         <div className={`loader-text ${animationClass}`}>
