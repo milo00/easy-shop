@@ -23,7 +23,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  
+
   const status = useSelector((state: IRootState) => state.account.status);
   const dispatch = useDispatch<AppDispatch>();
 
@@ -65,7 +65,6 @@ const Login = () => {
                   type="text"
                   name="username"
                   id="username"
-                  placeholder="Username"
                   required
                 />
               </FormGroup>

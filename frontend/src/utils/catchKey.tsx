@@ -25,7 +25,6 @@ const CatchKey = (props: PropsWithChildren<ICatchKeyProps>) => {
   const location = useLocation();
   const dispatch = useDispatch<AppDispatch>();
 
-  console.log(canRegisterIrritationTime);
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.target === document.body) {

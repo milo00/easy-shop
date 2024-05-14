@@ -8,7 +8,13 @@ const usePagination = () => {
   const navigate = useNavigate();
 
   const onPageChange = (page: number) => {
-    navigate(`${location.pathname}?page=${page}`);
+    const newParams = new URLSearchParams();
+    queryParams.forEach((value, key) => {
+      newParams.append(key, value);
+    });
+    newParams.set("page", page + "");
+
+    navigate(`${location.pathname}?${newParams.toString()}`);
   };
 
   return { currentPage, onPageChange };

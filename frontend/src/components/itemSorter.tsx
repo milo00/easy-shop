@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Dropdown,
   DropdownToggle,
@@ -25,6 +25,10 @@ const ItemSorter = (props: IItemSorterProps) => {
   const [selectedSort, setSelectedSort] = useState<ItemSortingType>(
     props.currentSorting
   );
+
+  useEffect(() => {
+    setSelectedSort(props.currentSorting);
+  }, [props.currentSorting]);
 
   const toggleDropdown = () => setDropdownOpen((prev) => !prev);
 

@@ -90,8 +90,6 @@ const userIrritationTimeSlice = createSlice({
       state,
       action: { payload: IUserIrritationTime; type: string }
     ) {
-      console.log("in reducer");
-      console.log(state.startTime);
       if (state.startTime !== 0) {
         const elapsedTime = (Date.now() - state.startTime) / 1000;
         const location = action.payload.location;
