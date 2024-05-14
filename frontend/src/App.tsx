@@ -27,7 +27,7 @@ function App() {
   return (
     <Provider store={store}>
       <SidebarDataContext.Provider value={sidebarData}>
-        <LoaderTypeDataContext.Provider value={LoaderType.PROGRESS_BAR}>
+        <LoaderTypeDataContext.Provider value={LoaderType.SPINNER}>
           <div className="App">
             <AppRoutes />
           </div>

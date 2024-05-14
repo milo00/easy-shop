@@ -6,7 +6,7 @@ interface ICheckoutItemProps {
 
 const CheckoutItem = (props: ICheckoutItemProps) => {
   return (
-    <div className="d-flex w-100">
+    <div className="d-flex w-100 gap-3">
       <div>
         <img
           alt={props.item.name + " image"}

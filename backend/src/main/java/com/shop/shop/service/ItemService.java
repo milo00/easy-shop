@@ -51,7 +51,7 @@ public class ItemService {
         var sorting = sortingType.isDescending() ? Sort.by(sortingType.toString()).descending() : Sort.by(sortingType.toString());
         var pageable = PageRequest.of(page, size, sorting);
         try {
-            Thread.sleep(2000);
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

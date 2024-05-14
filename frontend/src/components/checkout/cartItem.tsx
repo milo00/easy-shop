@@ -1,4 +1,3 @@
-import IItem from "../../models/item";
 import { Input } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose, faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -20,15 +19,7 @@ const CartItem = (props: ICartItemProps) => {
   const navigate = useNavigate();
 
   return (
-    <div
-      className="d-flex gap-1 w-100 border"
-      style={{
-        maxWidth:
-          window.innerWidth > 720
-            ? (window.innerWidth / 5) * 2
-            : window.innerWidth,
-      }}
-    >
+    <div className="d-flex gap-3 w-100 border ps-0">
       <div role="button" onClick={() => navigate(`/items/${props.item.id}`)}>
         <img
           alt={props.item.name + " image"}
