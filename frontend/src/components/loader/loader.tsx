@@ -33,8 +33,8 @@ const Loader = (props: PropsWithChildren<ILoaderProps>) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(startTimer());
-  }, [dispatch]);
+    props.loading && dispatch(startTimer());
+  }, [dispatch, props.loading]);
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
