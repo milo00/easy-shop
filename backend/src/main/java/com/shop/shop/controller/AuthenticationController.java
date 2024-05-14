@@ -1,6 +1,7 @@
 package com.shop.shop.controller;
 
 import com.shop.shop.filter.JwtAuthenticationFilter;
+import com.shop.shop.model.Item;
 import com.shop.shop.model.User;
 import com.shop.shop.repository.UserRepository;
 import com.shop.shop.service.AuthenticationService;
@@ -44,4 +45,10 @@ public class AuthenticationController {
         var users = userRepository.findAll();
         return ResponseEntity.ok(users);
     }
+    @GetMapping("/users/{id}")
+    public ResponseEntity<User> getUser(@PathVariable Integer id) {
+        var user = userRepository.findById(id);
+        return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(null));
+    }
+
 }

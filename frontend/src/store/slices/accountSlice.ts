@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, isAnyOf } from "@reduxjs/toolkit";
 import IUser, { getUserFromStorage } from "../../models/user";
 import api, { BASE_URL } from "../../config/axiosInterceptor";
 
@@ -7,11 +7,13 @@ export const USER_TOKEN = "USER_TOKEN";
 
 type IAccountState = {
   userId: number;
+  user: IUser;
   status: "idle" | "loading" | "succeeded" | "failed" | "unauthenticated";
 };
 
 const initialState: IAccountState = {
   userId: getUserFromStorage(),
+  user: {},
   status: "idle",
 };
 
@@ -29,6 +31,17 @@ export const register = createAsyncThunk(
   async (user: IUser) => {
     const response = await api.post(`${BASE_URL}/register`, user);
     return response;
+  }
+);
+
+export const fetchById = createAsyncThunk(
+  "account/fetchById",
+  async () => {
+    const response = await api.get(`${BASE_URL}/users/${getUserFromStorage()}`);
+    return response;
+  },
+  {
+    condition: () => !!getUserFromStorage(),
   }
 );
 
@@ -53,9 +66,6 @@ const accountSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(login.pending, (state) => {
-        state.status = "loading";
-      })
       .addCase(login.fulfilled, (state, action) => {
         state.status = "succeeded";
         if (action.payload.data.token) {
@@ -68,6 +78,7 @@ const accountSlice = createSlice({
           }
         }
         state.userId = action.payload.data.user.id;
+        state.user = action.payload.data.user;
       })
       .addCase(login.rejected, (state, action) => {
         if (action.error.message === "Request failed with status code 403") {
@@ -76,13 +87,21 @@ const accountSlice = createSlice({
           state.status = "failed";
         }
       })
-      .addCase(register.pending, (state) => {
-        state.status = "loading";
-      })
       .addCase(register.fulfilled, (state) => {
         state.status = "succeeded";
       })
-      .addCase(register.rejected, (state, action) => {
+      .addCase(fetchById.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        console.log(action.payload);
+        state.user = action.payload.data;
+      })
+      .addMatcher(
+        isAnyOf(register.pending, login.pending, fetchById.pending),
+        (state) => {
+          state.status = "loading";
+        }
+      )
+      .addMatcher(isAnyOf(register.rejected, fetchById.rejected), (state) => {
         state.status = "failed";
       });
   },

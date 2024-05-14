@@ -1,6 +1,9 @@
 .home-image {
   width: 100%;
   height: auto;
+}
+
+.fade-in {
   animation: fadeInAnimation ease 2s;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;

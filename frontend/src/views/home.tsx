@@ -37,37 +37,39 @@ const Home = () => {
 
   return (
     <div>
-      <img
-        className="home-image"
-        src={`${process.env.PUBLIC_URL}/assets/homepage.png`}
-        alt="Woman with a shopping bag"
-      />
-      <div className="m-5">
-        <h2 className="text-danger fw-bolder">sale</h2>
-        <Button
-          className="mt-2"
-          color="primary"
-          outline
-          size="small"
-          onClick={() => navigate("/sale")}
-        >
-          browse
-        </Button>
-      </div>
       <Loader loading={status === "loading"}>
-        <Carousel
-          responsive={responsive}
-          swipeable={false}
-          draggable={false}
-          infinite
-          autoPlay
-          autoPlaySpeed={4000}
-          transitionDuration={1000}
-        >
-          {items?.map((item) => (
-            <ItemCard key={item.id} item={item} />
-          ))}
-        </Carousel>
+        <div className="fade-in">
+          <img
+            className="home-image"
+            src={`${process.env.PUBLIC_URL}/assets/homepage.png`}
+            alt="Woman with a shopping bag"
+          />
+          <div className="m-5">
+            <h2 className="text-danger fw-bolder">sale</h2>
+            <Button
+              className="mt-2"
+              color="primary"
+              outline
+              size="small"
+              onClick={() => navigate("/sale")}
+            >
+              browse
+            </Button>
+          </div>
+          <Carousel
+            responsive={responsive}
+            swipeable={false}
+            draggable={false}
+            infinite
+            autoPlay
+            autoPlaySpeed={4000}
+            transitionDuration={1000}
+          >
+            {items?.map((item) => (
+              <ItemCard key={item.id} item={item} />
+            ))}
+          </Carousel>
+        </div>
       </Loader>
     </div>
   );

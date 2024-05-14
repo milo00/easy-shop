@@ -23,20 +23,10 @@ public class ItemService {
 
 
     public Optional<Item> getItem(Integer id) {
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         return itemRepository.findById(id);
     }
 
     public Optional<List<Item>> getItemsForIds(List<Integer> ids) {
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         return itemRepository.findByIdIn(ids);
     }
 

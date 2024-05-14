@@ -1,16 +1,26 @@
-import { Container, Row, Col, Input } from "reactstrap";
+import { Container, Row, Col, Input, Button } from "reactstrap";
 import OrderSummary from "../components/checkout/orderSummary";
 import useCartItems from "../utils/hooks/useCartItems";
 import CheckoutItem from "../components/checkout/checkoutItem";
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import CheckoutFormElement from "../components/checkout/checkoutFormElement";
-import CheckoutCollapse from "../components/checkout/checkoutCollapse";
 import { DISCOUNT_PERCENT_TOKEN } from "./cart";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, IRootState } from "../store/store";
+import { fetchById } from "../store/slices/accountSlice";
+import CreditCardForm from "../components/checkout/creditCardForm";
 
 const Checkout = () => {
   const [submittedForms, setSubmittedForms] = useState<boolean[]>([]);
+  const user = useSelector((state: IRootState) => state.account.user);
+
   const { items, totalCost } = useCartItems();
   const discount = sessionStorage.getItem(DISCOUNT_PERCENT_TOKEN);
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    dispatch(fetchById());
+  }, [dispatch]);
 
   const onReset = (index: number) => {
     let newValidForm = [...submittedForms];
@@ -26,6 +36,9 @@ const Checkout = () => {
         break;
       case 1:
         element = getAdressFormData(data);
+        break;
+      case 2:
+        element = getCardData(data);
     }
 
     if (element) {
@@ -35,6 +48,20 @@ const Checkout = () => {
     }
 
     return element;
+  };
+
+  const getCardData = (data: FormData) => {
+    const cardNumber = data.get("cardNumber")?.toString();
+    const expiryDate = data.get("expiryDate")?.toString();
+    const cvc = data.get("cvc")?.toString();
+    return (
+      <>
+        <div>{cardNumber}</div>
+        <div>
+          {expiryDate} {cvc}
+        </div>
+      </>
+    );
   };
 
   const getContactFormData = (data: FormData) => {
@@ -96,11 +123,21 @@ const Checkout = () => {
                 <Row className="gap-2">
                   <Col xs={12} md={6}>
                     <span style={{ fontSize: "small" }}>first name*</span>
-                    <Input type="text" name="firstName" required />
+                    <Input
+                      type="text"
+                      name="firstName"
+                      required
+                      defaultValue={user?.firstName}
+                    />
                   </Col>
                   <Col>
                     <span style={{ fontSize: "small" }}>last name*</span>
-                    <Input type="text" name="lastName" required />
+                    <Input
+                      type="text"
+                      name="lastName"
+                      required
+                      defaultValue={user?.lastName}
+                    />
                   </Col>
                 </Row>
                 <Row>
@@ -141,10 +178,22 @@ const Checkout = () => {
                 </Row>
               </Col>
             </CheckoutFormElement>
-            <CheckoutCollapse
+            <CheckoutFormElement
               isOpen={submittedForms[1]}
               header={"payment"}
-            ></CheckoutCollapse>
+              onSubmitCallback={(data: FormData) => onSubmitCallback(data, 2)}
+              onResetCallback={() => onReset(2)}
+              wasSubmitted={submittedForms[2]}
+            >
+              <CreditCardForm />
+            </CheckoutFormElement>
+            {submittedForms[0] && submittedForms[1] && submittedForms[2] && (
+              <Row>
+                <Col>
+                  <Button color="primary">buy</Button>
+                </Col>
+              </Row>
+            )}
           </Row>
         </Col>
         <Col xs={0} md={1}></Col>
