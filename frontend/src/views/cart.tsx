@@ -31,6 +31,9 @@ const Cart = () => {
 
   const validateCode = async (e: MouseEvent<HTMLButtonElement>) => {
     if (loadingDiscount) return;
+    setPromoCodeText("");
+    sessionStorage.removeItem(DISCOUNT_PERCENT_TOKEN);
+    setDiscount(0);
 
     try {
       e.currentTarget.blur();

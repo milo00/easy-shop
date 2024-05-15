@@ -16,6 +16,7 @@ interface ICheckoutFormElementProps {
   header: string;
   onSubmitCallback: (data: FormData) => ReactNode;
   onResetCallback: VoidFunction;
+  setCardValidatedCallback?: VoidFunction;
 }
 
 const CheckoutFormElement = (
@@ -26,17 +27,18 @@ const CheckoutFormElement = (
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
-    if (props.header === "payment") {
+    if (props.wasSubmitted && props.header === "payment") {
       setIsLoading(true);
       timer = setTimeout(() => {
         setIsLoading(false);
+        props.setCardValidatedCallback && props.setCardValidatedCallback();
       }, 10000);
     }
 
     return () => {
       timer && clearTimeout(timer);
     };
-  }, [submittedData, props.header]);
+  }, [props.wasSubmitted]); // eslint-disable-line
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

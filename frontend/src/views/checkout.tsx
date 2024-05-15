@@ -15,6 +15,7 @@ import { DISCOUNT_PERCENT_TOKEN } from "../utils/localStorageTokens";
 
 const Checkout = () => {
   const [wasBought, setWasBought] = useState(false);
+  const [cardValidated, setCardValidated] = useState(false);
   const [submittedForms, setSubmittedForms] = useState<boolean[]>([]);
   const user = useSelector((state: IRootState) => state.account.user);
 
@@ -25,6 +26,12 @@ const Checkout = () => {
   useEffect(() => {
     dispatch(fetchById());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (submittedForms[2]) {
+      setCardValidated(false);
+    }
+  }, [submittedForms[2]]); // eslint-disable-line
 
   const onReset = (index: number) => {
     let newValidForm = [...submittedForms];
@@ -111,10 +118,7 @@ const Checkout = () => {
           <Button
             color="primary"
             onClick={() =>
-              window.open(
-                "https://www.google.pl/intl/pl/forms/about/",
-                "_blank"
-              )
+              window.open("https://forms.gle/qTzTh2fTT2SoZ9ex8", "_blank")
             }
             style={{
               width: "auto",
@@ -161,13 +165,18 @@ const Checkout = () => {
               onSubmitCallback={(data: FormData) => onSubmitCallback(data, 2)}
               onResetCallback={() => onReset(2)}
               wasSubmitted={submittedForms[2]}
+              setCardValidatedCallback={() => setCardValidated(true)}
             >
               <CreditCardForm />
             </CheckoutFormElement>
             {submittedForms[0] && submittedForms[1] && submittedForms[2] && (
               <Row>
                 <Col>
-                  <Button color="primary" onClick={onBuy}>
+                  <Button
+                    color="primary"
+                    onClick={onBuy}
+                    disabled={!cardValidated}
+                  >
                     buy
                   </Button>
                 </Col>
