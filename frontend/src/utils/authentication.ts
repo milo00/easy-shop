@@ -1,4 +1,4 @@
-import { ACCESS_TOKEN } from "../store/slices/accountSlice";
+import { ACCESS_TOKEN } from "./localStorageTokens";
 
 export const isAuthenticated = () => {
   return (

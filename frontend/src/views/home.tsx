@@ -9,12 +9,23 @@ import { IRootState, AppDispatch } from "../store/store";
 import { fetchOnSale } from "../store/slices/itemsSlice";
 import Loader from "../components/loader/loader";
 import { useNavigate } from "react-router-dom";
+import { VISITED_HOMEPAGE_TOKEN } from "../utils/localStorageTokens";
+import Header from "../components/header";
+import CatchKey from "../utils/catchKey";
 
 const Home = () => {
   const items = useSelector((state: IRootState) => state.items.items);
   const status = useSelector((state: IRootState) => state.items.status);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    return () => {
+      if (!sessionStorage.getItem(VISITED_HOMEPAGE_TOKEN)) {
+        sessionStorage.setItem(VISITED_HOMEPAGE_TOKEN, "true");
+      }
+    };
+  }, []);
 
   useEffect(() => {
     dispatch(fetchOnSale());
@@ -36,42 +47,52 @@ const Home = () => {
   };
 
   return (
-    <div>
-      <Loader loading={status === "loading"}>
-        <div className="fade-in">
-          <img
-            className="home-image"
-            src={`${process.env.PUBLIC_URL}/assets/homepage.png`}
-            alt="Woman with a shopping bag"
-          />
-          <div className="m-5">
-            <h2 className="text-danger fw-bolder">sale</h2>
-            <Button
-              className="mt-2"
-              color="primary"
-              outline
-              size="small"
-              onClick={() => navigate("/sale")}
-            >
-              browse
-            </Button>
+    <CatchKey>
+      <div style={{ height: "100vh" }}>
+        <Loader
+          loading={
+            !sessionStorage.getItem(VISITED_HOMEPAGE_TOKEN) &&
+            status === "loading"
+          }
+        >
+          <Header />
+          <div className="fade-in">
+            <img
+              className="home-image"
+              src={`${process.env.PUBLIC_URL}/assets/homepage.png`}
+              alt="Woman with a shopping bag"
+            />
+            <div className="m-5">
+              <h2 className="text-danger fw-bolder">sale</h2>
+              <Button
+                className="mt-2"
+                color="primary"
+                outline
+                size="small"
+                onClick={() => navigate("/sale")}
+              >
+                browse
+              </Button>
+            </div>
+            <Loader loading={status === "loading"}>
+              <Carousel
+                responsive={responsive}
+                swipeable={false}
+                draggable={false}
+                infinite
+                autoPlay
+                autoPlaySpeed={4000}
+                transitionDuration={1000}
+              >
+                {items?.map((item) => (
+                  <ItemCard key={item.id} item={item} />
+                ))}
+              </Carousel>
+            </Loader>
           </div>
-          <Carousel
-            responsive={responsive}
-            swipeable={false}
-            draggable={false}
-            infinite
-            autoPlay
-            autoPlaySpeed={4000}
-            transitionDuration={1000}
-          >
-            {items?.map((item) => (
-              <ItemCard key={item.id} item={item} />
-            ))}
-          </Carousel>
-        </div>
-      </Loader>
-    </div>
+        </Loader>
+      </div>
+    </CatchKey>
   );
 };
 

@@ -111,7 +111,7 @@ const Loader = (props: PropsWithChildren<ILoaderProps>) => {
 
   return props.loading ? (
     <div
-      className={`d-flex flex-column align-items-center w-${
+      className={`d-flex flex-column align-items-center justify-content-center h-100 w-${
         props.width ?? 100
       }`}
     >

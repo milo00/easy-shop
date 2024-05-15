@@ -41,10 +41,7 @@ export const AppRoutes = () => {
             </RequireAuth>
           )}
         />
-        <Route
-          path="/"
-          element={errorBoundaryWrapper(layoutWrapper(<Home />))}
-        />
+        <Route path="/" element={errorBoundaryWrapper(<Home />)} />
         <Route
           path="/items/:id"
           element={errorBoundaryWrapper(layoutWrapper(<Item />))}

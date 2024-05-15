@@ -1,4 +1,4 @@
-import { IRRITATION_TIME_TOKEN } from "../store/slices/userIrritationTimeSlice";
+import { IRRITATION_TIME_TOKEN } from "../utils/localStorageTokens";
 import LoaderType from "./loader";
 
 export default interface IUserIrritationTime {

@@ -12,8 +12,7 @@ import { Fragment } from "react/jsx-runtime";
 import { MouseEvent, useState } from "react";
 import api, { BASE_URL } from "../config/axiosInterceptor";
 import { startTimer } from "../store/slices/userIrritationTimeSlice";
-
-export const DISCOUNT_PERCENT_TOKEN = "DISCOUNT_PERCENT_TOKEN";
+import { DISCOUNT_PERCENT_TOKEN } from "../utils/localStorageTokens";
 
 const Cart = () => {
   const [promoCode, setPromoCode] = useState("");

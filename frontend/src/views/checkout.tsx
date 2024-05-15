@@ -4,7 +4,6 @@ import useCartItems from "../utils/hooks/useCartItems";
 import CheckoutItem from "../components/checkout/checkoutItem";
 import { ReactNode, useEffect, useState } from "react";
 import CheckoutFormElement from "../components/checkout/checkoutFormElement";
-import { DISCOUNT_PERCENT_TOKEN } from "./cart";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, IRootState } from "../store/store";
 import { fetchById } from "../store/slices/accountSlice";
@@ -12,6 +11,7 @@ import CreditCardForm from "../components/checkout/forms/creditCardForm";
 import { clear } from "../store/slices/cartSlice";
 import ContactForm from "../components/checkout/forms/contactForm";
 import AddressForm from "../components/checkout/forms/addressForm";
+import { DISCOUNT_PERCENT_TOKEN } from "../utils/localStorageTokens";
 
 const Checkout = () => {
   const [wasBought, setWasBought] = useState(false);
@@ -106,8 +106,8 @@ const Checkout = () => {
     return (
       <Container>
         <Row style={{ marginTop: "80px", alignItems: "flex-start" }}>
-          <h1>thank You so much for participating in my research</h1>
-          <h4>now it is time for a short questionaire :)</h4>
+          <h1>dziękuję za udział w badaniu</h1>
+          <h4>na koniec została krótka ankieta do wypełnienia :)</h4>
           <Button
             color="primary"
             onClick={() =>
@@ -122,7 +122,7 @@ const Checkout = () => {
               marginTop: "0.75rem",
             }}
           >
-            go to questionaire
+            idź do ankiety
           </Button>
         </Row>
       </Container>

@@ -1,9 +1,8 @@
 import { createAsyncThunk, createSlice, isAnyOf } from "@reduxjs/toolkit";
 import IUser, { getUserFromStorage } from "../../models/user";
 import api, { BASE_URL } from "../../config/axiosInterceptor";
-
-export const ACCESS_TOKEN = "ACCESS_TOKEN";
-export const USER_TOKEN = "USER_TOKEN";
+import { USER_TOKEN } from "../../utils/localStorageTokens";
+import { ACCESS_TOKEN } from "./itemsSlice";
 
 type IAccountState = {
   userId: number;

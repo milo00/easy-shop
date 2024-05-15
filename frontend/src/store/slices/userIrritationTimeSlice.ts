@@ -6,8 +6,7 @@ import IUserIrritationTime, {
 import _ from "lodash";
 import { getUserFromStorage } from "../../models/user";
 import { IRootState } from "../store";
-
-export const IRRITATION_TIME_TOKEN = "IRRITATION_TIME_TOKEN";
+import { IRRITATION_TIME_TOKEN } from "../../utils/localStorageTokens";
 
 type IIrritationTimeState = {
   startTime: number;

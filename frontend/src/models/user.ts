@@ -1,4 +1,4 @@
-import { USER_TOKEN } from "../store/slices/accountSlice";
+import { USER_TOKEN } from "../utils/localStorageTokens";
 
 export default interface IUser {
   id?: number;

@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import ICart from "../../models/cart";
-
-export const CART_TOKEN = "CART_TOKEN";
+import { CART_TOKEN } from "../../utils/localStorageTokens";
 
 type ICartState = {
   cart: ICart;
