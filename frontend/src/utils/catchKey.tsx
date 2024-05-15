@@ -1,6 +1,5 @@
 import { PropsWithChildren, useContext, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, IRootState } from "../store/store";
@@ -9,6 +8,7 @@ import {
   endTimerLocally,
 } from "../store/slices/userIrritationTimeSlice";
 import { LoaderTypeDataContext } from "../App";
+import { toast } from "react-toastify";
 
 interface ICatchKeyProps {
   key?: string;
@@ -55,12 +55,7 @@ const CatchKey = (props: PropsWithChildren<ICatchKeyProps>) => {
     };
   }, [location, userId, dispatch, canRegisterIrritationTime, loaderType]);
 
-  return (
-    <>
-      <ToastContainer />
-      {props.children}
-    </>
-  );
+  return <>{props.children}</>;
 };
 
 export default CatchKey;

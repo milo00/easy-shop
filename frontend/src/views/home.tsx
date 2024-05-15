@@ -3,28 +3,36 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { ItemCard } from "../components/itemCard";
 import { Button } from "reactstrap";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { IRootState, AppDispatch } from "../store/store";
 import { fetchOnSale } from "../store/slices/itemsSlice";
 import Loader from "../components/loader/loader";
 import { useNavigate } from "react-router-dom";
-import { VISITED_HOMEPAGE_TOKEN } from "../utils/localStorageTokens";
+import {
+  INTRO_DONE_TOKEN,
+  VISITED_HOMEPAGE_TOKEN,
+} from "../utils/localStorageTokens";
 import Header from "../components/header";
 import CatchKey from "../utils/catchKey";
 
 const Home = () => {
+  const [wasFirstVisited, setWasFirstVisited] = useState(false);
+
   const items = useSelector((state: IRootState) => state.items.items);
   const status = useSelector((state: IRootState) => state.items.status);
+
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
   useEffect(() => {
-    return () => {
-      if (!sessionStorage.getItem(VISITED_HOMEPAGE_TOKEN)) {
-        sessionStorage.setItem(VISITED_HOMEPAGE_TOKEN, "true");
-      }
-    };
+    if (
+      sessionStorage.getItem(INTRO_DONE_TOKEN) &&
+      !sessionStorage.getItem(VISITED_HOMEPAGE_TOKEN)
+    ) {
+      setWasFirstVisited(true);
+      sessionStorage.setItem(VISITED_HOMEPAGE_TOKEN, "true");
+    }
   }, []);
 
   useEffect(() => {
@@ -51,7 +59,8 @@ const Home = () => {
       <div style={{ height: "100vh" }}>
         <Loader
           loading={
-            !sessionStorage.getItem(VISITED_HOMEPAGE_TOKEN) &&
+            (wasFirstVisited ||
+              !sessionStorage.getItem(VISITED_HOMEPAGE_TOKEN)) &&
             status === "loading"
           }
         >

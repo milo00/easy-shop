@@ -1,4 +1,12 @@
-import { Navbar, NavbarBrand, Nav, NavItem, NavLink, Badge } from "reactstrap";
+import {
+  Navbar,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  NavLink,
+  Badge,
+  Button,
+} from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCartShopping,
@@ -50,6 +58,14 @@ const Header = (props: { basic?: boolean }) => {
           </Nav>
           <Nav className="align-items-center">
             <NavItem>
+              <NavLink href="/instructions">
+                <Button outline color="primary">
+                  instructions
+                </Button>
+              </NavLink>
+            </NavItem>
+
+            <NavItem>
               <NavLink href="/cart" style={{ position: "relative" }}>
                 <FontAwesomeIcon icon={faCartShopping} />
                 {cart.items?.length ? (
@@ -77,7 +93,17 @@ const Header = (props: { basic?: boolean }) => {
             </NavItem>
           </Nav>
         </>
-      ) : null}
+      ) : (
+        <Nav>
+          <NavItem>
+            <NavLink href="/instructions">
+              <Button outline color="primary">
+                instructions
+              </Button>
+            </NavLink>
+          </NavItem>
+        </Nav>
+      )}
     </Navbar>
   );
 };
