@@ -50,9 +50,9 @@ const Instructions = () => {
               Wykonaj zadania zgodnie z podanymi instrukcjami.
               <br />
               <span style={{ fontSize: "smaller" }}>
-                Jeśli potrzebujesz przypomnienia o kolejnych krokach, możesz
-                zawsze wrócić do tej strony, klikając poniższy przycisk na
-                górnym pasku.
+                Jeśli potrzebujesz przypomnienia o kolejnych krokach w trakcie
+                wykonywania badania, możesz zawsze wrócić do instrukcji,
+                klikając poniższy przycisk na górnym pasku.
               </span>
               <br />
               <div className="py-3 d-flex justify-content-center w-100">
@@ -92,7 +92,7 @@ const Instructions = () => {
               <br />
               <span style={{ fontSize: "smaller" }}>
                 Do rejestracji wymagane jest imie i nazwisko oraz hasło - proszę
-                abyś je zapamiętał/a do wykorzystania w następnych badaniach
+                abyś je zapamiętał/a do wykorzystania w następnych badaniach.
               </span>
             </li>
             <li>
@@ -101,7 +101,7 @@ const Instructions = () => {
             </li>
             <li>
               <strong>Zadanie 3:</strong> Przejdź do koszyka, wprowadź kod
-              promocyjny PROMO-CODE i sfinalizuj zamówienie.
+              promocyjny EASY-SHOP i sfinalizuj zamówienie.
             </li>
           </ul>
         </span>
@@ -111,9 +111,9 @@ const Instructions = () => {
           <h5>Dlaczego jest to ważne?</h5>
           <span>
             Twoje opinie i reakcje są kluczowe dla mojego badania. Pomogą mi one
-            zidentyfikować kluczowe momenty, w których czas oczekiwania jest
-            najbardziej frustrujący oraz jakie strategie najlepiej minimalizują
-            negatywne odczucia użytkowników.
+            zidentyfikować momenty, w których czas oczekiwania jest najbardziej
+            frustrujący oraz jakie strategie najlepiej minimalizują negatywne
+            odczucia użytkowników.
           </span>
         </div>
         <div>

@@ -20,13 +20,14 @@ import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Register = () => {
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState(""); // eslint-disable-line
   const [showPassword, setShowPassword] = useState(false);
 
   const status = useSelector((state: IRootState) => state.account.status);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
+    // eslint-disable-next-line
   const validatePassword = (password?: string) => {
     const validPasswordRegex = /^(?=.*[A-Z])(?=.*\d)[\w!@#$%^&*]{6,}$/;
     return password && validPasswordRegex.test(password);
@@ -35,12 +36,12 @@ const Register = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    if (!validatePassword(data.get("password")?.toString())) {
-      setErrorMessage(
-        "password must have at least 6 characters, 1 uppercase letter and 1 number"
-      );
-      return;
-    }
+    // if (!validatePassword(data.get("password")?.toString())) {
+    //   setErrorMessage(
+    //     "password must have at least 6 characters, 1 uppercase letter and 1 number"
+    //   );
+    //   return;
+    // }
     dispatch(
       register({
         password: data.get("password")?.toString(),

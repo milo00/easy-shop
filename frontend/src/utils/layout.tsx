@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import Header from "../components/header";
+import Header from "../components/header/header";
 import CatchKey from "./catchKey";
 
 interface ILayoutProps {

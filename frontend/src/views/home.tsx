@@ -13,7 +13,7 @@ import {
   INTRO_DONE_TOKEN,
   VISITED_HOMEPAGE_TOKEN,
 } from "../utils/localStorageTokens";
-import Header from "../components/header";
+import Header from "../components/header/header";
 import CatchKey from "../utils/catchKey";
 
 const Home = () => {

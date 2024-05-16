@@ -115,16 +115,20 @@ const Loader = (props: PropsWithChildren<ILoaderProps>) => {
         props.width ?? 100
       }`}
     >
-      {loader}
-      {!props.basic ? (
-        <div className={`loader-text ${animationClass}`}>
-          <span>{text}</span>
-          <span>
-            <span>{".".repeat(dots)}</span>
-            <span style={{ visibility: "hidden" }}>{".".repeat(3 - dots)}</span>
-          </span>
-        </div>
-      ) : null}
+      <div>
+        {loader}
+        {!props.basic ? (
+          <div className={`loader-text ${animationClass}`}>
+            <span>{text}</span>
+            <span>
+              <span>{".".repeat(dots)}</span>
+              <span style={{ visibility: "hidden" }}>
+                {".".repeat(3 - dots)}
+              </span>
+            </span>
+          </div>
+        ) : null}
+      </div>
     </div>
   ) : (
     <>{props.children}</>
