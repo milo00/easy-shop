@@ -7,7 +7,7 @@ export const equalsIgnoreCase = (fst?: string, snd?: string) =>
   fst?.toLowerCase() === snd?.toLowerCase();
 
 export const isSalePath = (location: Location) =>
-  location.pathname.includes("/sale");
+  location.pathname.includes("/wyprzeda");
 
 export const isKidsPath = (location: Location) =>
-  location.pathname.includes("/kids/");
+  location.pathname.includes("/dzieci/");

@@ -11,13 +11,13 @@ import Loader from "../loader/loader";
 
 interface IInstructionsModalProps {
   isOpen: boolean;
-  onCloseCallback: VoidFunction;
+  toggle: VoidFunction;
 }
 
 const InstructionsModal = (props: IInstructionsModalProps) => {
   return (
     <Modal className="modal-lg" isOpen={props.isOpen}>
-      <ModalHeader>Instrukcje</ModalHeader>
+      <ModalHeader toggle={props.toggle}>Instrukcje</ModalHeader>
       <ModalBody>
         <Container
           fluid
@@ -49,32 +49,13 @@ const InstructionsModal = (props: IInstructionsModalProps) => {
             </span>
           </Row>
           <Row className="pt-3">
-            <h5>Jak będzie przebiegać badanie?</h5>
+            <h5>Pamiętaj:</h5>
             <span>
               <ol>
-                <li>
-                  Wykonaj zadania zgodnie z podanymi instrukcjami.
-                  <br />
-                  <span style={{ fontSize: "smaller" }}>
-                    Jeśli potrzebujesz przypomnienia o kolejnych krokach w
-                    trakcie wykonywania badania, możesz zawsze wrócić do
-                    instrukcji, klikając poniższy przycisk na górnym pasku.
-                  </span>
-                  <br />
-                  <div className="py-3 d-flex justify-content-center w-100">
-                    <Button outline color="primary">
-                      instructions
-                    </Button>
-                  </div>
-                </li>
+                <li>Wykonaj zadania zgodnie z podanymi instrukcjami.</li>
                 <li>
                   Gdy pojawi się poniższy wskaźnik ładowania i odczujesz
                   irytację, naciśnij klawisz <strong>Spacji</strong>.
-                  <br />
-                  <span style={{ fontSize: "smaller" }}>
-                    Po naciśnięciu klawisza, w prawym górnym rogu aplikacji
-                    pojawi się powiadomienie o zarejestrowaniu czasu irytacji.
-                  </span>
                 </li>
                 <div className="my-5">
                   <Loader loading={true} basic />
@@ -89,7 +70,7 @@ const InstructionsModal = (props: IInstructionsModalProps) => {
         </Container>
       </ModalBody>
       <ModalFooter>
-        <Button color="primary" onClick={props.onCloseCallback}>
+        <Button color="primary" onClick={props.toggle}>
           zamknij
         </Button>
       </ModalFooter>

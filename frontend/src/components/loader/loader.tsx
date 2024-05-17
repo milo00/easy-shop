@@ -26,7 +26,7 @@ interface ILoaderProps {
 // const loadersWithProcessText = [LoaderType.PROGRESS_BAR, LoaderType.SPINNER];
 
 const Loader = (props: PropsWithChildren<ILoaderProps>) => {
-  const [text, setText] = useState("fetching data");
+  const [text, setText] = useState("pobieranie danych");
   const [dots, setDots] = useState(0);
   const [animationClass, setAnimationClass] = useState("");
   const type = useContext(LoaderTypeDataContext);
@@ -41,9 +41,9 @@ const Loader = (props: PropsWithChildren<ILoaderProps>) => {
     let dotsTimer: NodeJS.Timeout;
 
     if (props.loading) {
-      setText("fetching data");
+      setText("pobieranie danych");
       timer = setTimeout(() => {
-        setAnimationClass("fade-out");
+        setAnimationClass("-fade-out");
       }, 4000);
 
       dotsTimer = setInterval(() => {
@@ -59,7 +59,7 @@ const Loader = (props: PropsWithChildren<ILoaderProps>) => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setAnimationClass("fade-out");
+      setAnimationClass("-fade-out");
     }, 4000);
 
     return () => {
@@ -70,20 +70,20 @@ const Loader = (props: PropsWithChildren<ILoaderProps>) => {
   useEffect(() => {
     let timeout: NodeJS.Timeout;
 
-    if (animationClass === "fade-out") {
+    if (animationClass === "-fade-out") {
       timeout = setTimeout(() => {
-        setAnimationClass("fade-in");
-        if (text === "fetching data") {
-          setText("processing data");
-        } else if (text === "processing data") {
-          setText("preparing view");
+        setAnimationClass("-fade-in");
+        if (text === "pobieranie danych") {
+          setText("przetwarzanie danych");
+        } else if (text === "przetwarzanie danych") {
+          setText("przygotowywanie widoku");
         }
         setDots(0);
-      }, 300);
-    } else if (animationClass === "fade-in") {
+      }, 500);
+    } else if (animationClass === "-fade-in") {
       timeout = setTimeout(() => {
         setAnimationClass("");
-      }, 300);
+      }, 500);
     }
 
     return () => {
@@ -111,14 +111,14 @@ const Loader = (props: PropsWithChildren<ILoaderProps>) => {
 
   return props.loading ? (
     <div
-      className={`d-flex flex-column align-items-center justify-content-center h-100 w-${
+      className={`d-flex align-items-center justify-content-center h-100 w-${
         props.width ?? 100
       }`}
     >
-      <div>
+      <div className="d-flex flex-column align-items-center justify-content-start">
         {loader}
         {!props.basic ? (
-          <div className={`loader-text ${animationClass}`}>
+          <div className={`loader-text${animationClass}`}>
             <span>{text}</span>
             <span>
               <span>{".".repeat(dots)}</span>

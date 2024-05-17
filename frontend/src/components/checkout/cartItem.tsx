@@ -20,7 +20,7 @@ const CartItem = (props: ICartItemProps) => {
 
   return (
     <div className="d-flex gap-3 w-100 border ps-0">
-      <div role="button" onClick={() => navigate(`/items/${props.item.id}`)}>
+      <div role="button" onClick={() => navigate(`/produkty/${props.item.id}`)}>
         <img
           alt={props.item.name + " image"}
           src={props.item.imgUrl}
@@ -31,7 +31,7 @@ const CartItem = (props: ICartItemProps) => {
         <div className="d-flex w-100">
           <span
             role="button"
-            onClick={() => navigate(`/items/${props.item.id}`)}
+            onClick={() => navigate(`/produkty/${props.item.id}`)}
           >
             {props.item.name}
           </span>
@@ -50,7 +50,7 @@ const CartItem = (props: ICartItemProps) => {
           />
         </div>
         <div>{props.item.currentPrice} PLN</div>
-        <div>size: {props.item.size}</div>
+        <div>rozmiar: {props.item.size}</div>
         <div className="d-flex align-items-center justify-content-start gap-2">
           <FontAwesomeIcon
             icon={faMinus}

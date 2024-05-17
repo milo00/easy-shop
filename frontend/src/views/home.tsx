@@ -72,15 +72,15 @@ const Home = () => {
               alt="Woman with a shopping bag"
             />
             <div className="m-5">
-              <h2 className="text-danger fw-bolder">sale</h2>
+              <h2 className="text-danger fw-bolder">wyprzedaż</h2>
               <Button
                 className="mt-2"
                 color="primary"
                 outline
                 size="small"
-                onClick={() => navigate("/sale")}
+                onClick={() => navigate("/wyprzedaż")}
               >
-                browse
+                przeglądaj
               </Button>
             </div>
             <Loader loading={status === "loading"}>

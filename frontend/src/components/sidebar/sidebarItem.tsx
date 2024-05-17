@@ -2,6 +2,12 @@ import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import {
+  getCategoryTranslation,
+  getGenderTranslation,
+  isCategoryKey,
+  isGenderKey,
+} from "../../models/item";
 
 interface ISidebarMenuItemProps {
   name: string;
@@ -29,10 +35,10 @@ const SidebarMenuItem = (props: ISidebarMenuItemProps) => {
       onClick={props.toggleOpen}
     >
       <span
-        className={props.name === "SALE" ? "text-danger fw-bold" : ""}
+        className={props.name === "WYPRZEDAŻ" ? "text-danger fw-bold" : ""}
         onClickCapture={(e) => handleOnClick(e, props.path)}
       >
-        {(props.name).toLowerCase()}
+        {props.name.toLowerCase()}
       </span>
       <span className="icon">
         {props.displayArrow && (

@@ -14,8 +14,8 @@ const EmptyCart = () => {
         </Col>
         <Col>
           <Row>
-            <h1>your cart is empty</h1>
-            <h3>let's fill it in!</h3>
+            <h1>Twój koszyk jest pusty</h1>
+            <h3>czas go zapełnić!</h3>
             <Button
               color="primary"
               role="button"
@@ -26,7 +26,7 @@ const EmptyCart = () => {
                 marginTop: "12px",
               }}
             >
-              let's do it
+              zaczynajmy
             </Button>
           </Row>
         </Col>

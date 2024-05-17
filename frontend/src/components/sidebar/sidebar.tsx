@@ -1,31 +1,34 @@
 import { useLocation, useParams } from "react-router-dom";
+import { equalsIgnoreCase, isSalePath } from "../../utils/functions";
 import {
-  equalsIgnoreCase,
-  isKeyOfEnum,
-  isSalePath,
-} from "../../utils/functions";
-import {
-  Category,
   Gender,
+  getCategoryFromTranslation,
+  getCategoryTranslation,
+  getGenderFromTranslation,
+  getGenderTranslation,
   isBoysOrGirlsGender,
-  isGender,
+  isCategoryKey,
+  isGenderKey,
 } from "../../models/item";
 import CollapseSidebarItem from "./collapseSidebarItem";
 import { Fragment, useContext } from "react";
 import { SidebarDataContext } from "../../App";
 import "../../styles/sidebar.css";
 
+export const getTranslatedValue = (value: string) => {
+  if (isGenderKey(value)) return getGenderTranslation(value) ?? "";
+  if (isCategoryKey(value)) return getCategoryTranslation(value) ?? "";
+  if (value === "SALE") return "WYPRZEDAŻ";
+  return value;
+};
+
 export const Sidebar = () => {
   const params = useParams();
   const location = useLocation();
   const data = useContext(SidebarDataContext);
 
-  const pathGender = isKeyOfEnum(Object.keys(Gender), params.gender)
-    ? Gender[params.gender!.toUpperCase() as keyof typeof Gender]
-    : undefined;
-  const pathCategory = isKeyOfEnum(Object.keys(Category), params.category)
-    ? Category[params.category!.toUpperCase() as keyof typeof Category]
-    : undefined;
+  const pathGender = getGenderFromTranslation(params.gender);
+  const pathCategory = getCategoryFromTranslation(params.category);
   const pathSubcategory = params.subcategory;
   const pathProductType = params.productType;
 
@@ -33,7 +36,7 @@ export const Sidebar = () => {
     isSalePath(location) && menuData === "SALE";
 
   const isCurrentGender = (gender: string) =>
-    equalsIgnoreCase(gender, pathGender) ||
+    equalsIgnoreCase(getTranslatedValue(gender), pathGender) ||
     (gender === Gender.KIDS && isBoysOrGirlsGender(pathGender));
 
   const isActive = (menuData: string) =>
@@ -46,9 +49,9 @@ export const Sidebar = () => {
           <CollapseSidebarItem
             parent={menuData}
             toggler={menuData.name}
-            path={`${isGender(menuData.name) ? "/items/categories/" : "/"}${
-              menuData.name
-            }`}
+            path={`${
+              isGenderKey(menuData.name) ? "/produkty/kategorie/" : "/"
+            }${getTranslatedValue(menuData.name)}`}
             isParentActive={isActive(menuData.name)}
             pathValues={[
               pathGender,

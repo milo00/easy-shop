@@ -79,7 +79,7 @@ const ItemSorter = (props: IItemSorterProps) => {
   return (
     <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown} color="primary">
       <DropdownToggle caret color="primary" outline>
-        sort by
+        sortowanie
       </DropdownToggle>
       <DropdownMenu>
         {Object.keys(ItemSortingType).map((i) => {

@@ -29,7 +29,7 @@ const Login = () => {
 
   useEffect(() => {
     status === "unauthenticated" &&
-      setErrorMessage("incorrect username or password. please try again");
+      setErrorMessage("niepoprawne dane, spróbuj ponownie");
   }, [status]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -57,19 +57,19 @@ const Login = () => {
     <Container>
       <Row className="justify-content-center">
         <Col xs="12" md="8" lg="4">
-          <h1 style={{ textAlign: "center" }}>sign in</h1>
+          <h1 style={{ textAlign: "center" }}>zaloguj się</h1>
           <Loader loading={status === "loading"}>
             <Form onSubmit={handleSubmit}>
               <FormGroup>
-                <span style={{ fontSize: "small" }}>first name*</span>
+                <span style={{ fontSize: "small" }}>imię*</span>
                 <Input type="text" name="firstName" id="firstName" required />
               </FormGroup>
               <FormGroup>
-                <span style={{ fontSize: "small" }}>last name*</span>
+                <span style={{ fontSize: "small" }}>nazwisko*</span>
                 <Input type="text" name="lastName" id="lastName" required />
               </FormGroup>
               <FormGroup>
-                <span style={{ fontSize: "small" }}>password*</span>
+                <span style={{ fontSize: "small" }}>hasło*</span>
                 <InputGroup>
                   <Input
                     type={showPassword ? "text" : "password"}
@@ -89,7 +89,7 @@ const Login = () => {
               </FormGroup>
               <FormGroup check>
                 <Input type="checkbox" name="remember" />
-                <span style={{ fontSize: "medium" }}>remember me</span>
+                <span style={{ fontSize: "medium" }}>pamiętaj mnie</span>
               </FormGroup>
               {errorMessage && (
                 <span className="text-danger" style={{ fontSize: "small" }}>
@@ -97,12 +97,12 @@ const Login = () => {
                 </span>
               )}
               <Button className="my-3" type="submit" color="primary" block>
-                sign In
+                zaloguj się
               </Button>
               <div style={{ textAlign: "right" }}>
-                <Link to="/register">
+                <Link to="/zarejestruj">
                   <span style={{ fontSize: "medium" }}>
-                    don't have an account? sign up
+                    nie masz konta? zarejestruj się
                   </span>
                 </Link>
               </div>

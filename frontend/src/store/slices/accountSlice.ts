@@ -33,8 +33,8 @@ export const register = createAsyncThunk(
   }
 );
 
-export const fetchById = createAsyncThunk(
-  "account/fetchById",
+export const fetchLoggedIn = createAsyncThunk(
+  "account/fetchLoggedIn",
   async () => {
     const response = await api.get(`${BASE_URL}/users/${getUserFromStorage()}`);
     return response;
@@ -89,20 +89,23 @@ const accountSlice = createSlice({
       .addCase(register.fulfilled, (state) => {
         state.status = "succeeded";
       })
-      .addCase(fetchById.fulfilled, (state, action) => {
+      .addCase(fetchLoggedIn.fulfilled, (state, action) => {
         state.status = "succeeded";
         console.log(action.payload);
         state.user = action.payload.data;
       })
       .addMatcher(
-        isAnyOf(register.pending, login.pending, fetchById.pending),
+        isAnyOf(register.pending, login.pending, fetchLoggedIn.pending),
         (state) => {
           state.status = "loading";
         }
       )
-      .addMatcher(isAnyOf(register.rejected, fetchById.rejected), (state) => {
-        state.status = "failed";
-      });
+      .addMatcher(
+        isAnyOf(register.rejected, fetchLoggedIn.rejected),
+        (state) => {
+          state.status = "failed";
+        }
+      );
   },
 });
 

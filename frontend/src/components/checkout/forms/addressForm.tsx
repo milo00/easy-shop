@@ -10,7 +10,7 @@ const AddressForm = (props: IAddressFormProps) => {
     <Col>
       <Row className="gap-2">
         <Col xs={12} md={6}>
-          <span style={{ fontSize: "small" }}>first name*</span>
+          <span style={{ fontSize: "small" }}>imię*</span>
           <Input
             type="text"
             name="firstName"
@@ -19,7 +19,7 @@ const AddressForm = (props: IAddressFormProps) => {
           />
         </Col>
         <Col>
-          <span style={{ fontSize: "small" }}>last name*</span>
+          <span style={{ fontSize: "small" }}>nazwisko*</span>
           <Input
             type="text"
             name="lastName"
@@ -30,19 +30,21 @@ const AddressForm = (props: IAddressFormProps) => {
       </Row>
       <Row>
         <Col>
-          <span style={{ fontSize: "small" }}>adress*</span>
+          <span style={{ fontSize: "small" }}>adres*</span>
           <Input type="text" name="adress" required />
         </Col>
       </Row>
       <Row>
         <Col>
-          <span style={{ fontSize: "small" }}>adress additional info</span>
+          <span style={{ fontSize: "small" }}>
+            dodatkowe informacje
+          </span>
           <Input type="text" name="adressAdditional" />
         </Col>
       </Row>
       <Row className="gap-2">
         <Col xs={12} md={6}>
-          <span style={{ fontSize: "small" }}>postal code*</span>
+          <span style={{ fontSize: "small" }}>kod pocztowy*</span>
           <Input
             type="text"
             name="postCode"
@@ -51,13 +53,13 @@ const AddressForm = (props: IAddressFormProps) => {
           />
         </Col>
         <Col>
-          <span style={{ fontSize: "small" }}>city*</span>
+          <span style={{ fontSize: "small" }}>miasto*</span>
           <Input type="text" name="city" required />
         </Col>
       </Row>
       <Row>
         <Col>
-          <span style={{ fontSize: "small" }}>phone number*</span>
+          <span style={{ fontSize: "small" }}>numer telefonu*</span>
           <Input type="tel" name="tel" required />
         </Col>
         <Col xs={12} md={6} />

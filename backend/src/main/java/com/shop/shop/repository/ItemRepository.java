@@ -75,7 +75,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 
     @Query("SELECT CASE " +
             "  WHEN i.currentPrice != i.regularPrice THEN 'SALE' " +
-            "  WHEN i.gender = 'BOYS' OR i.gender = 'GIRLS' THEN 'KIDS' " +
+            "  WHEN i.gender = 'CHŁOPCY' OR i.gender = 'DZIEWCZYNKI' THEN 'KIDS' " +
             "  ELSE '' " +
             "END AS additional, " +
             "i.gender, pt.category, pt.subcategory, pt.productType " +

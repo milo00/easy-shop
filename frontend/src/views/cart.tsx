@@ -45,7 +45,7 @@ const Cart = () => {
       );
 
       setLoadingDiscount(false);
-      setPromoCodeText("promo code applied");
+      setPromoCodeText("zastosowano kod promocyjny");
       setDiscount(response.data.discountPercent / 100);
       sessionStorage.setItem(
         DISCOUNT_PERCENT_TOKEN,
@@ -55,8 +55,8 @@ const Cart = () => {
       setLoadingDiscount(false);
       setPromoCodeText(
         error.response?.status === 406
-          ? "sorry, this code is not working :("
-          : "something went wrong, please try again"
+          ? "przykro nam, ten kod nie działa :("
+          : "coś poszło nie tak, spróbuj ponownie"
       );
     }
   };
@@ -67,7 +67,7 @@ const Cart = () => {
         <Col xs={0} md={1}></Col>
         <Col className="me-5">
           <Row className="justify-content-between">
-            <h1 className="w-auto">YOUR CART</h1>
+            <h1 className="w-auto">TWÓJ KOSZYK</h1>
             {loading ? null : (
               <Button
                 color="primary"
@@ -79,7 +79,7 @@ const Cart = () => {
                   height: "fit-content",
                 }}
               >
-                clear
+                wyczyść
               </Button>
             )}
           </Row>
@@ -87,10 +87,10 @@ const Cart = () => {
             <Col className="d-flex flex-column align-items-center">
               <Loader loading={loading} width={50}>
                 <Row style={{ fontSize: "smaller", width: "100%" }}>
-                  <span className="ps-0">{`in total (${totalItems} items): ${totalCost} PLN`}</span>
+                  <span className="ps-0">{`w sumie (${totalItems} przedmiotów): ${totalCost} PLN`}</span>
                   <span className="ps-0">
-                    remember, adding items to Your cart does not automatically
-                    reserve them
+                    pamiętaj, dodanie przedmiotów do koszyka nie powoduje ich
+                    automatycznej rezerwacji
                   </span>
                 </Row>
                 <Row className="py-3 mt-3 mb-5 gap-4 w-100">
@@ -110,10 +110,10 @@ const Cart = () => {
               className="mb-5"
               color="primary"
               role="button"
-              onClick={() => navigate("/checkout")}
+              onClick={() => navigate("/kasa")}
               style={{ width: "fit-content" }}
             >
-              go to checkout
+              idź do kasy
             </Button>
             <Row className="gap-3">
               <OrderSummary
@@ -125,7 +125,7 @@ const Cart = () => {
                 <div className="d-flex justify-content-between gap-2">
                   <div className="w-100">
                     <Input
-                      placeholder="promo code"
+                      placeholder="kod promocyjny"
                       onChange={(e) => setPromoCode(e.currentTarget.value)}
                       disabled={loadingDiscount}
                     />
@@ -134,7 +134,7 @@ const Cart = () => {
                     {loadingDiscount ? (
                       <Spinner style={{ width: "1rem", height: "1rem" }} />
                     ) : (
-                      "add"
+                      "dodaj"
                     )}
                   </Button>
                 </div>

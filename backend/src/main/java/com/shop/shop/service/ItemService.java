@@ -55,13 +55,13 @@ public class ItemService {
             return itemRepository.findByGender(pageable, genders, onSale);
         }
         if (subcategory == null) {
-            return itemRepository.findByGenderAndCategory(pageable, genders, category.name(), onSale);
+            return itemRepository.findByGenderAndCategory(pageable, genders, category.getPolishTranslation(), onSale);
         }
         if (productType == null) {
             return itemRepository.findByGenderAndCategoryAndSubcategory(
                     pageable,
                     genders,
-                    category.name(),
+                    category.getPolishTranslation(),
                     subcategory,
                     onSale);
         }
@@ -69,7 +69,7 @@ public class ItemService {
                 .findByGenderAndCategoryAndSubcategoryAndProductType(
                         pageable,
                         genders,
-                        category.name(),
+                        category.getPolishTranslation(),
                         subcategory,
                         productType,
                         onSale);

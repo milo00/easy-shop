@@ -43,7 +43,7 @@ const CreditCardForm = () => {
     <>
       <Row>
         <Col>
-          <span style={{ fontSize: "small" }}>card number*</span>
+          <span style={{ fontSize: "small" }}>numer karty*</span>
           <Input
             type="text"
             id="cardNumber"
@@ -59,7 +59,7 @@ const CreditCardForm = () => {
       </Row>
       <Row className="gap-2">
         <Col xs={12} md={6}>
-          <span style={{ fontSize: "small" }}>expiration date*</span>
+          <span style={{ fontSize: "small" }}>data ważności*</span>
           <Input
             type="text"
             id="expiryDate"

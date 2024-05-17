@@ -1,5 +1,6 @@
 package com.shop.shop.model;
 
+import com.shop.shop.config.converter.GenderConverter;
 import com.shop.shop.model.enums.Gender;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -19,7 +20,7 @@ public class Item {
     private String name;
 
     @Column(nullable = false)
-    @Enumerated(value = EnumType.STRING)
+    @Convert(converter = GenderConverter.class)
     private Gender gender;
 
     @ManyToOne

@@ -27,7 +27,7 @@ const Register = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
-    // eslint-disable-next-line
+  // eslint-disable-next-line
   const validatePassword = (password?: string) => {
     const validPasswordRegex = /^(?=.*[A-Z])(?=.*\d)[\w!@#$%^&*]{6,}$/;
     return password && validPasswordRegex.test(password);
@@ -70,19 +70,19 @@ const Register = () => {
           </Col>
           <Col>
             <Row>
-              <h1>succesfully signed up</h1>
-              <h3 className="d-block">now You are ready to sign in</h3>
+              <h1>pomyślna rejestracja</h1>
+              <h3 className="d-block">teraz możesz się zalogować</h3>
               <Button
                 className="mt-2"
                 color="primary"
-                onClick={() => navigate("/login")}
+                onClick={() => navigate("/zaloguj")}
                 style={{
                   width: "fit-content",
                   marginLeft: "12px",
                   marginTop: "12px",
                 }}
               >
-                sign in
+                zaloguj się
               </Button>
             </Row>
           </Col>
@@ -90,19 +90,19 @@ const Register = () => {
       ) : (
         <Row className="justify-content-center">
           <Col xs={12} md={8} xl={4}>
-            <h1 style={{ textAlign: "center" }}>sign up</h1>
+            <h1 style={{ textAlign: "center" }}>zarejestruj się</h1>
             <Loader loading={status === "loading"}>
               <Form noValidate onSubmit={handleSubmit}>
                 <FormGroup>
-                  <span style={{ fontSize: "small" }}>firt name*</span>
+                  <span style={{ fontSize: "small" }}>imię*</span>
                   <Input type="text" name="firstName" id="firstName" required />
                 </FormGroup>
                 <FormGroup>
-                  <span style={{ fontSize: "small" }}>last name*</span>
+                  <span style={{ fontSize: "small" }}>nazwisko*</span>
                   <Input type="text" name="lastName" id="lastName" required />
                 </FormGroup>
                 <FormGroup>
-                  <span style={{ fontSize: "small" }}>year of birth*</span>
+                  <span style={{ fontSize: "small" }}>rok urodzenia*</span>
                   <Input
                     type="select"
                     name="yearOfBirth"
@@ -117,7 +117,7 @@ const Register = () => {
                   </Input>
                 </FormGroup>
                 <FormGroup>
-                  <span style={{ fontSize: "small" }}>password*</span>
+                  <span style={{ fontSize: "small" }}>hasło*</span>
                   <InputGroup>
                     <Input
                       type={showPassword ? "text" : "password"}
@@ -141,12 +141,12 @@ const Register = () => {
                   </span>
                 )}
                 <Button className="mb-3" type="submit" color="primary" block>
-                  sign up
+                  zarejestruj się
                 </Button>
                 <div style={{ textAlign: "right" }}>
-                  <Link to="/login">
+                  <Link to="/zaloguj">
                     <span style={{ fontSize: "medium" }}>
-                      already have an account? sign in
+                      masz już konto? zaloguj się
                     </span>
                   </Link>
                 </div>

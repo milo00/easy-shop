@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { Category, Gender } from "../../models/item";
 import { AppDispatch } from "../../store/store";
-import { isKeyOfEnum } from "../functions";
+import { isKeyOfEnum as isValueOfEnum } from "../functions";
 import { reset } from "../../store/slices/itemsSlice";
 import ItemSortingType from "../../models/itemSortingType";
 
@@ -19,26 +19,31 @@ const useFetchItems = (
     let actionPromise: { abort: () => any };
 
     if (
-      isKeyOfEnum(Object.keys(Category), params.category) &&
-      isKeyOfEnum(Object.keys(Gender), params.gender)
+      isValueOfEnum(Object.values(Category), params.category) &&
+      isValueOfEnum(Object.values(Gender), params.gender)
     ) {
       actionPromise = dispatch(
         action({
           page: currentPage,
           sortingType: currentSorting,
-          gender: Gender[params.gender!.toUpperCase() as keyof typeof Gender],
-          category:
-            Category[params.category!.toUpperCase() as keyof typeof Category],
+          gender: Object.entries(Gender).find(
+            (val) => val[1] === params.gender?.toUpperCase()
+          )![0],
+          category: Object.entries(Category).find(
+            (val) => val[1] === params.category?.toUpperCase()
+          )![0],
           subcategory: params.subcategory,
           productType: params.productType,
         })
       );
-    } else if (isKeyOfEnum(Object.keys(Gender), params.gender)) {
+    } else if (isValueOfEnum(Object.values(Gender), params.gender)) {
       actionPromise = dispatch(
         action({
           page: currentPage,
           sortingType: currentSorting,
-          gender: Gender[params.gender!.toUpperCase() as keyof typeof Gender],
+          gender: Object.entries(Gender).find(
+            (val) => val[1] === params.gender?.toUpperCase()
+          )![0],
         })
       );
     } else {

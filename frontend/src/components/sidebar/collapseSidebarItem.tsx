@@ -4,6 +4,7 @@ import { Collapse } from "reactstrap";
 import { equalsIgnoreCase } from "../../utils/functions";
 import SidebarMenuItem from "./sidebarItem";
 import _ from "lodash";
+import { getTranslatedValue } from "./sidebar";
 
 interface ICollapseSidebarItemProps {
   parent: IMenuDataInner;
@@ -19,8 +20,8 @@ const CollapseSidebarItem = (props: ICollapseSidebarItemProps) => {
   return (
     <div className="sidebar-level">
       <SidebarMenuItem
-        name={props.parent.name}
-        path={props.path}
+        name={getTranslatedValue(props.parent.name)}
+        path={getTranslatedValue(props.path)}
         isOpen={isOpen}
         isActive={props.isParentActive}
         toggleOpen={() => setIsOpen((prev) => !prev)}
@@ -31,8 +32,10 @@ const CollapseSidebarItem = (props: ICollapseSidebarItemProps) => {
           {props.parent.data.map((d) => {
             const isActive =
               props.isParentActive &&
-              !!props.pathValues.find((p) => equalsIgnoreCase(d.name, p));
-            const newPath = `${props.path}/${d.name}`;
+              !!props.pathValues.find((p) =>
+                equalsIgnoreCase(getTranslatedValue(d.name), p)
+              );
+            const newPath = `${props.path}/${getTranslatedValue(d.name)}`;
             const newToggler = `${props.toggler}-${d.name}`.replace(/\s/g, "");
 
             return (

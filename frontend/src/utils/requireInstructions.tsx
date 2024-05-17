@@ -5,7 +5,7 @@ export default function RequireInstructions({ children }: { children: JSX.Elemen
   let location = useLocation();
 
   if (!sessionStorage.getItem(INTRO_DONE_TOKEN)) {
-    return <Navigate to="/instructions" state={{ from: location }} />;
+    return <Navigate to="/instrukcje" state={{ from: location }} />;
   }
 
   return children;

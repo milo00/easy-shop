@@ -19,7 +19,7 @@ const singleBreadItemForPath = (
 const breadcrumbItemsFromPath = (paths: (string | undefined)[]) => {
   const items: JSX.Element[] = [];
   let path = Object.values(Gender).includes(paths[0]?.toUpperCase() as Gender)
-    ? "/items/categories"
+    ? "/produkty/kategorie"
     : "";
 
   paths?.forEach((p, index) => {

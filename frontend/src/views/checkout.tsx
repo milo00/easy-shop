@@ -6,7 +6,7 @@ import { ReactNode, useEffect, useState } from "react";
 import CheckoutFormElement from "../components/checkout/checkoutFormElement";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, IRootState } from "../store/store";
-import { fetchById } from "../store/slices/accountSlice";
+import { fetchLoggedIn } from "../store/slices/accountSlice";
 import CreditCardForm from "../components/checkout/forms/creditCardForm";
 import { clear } from "../store/slices/cartSlice";
 import ContactForm from "../components/checkout/forms/contactForm";
@@ -24,7 +24,7 @@ const Checkout = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    dispatch(fetchById());
+    dispatch(fetchLoggedIn());
   }, [dispatch]);
 
   useEffect(() => {
@@ -138,13 +138,13 @@ const Checkout = () => {
         <Col xs={0} md={1}></Col>
         <Col>
           <Row className="justify-content-between">
-            <h1 className="w-auto">ORDER DETAILS</h1>
+            <h1 className="w-auto">SZCZEGÓŁY ZAMÓWIENIA</h1>
           </Row>
           <Row className="py-3 mt-3 mb-5 gap-4">
             <CheckoutFormElement
               isOpen={!submittedForms[0]}
               wasSubmitted={submittedForms[0]}
-              header={"contact"}
+              header={"kontakt"}
               onSubmitCallback={(data: FormData) => onSubmitCallback(data, 0)}
               onResetCallback={() => onReset(0)}
             >
@@ -153,7 +153,7 @@ const Checkout = () => {
             <CheckoutFormElement
               isOpen={submittedForms[0]}
               wasSubmitted={submittedForms[1]}
-              header={"address"}
+              header={"adres"}
               onSubmitCallback={(data: FormData) => onSubmitCallback(data, 1)}
               onResetCallback={() => onReset(1)}
             >
@@ -161,7 +161,7 @@ const Checkout = () => {
             </CheckoutFormElement>
             <CheckoutFormElement
               isOpen={submittedForms[1]}
-              header={"payment"}
+              header={"płatność"}
               onSubmitCallback={(data: FormData) => onSubmitCallback(data, 2)}
               onResetCallback={() => onReset(2)}
               wasSubmitted={submittedForms[2]}
@@ -177,7 +177,7 @@ const Checkout = () => {
                     onClick={onBuy}
                     disabled={!cardValidated}
                   >
-                    buy
+                    kup
                   </Button>
                 </Col>
               </Row>

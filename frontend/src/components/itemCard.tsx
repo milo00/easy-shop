@@ -11,7 +11,7 @@ export const ItemCard = (props: IItemCardProps) => {
   const navigate = useNavigate();
 
   const handleOnClick = () => {
-    navigate(`/items/${props.item?.id}`);
+    navigate(`/produkty/${props.item?.id}`);
   };
 
   return (

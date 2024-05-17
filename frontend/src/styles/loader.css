@@ -8,17 +8,21 @@
 
 .loader-text {
   padding-top: 1rem;
-  transition: opacity 0.3s, transform 0.3s;
+  transition: opacity 0.5s, transform 0.5s;
   opacity: 1;
   transform: translateY(0);
 }
 
-.loader-text.fade-out {
+.loader-text-fade-out {
+  padding-top: 1rem;
   opacity: 0;
+  transition: opacity 0.5s, transform 0.5s;
   transform: translateY(1rem);
 }
 
-.loader-text.fade-in {
+.loader-text-fade-in {
+  padding-top: 1rem;
   opacity: 0;
+  transition: opacity 0.5s, transform 0.5s;
   transform: translateY(-1rem);
 }

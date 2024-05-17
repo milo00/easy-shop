@@ -34,10 +34,10 @@ export const AppRoutes = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/login" element={mutliWrapper(<Login />, true)} />
-        <Route path="/register" element={mutliWrapper(<Register />, true)} />
+        <Route path="/zaloguj" element={mutliWrapper(<Login />, true)} />
+        <Route path="/zarejestruj" element={mutliWrapper(<Register />, true)} />
         <Route
-          path="/logout"
+          path="/wyloguj"
           element={requireInstructionsWrapper(
             errorBoundaryWrapper(
               <RequireAuth>
@@ -50,22 +50,22 @@ export const AppRoutes = () => {
           path="/"
           element={requireInstructionsWrapper(errorBoundaryWrapper(<Home />))}
         />
-        <Route path="/instructions" element={errorBoundaryWrapper(<Instructions />)} />
-        <Route path="/items/:id" element={mutliWrapper(<Item />)} />
+        <Route path="/instrukcje" element={errorBoundaryWrapper(<Instructions />)} />
+        <Route path="/produkty/:id" element={mutliWrapper(<Item />)} />
         <Route
-          path="/items/categories/:gender/:category?/:subcategory?/:productType?"
+          path="/produkty/kategorie/:gender/:category?/:subcategory?/:productType?"
           element={mutliWrapper(<Items fetchItems={fetchItems} />)}
         />
         <Route
-          path="/items/categories/kids/:gender/:category?/:subcategory?/:productType?"
+          path="/produkty/kategorie/kids/:gender/:category?/:subcategory?/:productType?"
           element={mutliWrapper(<Items fetchItems={fetchItems} />)}
         />
         <Route
-          path="/sale/:gender?/:category?/:subcategory?/:productType?"
+          path="/wyprzedaż/:gender?/:category?/:subcategory?/:productType?"
           element={mutliWrapper(<Items fetchItems={fetchOnSale} />)}
         />
-        <Route path="/cart" element={mutliWrapper(<Cart />)} />
-        <Route path="/checkout" element={mutliWrapper(<Checkout />, true)} />
+        <Route path="/koszyk" element={mutliWrapper(<Cart />)} />
+        <Route path="/kasa" element={mutliWrapper(<Checkout />, true)} />
         <Route
           path="*"
           element={

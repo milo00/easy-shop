@@ -21,10 +21,10 @@ const CheckoutItem = (props: ICheckoutItemProps) => {
         <span>{props.item.name}</span>
         <span>{props.item.currentPrice} PLN</span>
         <span className="text-secondary" style={{ fontSize: "smaller" }}>
-          size: {props.item.size}
+          rozmiar: {props.item.size}
         </span>
         <span className="text-secondary" style={{ fontSize: "smaller" }}>
-          quantity: {props.item.quantity}
+          ilość: {props.item.quantity}
         </span>
       </div>
     </div>

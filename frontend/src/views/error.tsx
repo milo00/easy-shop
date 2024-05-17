@@ -42,7 +42,7 @@ const Error = (props: IErrorProps) => {
         <Col>
           <Row>
             <h1>ooops!</h1>
-            <h2>something went wrong</h2>
+            <h2>coś poszło nie tak</h2>
             <h3>{props.message}</h3>
             <Button
               color="primary"
@@ -54,7 +54,7 @@ const Error = (props: IErrorProps) => {
                 marginTop: "12px",
               }}
             >
-              go back to homepage
+              powróć na stronę główną
             </Button>
           </Row>
         </Col>

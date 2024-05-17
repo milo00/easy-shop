@@ -14,20 +14,29 @@ import {
   faArrowRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import { isAuthenticated } from "../../utils/authentication";
-import { useSelector } from "react-redux";
-import { IRootState } from "../../store/store";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, IRootState } from "../../store/store";
+import { useEffect, useState } from "react";
 import InstructionsModal from "./instructionsModal";
+import { fetchLoggedIn } from "../../store/slices/accountSlice";
 
 const Header = (props: { basic?: boolean }) => {
   const [isInstructionsModalOpen, setIsInstructionsModalOpen] = useState(false);
   const cart = useSelector((state: IRootState) => state.cart.cart);
+  const user = useSelector((state: IRootState) => state.account.user);
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    if (isAuthenticated() && !user?.firstName) {
+      dispatch(fetchLoggedIn());
+    }
+  }, [user, dispatch]);
 
   return (
     <>
       <InstructionsModal
         isOpen={isInstructionsModalOpen}
-        onCloseCallback={() => setIsInstructionsModalOpen(false)}
+        toggle={() => setIsInstructionsModalOpen((prev) => !prev)}
       />
       <Navbar
         light
@@ -52,29 +61,36 @@ const Header = (props: { basic?: boolean }) => {
           <>
             <Nav className="me-auto">
               <NavItem>
-                <NavLink href="/items/categories/women">women</NavLink>
+                <NavLink href="/produkty/kategorie/kobiety">kobiety</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="/items/categories/men">men</NavLink>
+                <NavLink href="/produkty/kategorie/mężczyźni">
+                  mężczyźni
+                </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="/items/categories/kids">kids</NavLink>
+                <NavLink href="/produkty/kategorie/kids">dzieci</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="/sale">sale</NavLink>
+                <NavLink href="/wyprzedaż">wyprzedaż</NavLink>
               </NavItem>
             </Nav>
             <Nav className="align-items-center">
-              <Button className="me-3"
-                outline 
+              <Button
+                className="me-3"
+                outline
                 color="primary"
                 onClick={() => setIsInstructionsModalOpen(true)}
               >
-                instructions
+                instrukcje
               </Button>
 
+              {user?.firstName && (
+                <span className="fw-light mx-2">cześć, {user?.firstName}!</span>
+              )}
+
               <NavItem>
-                <NavLink href="/cart" style={{ position: "relative" }}>
+                <NavLink href="/koszyk" style={{ position: "relative" }}>
                   <FontAwesomeIcon icon={faCartShopping} />
                   {cart.items?.length ? (
                     <Badge
@@ -93,7 +109,7 @@ const Header = (props: { basic?: boolean }) => {
               </NavItem>
 
               <NavItem>
-                <NavLink href={isAuthenticated() ? "/logout" : "/login"}>
+                <NavLink href={isAuthenticated() ? "/wyloguj" : "/zaloguj"}>
                   <FontAwesomeIcon
                     icon={isAuthenticated() ? faArrowRightFromBracket : faUser}
                   />
@@ -107,7 +123,7 @@ const Header = (props: { basic?: boolean }) => {
             color="primary"
             onClick={() => setIsInstructionsModalOpen(true)}
           >
-            instructions
+            instrukcje
           </Button>
         )}
       </Navbar>

@@ -8,7 +8,12 @@ import { breadcrumbBuilder } from "../utils/breadcrumbBuilder";
 import { addItem } from "../store/slices/cartSlice";
 import Loader from "../components/loader/loader";
 import Sidebar from "../components/sidebar/sidebar";
-import { Category, Gender } from "../models/item";
+import {
+  Category,
+  Gender,
+  getCategoryTranslation,
+  getGenderTranslation,
+} from "../models/item";
 import _ from "lodash";
 
 const apparelSizes = ["XS", "S", "M", "L", "XL"];
@@ -72,8 +77,8 @@ export const Item = () => {
               <Col>
                 {item &&
                   breadcrumbBuilder([
-                    item.gender,
-                    item.productType?.category,
+                    getGenderTranslation(item.gender),
+                    getCategoryTranslation(item.productType?.category),
                     item.productType?.subcategory,
                     item.productType?.productType,
                     item.name,
