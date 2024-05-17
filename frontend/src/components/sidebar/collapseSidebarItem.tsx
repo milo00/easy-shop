@@ -21,7 +21,7 @@ const CollapseSidebarItem = (props: ICollapseSidebarItemProps) => {
     <div className="sidebar-level">
       <SidebarMenuItem
         name={getTranslatedValue(props.parent.name)}
-        path={getTranslatedValue(props.path)}
+        path={props.path}
         isOpen={isOpen}
         isActive={props.isParentActive}
         toggleOpen={() => setIsOpen((prev) => !prev)}
@@ -30,12 +30,13 @@ const CollapseSidebarItem = (props: ICollapseSidebarItemProps) => {
       {props.parent.data && (
         <Collapse isOpen={isOpen}>
           {props.parent.data.map((d) => {
+            const translatedname = getTranslatedValue(d.name);
             const isActive =
               props.isParentActive &&
               !!props.pathValues.find((p) =>
-                equalsIgnoreCase(getTranslatedValue(d.name), p)
+                equalsIgnoreCase(translatedname, p)
               );
-            const newPath = `${props.path}/${getTranslatedValue(d.name)}`;
+            const newPath = `${props.path}/${translatedname}`;
             const newToggler = `${props.toggler}-${d.name}`.replace(/\s/g, "");
 
             return (

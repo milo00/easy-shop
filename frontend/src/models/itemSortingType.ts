@@ -1,9 +1,9 @@
 enum ItemSortingType {
-  DEFAULT = "DEFAULT",
-  NAME_ASC = "NAME_ASC",
-  NAME_DESC = "NAME_DESC",
-  PRICE_ASC = "PRICE_ASC",
-  PRICE_DESC = "PRICE_DESC",
+  DEFAULT = "DOMYŚLNE",
+  NAME_ASC = "NAZWA_ASC",
+  NAME_DESC = "NAZWA_DESC",
+  PRICE_ASC = "CENA_ASC",
+  PRICE_DESC = "CENA_DESC",
 }
 
 export default ItemSortingType;

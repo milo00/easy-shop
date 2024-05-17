@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { Category, Gender } from "../../models/item";
 import { AppDispatch } from "../../store/store";
-import { isKeyOfEnum as isValueOfEnum } from "../functions";
+import { getEnumKeyFromValue, isEnumValue } from "../functions";
 import { reset } from "../../store/slices/itemsSlice";
 import ItemSortingType from "../../models/itemSortingType";
 
@@ -19,38 +19,32 @@ const useFetchItems = (
     let actionPromise: { abort: () => any };
 
     if (
-      isValueOfEnum(Object.values(Category), params.category) &&
-      isValueOfEnum(Object.values(Gender), params.gender)
+      isEnumValue(Category, params.category) &&
+      isEnumValue(Gender, params.gender)
     ) {
       actionPromise = dispatch(
         action({
           page: currentPage,
-          sortingType: currentSorting,
-          gender: Object.entries(Gender).find(
-            (val) => val[1] === params.gender?.toUpperCase()
-          )![0],
-          category: Object.entries(Category).find(
-            (val) => val[1] === params.category?.toUpperCase()
-          )![0],
+          sortingType: getEnumKeyFromValue(ItemSortingType, currentSorting),
+          gender: getEnumKeyFromValue(Gender, params.gender),
+          category: getEnumKeyFromValue(Category, params.category),
           subcategory: params.subcategory,
           productType: params.productType,
         })
       );
-    } else if (isValueOfEnum(Object.values(Gender), params.gender)) {
+    } else if (isEnumValue(Gender, params.gender)) {
       actionPromise = dispatch(
         action({
           page: currentPage,
-          sortingType: currentSorting,
-          gender: Object.entries(Gender).find(
-            (val) => val[1] === params.gender?.toUpperCase()
-          )![0],
+          sortingType: getEnumKeyFromValue(ItemSortingType, currentSorting),
+          gender: getEnumKeyFromValue(Gender, params.gender),
         })
       );
     } else {
       actionPromise = dispatch(
         action({
           page: currentPage,
-          sortingType: currentSorting,
+          sortingType: getEnumKeyFromValue(ItemSortingType, currentSorting),
         })
       );
     }

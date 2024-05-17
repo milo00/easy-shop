@@ -101,7 +101,9 @@ const Instructions = () => {
             </li>
             <li>
               <strong>Zadanie 3:</strong> Przejdź do koszyka, wprowadź kod
-              promocyjny EASY-SHOP i sfinalizuj zamówienie.
+              promocyjny <strong>EASY-SHOP</strong> w{" "}
+              <strong>podsumowaniu zamówienia w koszyku</strong> i sfinalizuj
+              zamówienie.
             </li>
           </ul>
         </span>

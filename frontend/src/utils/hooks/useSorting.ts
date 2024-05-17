@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import ItemSortingType from "../../models/itemSortingType";
 import { useEffect, useMemo, useState } from "react";
+import { getEnumFromValue } from "../functions";
 
 const useSorting = () => {
   const location = useLocation();
@@ -9,20 +10,18 @@ const useSorting = () => {
     [location.search]
   );
   const [currentSorting, setCurrentSorting] = useState(
-    ItemSortingType[
-      (
-        queryParams.get("sort") ?? "default"
-      ).toUpperCase() as keyof typeof ItemSortingType
-    ]
+    getEnumFromValue(
+      ItemSortingType,
+      (queryParams.get("sort") ?? "domyślnie").toUpperCase()
+    ) ?? ItemSortingType.DEFAULT
   );
 
   useEffect(() => {
     setCurrentSorting(
-      ItemSortingType[
-        (
-          queryParams.get("sort") ?? "default"
-        ).toUpperCase() as keyof typeof ItemSortingType
-      ]
+      getEnumFromValue(
+        ItemSortingType,
+        (queryParams.get("sort") ?? "domyślnie").toUpperCase()
+      ) ?? ItemSortingType.DEFAULT
     );
   }, [queryParams]);
 

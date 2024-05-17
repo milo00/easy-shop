@@ -29,6 +29,7 @@ export const fetchItems = createAsyncThunk(
     subcategory?: string;
     productType?: string;
   }) => {
+    debugger;
     const response = await api.get(`${BASE_URL}/items`, {
       params: {
         size: 12,

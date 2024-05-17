@@ -1,23 +1,21 @@
 import { useLocation, useParams } from "react-router-dom";
-import { equalsIgnoreCase, isSalePath } from "../../utils/functions";
 import {
-  Gender,
-  getCategoryFromTranslation,
-  getCategoryTranslation,
-  getGenderFromTranslation,
-  getGenderTranslation,
-  isBoysOrGirlsGender,
-  isCategoryKey,
-  isGenderKey,
-} from "../../models/item";
+  equalsIgnoreCase,
+  getEnumFromValue,
+  getEnumValueFromKey,
+  isEnumKey,
+  isSalePath,
+} from "../../utils/functions";
+import { Category, Gender, isBoysOrGirlsGender } from "../../models/item";
 import CollapseSidebarItem from "./collapseSidebarItem";
 import { Fragment, useContext } from "react";
 import { SidebarDataContext } from "../../App";
 import "../../styles/sidebar.css";
 
 export const getTranslatedValue = (value: string) => {
-  if (isGenderKey(value)) return getGenderTranslation(value) ?? "";
-  if (isCategoryKey(value)) return getCategoryTranslation(value) ?? "";
+  if (isEnumKey(Gender, value)) return getEnumValueFromKey(Gender, value) ?? "";
+  if (isEnumKey(Category, value))
+    return getEnumValueFromKey(Category, value) ?? "";
   if (value === "SALE") return "WYPRZEDAŻ";
   return value;
 };
@@ -27,8 +25,8 @@ export const Sidebar = () => {
   const location = useLocation();
   const data = useContext(SidebarDataContext);
 
-  const pathGender = getGenderFromTranslation(params.gender);
-  const pathCategory = getCategoryFromTranslation(params.category);
+  const pathGender = getEnumFromValue(Gender, params.gender);
+  const pathCategory = getEnumFromValue(Category, params.category);
   const pathSubcategory = params.subcategory;
   const pathProductType = params.productType;
 
@@ -50,7 +48,7 @@ export const Sidebar = () => {
             parent={menuData}
             toggler={menuData.name}
             path={`${
-              isGenderKey(menuData.name) ? "/produkty/kategorie/" : "/"
+              isEnumKey(Gender, menuData.name) ? "/produkty/kategorie/" : "/"
             }${getTranslatedValue(menuData.name)}`}
             isParentActive={isActive(menuData.name)}
             pathValues={[

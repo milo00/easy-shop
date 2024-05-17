@@ -62,10 +62,10 @@ const ItemSorter = (props: IItemSorterProps) => {
 
     switch (direction) {
       case "ASC":
-        directionString = "ascending";
+        directionString = "malejąco";
         break;
       case "DESC":
-        directionString = "descending";
+        directionString = "rosnąco";
         break;
     }
 
@@ -82,16 +82,16 @@ const ItemSorter = (props: IItemSorterProps) => {
         sortowanie
       </DropdownToggle>
       <DropdownMenu>
-        {Object.keys(ItemSortingType).map((i) => {
+        {Object.entries(ItemSortingType).map((v) => {
           const sortingType =
-            ItemSortingType[i as keyof typeof ItemSortingType];
+            ItemSortingType[v[0] as keyof typeof ItemSortingType];
           return (
             <DropdownItem
-              key={i}
+              key={v[0]}
               onClick={() => handleSortChange(sortingType)}
               active={selectedSort === sortingType}
             >
-              {generateSortingOption(sortingType, i)}
+              {generateSortingOption(sortingType, v[1])}
             </DropdownItem>
           );
         })}

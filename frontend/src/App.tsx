@@ -30,7 +30,7 @@ function App() {
       <SidebarDataContext.Provider value={sidebarData}>
         <LoaderTypeDataContext.Provider value={LoaderType.SPINNER}>
           <div className="App">
-            <ToastContainer />
+            <ToastContainer autoClose={1500} hideProgressBar />
             <AppRoutes />
           </div>
         </LoaderTypeDataContext.Provider>

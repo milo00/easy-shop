@@ -8,13 +8,9 @@ import { breadcrumbBuilder } from "../utils/breadcrumbBuilder";
 import { addItem } from "../store/slices/cartSlice";
 import Loader from "../components/loader/loader";
 import Sidebar from "../components/sidebar/sidebar";
-import {
-  Category,
-  Gender,
-  getCategoryTranslation,
-  getGenderTranslation,
-} from "../models/item";
+import { Category, Gender } from "../models/item";
 import _ from "lodash";
+import { getEnumValueFromKey } from "../utils/functions";
 
 const apparelSizes = ["XS", "S", "M", "L", "XL"];
 const footwearSizes: Map<Gender, number[]> = new Map([
@@ -77,8 +73,8 @@ export const Item = () => {
               <Col>
                 {item &&
                   breadcrumbBuilder([
-                    getGenderTranslation(item.gender),
-                    getCategoryTranslation(item.productType?.category),
+                    getEnumValueFromKey(Gender, item.gender),
+                    getEnumValueFromKey(Category, item.productType?.category),
                     item.productType?.subcategory,
                     item.productType?.productType,
                     item.name,
