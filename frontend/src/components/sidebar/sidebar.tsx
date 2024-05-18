@@ -11,12 +11,13 @@ import CollapseSidebarItem from "./collapseSidebarItem";
 import { Fragment, useContext } from "react";
 import { SidebarDataContext } from "../../App";
 import "../../styles/sidebar.css";
+import { SALE, SALE_TRANSLATED } from "../../models/menuData";
 
 export const getTranslatedValue = (value: string) => {
   if (isEnumKey(Gender, value)) return getEnumValueFromKey(Gender, value) ?? "";
   if (isEnumKey(Category, value))
     return getEnumValueFromKey(Category, value) ?? "";
-  if (value === "SALE") return "WYPRZEDAŻ";
+  if (value === "SALE") return SALE_TRANSLATED;
   return value;
 };
 
@@ -31,11 +32,12 @@ export const Sidebar = () => {
   const pathProductType = params.productType;
 
   const isSale = (menuData: string) =>
-    isSalePath(location) && menuData === "SALE";
+    isSalePath(location) && menuData === SALE;
 
   const isCurrentGender = (gender: string) =>
     equalsIgnoreCase(getTranslatedValue(gender), pathGender) ||
-    (gender === Gender.KIDS && isBoysOrGirlsGender(pathGender));
+    (getEnumValueFromKey(Gender, gender) === Gender.KIDS &&
+      isBoysOrGirlsGender(pathGender));
 
   const isActive = (menuData: string) =>
     isSale(menuData) || (!isSalePath(location) && isCurrentGender(menuData));

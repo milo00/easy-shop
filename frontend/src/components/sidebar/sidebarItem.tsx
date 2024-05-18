@@ -2,6 +2,7 @@ import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { SALE_TRANSLATED } from "../../models/menuData";
 
 interface ISidebarMenuItemProps {
   name: string;
@@ -29,7 +30,7 @@ const SidebarMenuItem = (props: ISidebarMenuItemProps) => {
       onClick={props.toggleOpen}
     >
       <span
-        className={props.name === "WYPRZEDAŻ" ? "text-danger fw-bold" : ""}
+        className={props.name === SALE_TRANSLATED ? "text-danger fw-bold" : ""}
         onClickCapture={(e) => handleOnClick(e, props.path)}
       >
         {props.name.toLowerCase()}

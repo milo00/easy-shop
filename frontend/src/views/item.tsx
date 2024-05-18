@@ -10,7 +10,11 @@ import Loader from "../components/loader/loader";
 import Sidebar from "../components/sidebar/sidebar";
 import { Category, Gender } from "../models/item";
 import _ from "lodash";
-import { getEnumValueFromKey } from "../utils/functions";
+import {
+  getEnumFromValue,
+  getEnumKeyFromValue,
+  getEnumValueFromKey,
+} from "../utils/functions";
 
 const apparelSizes = ["XS", "S", "M", "L", "XL"];
 const footwearSizes: Map<Gender, number[]> = new Map([
@@ -47,9 +51,13 @@ export const Item = () => {
   const isLoading = status === "loading";
 
   const getSizes = (category?: Category, gender?: Gender) => {
-    return category === Category.APPAREL
+    return getEnumKeyFromValue(Category, category) === Category.APPAREL
       ? apparelSizes
-      : (gender && footwearSizes.get(gender)) ?? [];
+      : (gender &&
+          footwearSizes.get(
+            getEnumFromValue(Gender, gender) ?? Gender.WOMEN
+          )) ??
+          [];
   };
 
   const onSizeChange = (size: string | number) => {

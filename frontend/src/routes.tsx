@@ -57,7 +57,7 @@ export const AppRoutes = () => {
           element={mutliWrapper(<Items fetchItems={fetchItems} />)}
         />
         <Route
-          path="/produkty/kategorie/kids/:gender/:category?/:subcategory?/:productType?"
+          path="/produkty/kategorie/dzieci/:gender/:category?/:subcategory?/:productType?"
           element={mutliWrapper(<Items fetchItems={fetchItems} />)}
         />
         <Route

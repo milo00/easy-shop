@@ -13,6 +13,8 @@ import { isKidsPath, isSalePath } from "../utils/functions";
 import { Fragment } from "react";
 import ItemSorter from "../components/itemSorter";
 import useSorting from "../utils/hooks/useSorting";
+import { Gender } from "../models/item";
+import { SALE_TRANSLATED } from "../models/menuData";
 
 interface IItemsProps {
   fetchItems: any;
@@ -38,8 +40,10 @@ const Items = (props: IItemsProps) => {
           <Row>
             <Col>
               {breadcrumbBuilder([
-                isSalePath(location) ? "sale" : undefined,
-                isKidsPath(location) ? "kids" : undefined,
+                isSalePath(location)
+                  ? SALE_TRANSLATED.toLowerCase()
+                  : undefined,
+                isKidsPath(location) ? Gender.KIDS.toLowerCase() : undefined,
                 params.gender,
                 params.category,
                 params.subcategory,

@@ -10,3 +10,6 @@ export interface IMenuDataInner {
 export function isSidebarData(object: any): object is IMenuData {
   return "data" in object && !("name" in object);
 }
+
+export const SALE_TRANSLATED = "WYPRZEDAŻ";
+export const SALE = "SALE";
