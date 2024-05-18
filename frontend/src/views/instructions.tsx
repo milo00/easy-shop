@@ -12,9 +12,7 @@ const Instructions = () => {
     const handleKeyDown = (event: KeyboardEvent) => {
       event.preventDefault();
       if (event.key === " ") {
-        console.log("here");
-
-        toast("Irritation time registered");
+        toast("Zarejestrowano czas irytacji");
       }
     };
 

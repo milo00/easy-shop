@@ -30,7 +30,7 @@ const CatchKey = (props: PropsWithChildren<ICatchKeyProps>) => {
       if (event.target === document.body) {
         event.preventDefault();
         if (event.key === " " && canRegisterIrritationTime) {
-          toast("Irritation time registered");
+          toast("Zarejestrowano czas irytacji");
           if (userId) {
             dispatch(
               endTimerGlobally({
