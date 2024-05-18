@@ -27,7 +27,7 @@ const CheckoutFormElement = (
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
-    if (props.wasSubmitted && props.header === "payment") {
+    if (props.wasSubmitted && props.header === "płatność") {
       setIsLoading(true);
       timer = setTimeout(() => {
         setIsLoading(false);
@@ -77,7 +77,7 @@ const CheckoutFormElement = (
           outline
           size="sm"
         >
-          next
+          dalej
         </Button>
       </Form>
     </CheckoutCollapse>

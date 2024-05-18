@@ -194,7 +194,7 @@ const Checkout = () => {
             />
             <div className="border border-bottom my-2" />
             {items.length ? (
-              <div className="d-flex align-items-center flex-column">
+              <div className="d-flex align-items-center flex-column gap-2">
                 {items.map((i) => (
                   <CheckoutItem key={i.id} item={i} />
                 ))}

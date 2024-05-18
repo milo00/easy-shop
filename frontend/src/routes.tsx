@@ -70,7 +70,7 @@ export const AppRoutes = () => {
           path="*"
           element={
             <Layout>
-              <Error message={"page not found"} />
+              <Error message={"nie znaleziono strony"} />
             </Layout>
           }
         />
