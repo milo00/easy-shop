@@ -23,7 +23,7 @@ public class UserIrritationTimeService {
     public UserIrritationTime create(UserIrritationTimeDto userIrritationTimeDto) {
         var user = userRepository.findById(userIrritationTimeDto.getUserId());
         return user.map(value -> userIrritationTimeRepository.save(
-                        new UserIrritationTime(userIrritationTimeDto, value, LocalDateTime.now())))
+                        new UserIrritationTime(userIrritationTimeDto, value)))
                 .orElseThrow(() -> new NoSuchElementException("Wrong user id" + userIrritationTimeDto.getUserId()));
     }
 

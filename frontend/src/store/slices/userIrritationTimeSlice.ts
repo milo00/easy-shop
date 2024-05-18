@@ -32,6 +32,7 @@ export const endTimerGlobally = createAsyncThunk<
 
     return await api.post(`${BASE_URL}/user-irritation-time`, {
       ...userIrritationTime,
+      startTime: new Date(startTime).toISOString(),
       elapsedTime,
     });
   },
@@ -103,6 +104,7 @@ const userIrritationTimeSlice = createSlice({
             {
               location,
               elapsedTime,
+              startTime: new Date(state.startTime).toISOString(),
               loaderType,
             },
           ])

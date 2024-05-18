@@ -5,6 +5,7 @@ export default interface IUserIrritationTime {
   id?: number;
   location?: string;
   elapsedTime?: number;
+  startTime?: Date;
   userId?: number;
   loaderType?: LoaderType;
 }

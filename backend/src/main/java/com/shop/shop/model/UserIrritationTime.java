@@ -11,13 +11,13 @@ import java.time.LocalDateTime;
 @Entity
 public class UserIrritationTime {
 
-    public UserIrritationTime(UserIrritationTimeDto userIrritationTimeDto, User user, LocalDateTime date) {
+    public UserIrritationTime(UserIrritationTimeDto userIrritationTimeDto, User user) {
         this.id = userIrritationTimeDto.getId();
         this.location = userIrritationTimeDto.getLocation();
         this.elapsedTime = userIrritationTimeDto.getElapsedTime();
+        this.dateTime = userIrritationTimeDto.getStartTime();
         this.loaderType = userIrritationTimeDto.getLoaderType();
         this.user = user;
-        this.date = date;
     }
 
     @Id
@@ -35,7 +35,7 @@ public class UserIrritationTime {
     private Double elapsedTime;
 
     @Column(nullable = false)
-    private LocalDateTime date;
+    private LocalDateTime dateTime;
 
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)

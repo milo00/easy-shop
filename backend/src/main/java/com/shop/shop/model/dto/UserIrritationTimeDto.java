@@ -4,6 +4,8 @@ import com.shop.shop.model.enums.LoaderType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 public class UserIrritationTimeDto {
@@ -11,6 +13,6 @@ public class UserIrritationTimeDto {
     private Integer userId;
     private String location;
     private Double elapsedTime;
-
+    private LocalDateTime startTime;
     private LoaderType loaderType;
 }
