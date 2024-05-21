@@ -10,15 +10,19 @@ import Loader from "../components/loader/loader";
 import Sidebar from "../components/sidebar/sidebar";
 import { Category, Gender } from "../models/item";
 import _ from "lodash";
-import {
-  getEnumFromValue,
-  getEnumKeyFromValue,
-  getEnumValueFromKey,
-} from "../utils/functions";
+import { getEnumFromKey, getEnumValueFromKey } from "../utils/functions";
 
-const apparelSizes = ["XS", "S", "M", "L", "XL"];
+const apparelSizes: Map<Gender, string[]> = new Map([
+  [Gender.WOMEN, ["XS", "S", "M", "L", "XL"]],
+  [Gender.MEN, ["XS", "S", "M", "L", "XL"]],
+  [Gender.KIDS, ["116", "128", "134", "140", "146", "152", "158", "164"]],
+  [Gender.GIRLS, ["116", "128", "134", "140", "146", "152", "158", "164"]],
+  [Gender.BOYS, ["116", "128", "134", "140", "146", "152", "158", "164"]],
+]);
 const footwearSizes: Map<Gender, number[]> = new Map([
   [Gender.KIDS, _.range(31, 37)],
+  [Gender.BOYS, _.range(31, 37)],
+  [Gender.GIRLS, _.range(31, 37)],
   [Gender.MEN, _.range(38, 46)],
   [Gender.WOMEN, _.range(35, 41)],
 ]);
@@ -45,19 +49,22 @@ export const Item = () => {
   const onAddToCard = () => {
     setCartText("");
     dispatch(addItem({ id: item.id, size: chosenSize }));
-    setCartText("item added to cart");
+    setCartText("produkt dodany do koszyka");
   };
 
   const isLoading = status === "loading";
 
+  const getSizeForGender = (
+    sizes: Map<Gender, number[]> | Map<Gender, string[]>,
+    gender?: Gender
+  ) => gender && sizes.get(getEnumFromKey(Gender, gender) ?? Gender.WOMEN);
+
   const getSizes = (category?: Category, gender?: Gender) => {
-    return getEnumKeyFromValue(Category, category) === Category.APPAREL
-      ? apparelSizes
-      : (gender &&
-          footwearSizes.get(
-            getEnumFromValue(Gender, gender) ?? Gender.WOMEN
-          )) ??
-          [];
+    return (
+      (getEnumValueFromKey(Category, category) === Category.APPAREL
+        ? getSizeForGender(apparelSizes, gender)
+        : getSizeForGender(footwearSizes, gender)) ?? []
+    );
   };
 
   const onSizeChange = (size: string | number) => {
@@ -149,7 +156,7 @@ export const Item = () => {
                   disabled={!chosenSize}
                   style={{ width: "fit-content" }}
                 >
-                  add to cart
+                  dodaj do koszyka
                 </Button>
                 <span style={{ fontSize: "small", paddingTop: "0.5rem" }}>
                   {cartText}

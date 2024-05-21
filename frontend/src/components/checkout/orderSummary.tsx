@@ -5,6 +5,7 @@ interface IOrderSummaryProps {
   numOfItems: number;
   totalCost: number;
   discount?: number;
+  loading?: boolean;
 }
 
 const OrderSummary = (props: IOrderSummaryProps) => {
@@ -15,7 +16,7 @@ const OrderSummary = (props: IOrderSummaryProps) => {
   return (
     <>
       <h2>PODSUMOWANIE ZAMÓWIENIA:</h2>
-      <Loader loading={!props.numOfItems} basic>
+      <Loader loading={!!props.loading} basic>
         <div className="d-flex flex-column">
           <div className="d-flex justify-content-between">
             <span>{props.numOfItems} przedmiotów</span>

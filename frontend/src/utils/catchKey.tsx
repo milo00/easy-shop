@@ -9,6 +9,7 @@ import {
 } from "../store/slices/userIrritationTimeSlice";
 import { LoaderTypeDataContext } from "../App";
 import { toast } from "react-toastify";
+import popUpSound from "../assets/happy-pop.mp3";
 
 interface ICatchKeyProps {
   key?: string;
@@ -31,6 +32,12 @@ const CatchKey = (props: PropsWithChildren<ICatchKeyProps>) => {
         event.preventDefault();
         if (event.key === " " && canRegisterIrritationTime) {
           toast("Zarejestrowano czas irytacji");
+          var audio = new Audio(popUpSound);
+          try {
+            audio.play();
+          } catch (err) {
+            console.log("Failed to play, error: " + err);
+          }
           if (userId) {
             dispatch(
               endTimerGlobally({

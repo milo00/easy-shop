@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { INTRO_DONE_TOKEN } from "../utils/localStorageTokens";
 import { useNavigate } from "react-router-dom";
+import popUpSound from "../assets/happy-pop.mp3";
 
 const Instructions = () => {
   const navigate = useNavigate();
@@ -13,6 +14,12 @@ const Instructions = () => {
       event.preventDefault();
       if (event.key === " ") {
         toast("Zarejestrowano czas irytacji");
+        var audio = new Audio(popUpSound);
+        try {
+          audio.play();
+        } catch (err) {
+          console.log("Failed to play, error: " + err);
+        }
       }
     };
 
@@ -55,7 +62,7 @@ const Instructions = () => {
               <br />
               <div className="py-3 d-flex justify-content-center w-100">
                 <Button outline color="primary">
-                  instructions
+                  instrukcje
                 </Button>
               </div>
             </li>
@@ -64,8 +71,9 @@ const Instructions = () => {
               naciśnij klawisz <strong>Spacji</strong>.
               <br />
               <span style={{ fontSize: "smaller" }}>
-                Po naciśnięciu klawisza, w prawym górnym rogu aplikacji pojawi
-                się powiadomienie o zarejestrowaniu czasu irytacji.
+                Po naciśnięciu klawisza usłysz krótki dźwięk, a w prawym górnym
+                rogu aplikacji pojawi się powiadomienie o zarejestrowaniu czasu
+                irytacji.
                 <br />
                 Możesz teraz przetestować tę funkcję.
               </span>
@@ -76,6 +84,10 @@ const Instructions = () => {
             <li>
               Po wykonaniu zadań, wypełnij krótki kwestionariusz dotyczący
               Twoich odczuć związanych z czasem odpowiedzi strony.
+            </li>
+            <li>
+              Pamiętaj, że poza imieniem, nazwiskiem i datą urodzenia, wszystkie
+              podane przez Ciebie dane mogą być fikcyjne.
             </li>
           </ol>
         </span>

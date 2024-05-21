@@ -15,6 +15,7 @@ import {
 } from "../utils/localStorageTokens";
 import Header from "../components/header/header";
 import CatchKey from "../utils/catchKey";
+import Footer from "../components/footer";
 
 const Home = () => {
   const [wasFirstVisited, setWasFirstVisited] = useState(false);
@@ -99,6 +100,7 @@ const Home = () => {
               </Carousel>
             </Loader>
           </div>
+          <Footer />
         </Loader>
       </div>
     </CatchKey>

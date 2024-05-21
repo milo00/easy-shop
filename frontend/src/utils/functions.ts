@@ -35,6 +35,14 @@ export const getEnumFromValue = <T extends { [key: number]: string | number }>(
   return entry ? e[entry[0] as keyof typeof e] : undefined;
 };
 
+export const getEnumFromKey = <T extends { [key: number]: string | number }>(
+  e: T,
+  key?: string
+): T[keyof T] | undefined => {
+  const entry = Object.entries(e).find(([k, _]) => k === key?.toUpperCase());
+  return entry ? e[entry[0] as keyof typeof e] : undefined;
+};
+
 export const isEnumValue = <T extends { [key: number]: string | number }>(
   e: T,
   value?: string

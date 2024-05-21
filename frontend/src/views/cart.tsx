@@ -1,13 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import CartItem from "../components/checkout/cartItem";
-import { Button, Col, Container, Input, Row, Spinner } from "reactstrap";
+import { Button, Col, Container, Input, Row } from "reactstrap";
 import { clear } from "../store/slices/cartSlice";
 import EmptyCart from "./emptyCart";
 import { useNavigate } from "react-router-dom";
 import OrderSummary from "../components/checkout/orderSummary";
 import useCartItems from "../utils/hooks/useCartItems";
 import { IRootState } from "../store/store";
-import Loader from "../components/loader/loader";
 import { Fragment } from "react/jsx-runtime";
 import { MouseEvent, useState } from "react";
 import api, { BASE_URL } from "../config/axiosInterceptor";
@@ -85,22 +84,20 @@ const Cart = () => {
           </Row>
           <Row>
             <Col className="d-flex flex-column align-items-center">
-              <Loader loading={loading} width={50}>
-                <Row style={{ fontSize: "smaller", width: "100%" }}>
-                  <span className="ps-0">{`w sumie (${totalItems} przedmiotów): ${totalCost} PLN`}</span>
-                  <span className="ps-0">
-                    pamiętaj, dodanie przedmiotów do koszyka nie powoduje ich
-                    automatycznej rezerwacji
-                  </span>
-                </Row>
-                <Row className="py-3 mt-3 mb-5 gap-4 w-100">
-                  {items.map((i) => (
-                    <Fragment key={`${i.id}-${i.size}`}>
-                      <CartItem item={i} />
-                    </Fragment>
-                  ))}
-                </Row>
-              </Loader>
+              <Row style={{ fontSize: "smaller", width: "100%" }}>
+                <span className="ps-0">{`w sumie (${totalItems} przedmiotów): ${totalCost} PLN`}</span>
+                <span className="ps-0">
+                  pamiętaj, dodanie przedmiotów do koszyka nie powoduje ich
+                  automatycznej rezerwacji
+                </span>
+              </Row>
+              <Row className="py-3 mt-3 mb-5 gap-4 w-100">
+                {items.map((i) => (
+                  <Fragment key={`${i.id}-${i.size}`}>
+                    <CartItem item={i} />
+                  </Fragment>
+                ))}
+              </Row>
             </Col>
           </Row>
         </Col>
@@ -120,26 +117,25 @@ const Cart = () => {
                 numOfItems={totalItems}
                 totalCost={totalCost}
                 discount={discount}
+                loading={loadingDiscount}
               />
-              <div>
-                <div className="d-flex justify-content-between gap-2">
-                  <div className="w-100">
-                    <Input
-                      placeholder="kod promocyjny"
-                      onChange={(e) => setPromoCode(e.currentTarget.value)}
-                      disabled={loadingDiscount}
-                    />
+              {!loadingDiscount && (
+                <div>
+                  <div className="d-flex justify-content-between gap-2">
+                    <div className="w-100">
+                      <Input
+                        placeholder="kod promocyjny"
+                        onChange={(e) => setPromoCode(e.currentTarget.value)}
+                        disabled={loadingDiscount}
+                      />
+                    </div>
+                    <Button outline color="primary" onClick={validateCode}>
+                      dodaj
+                    </Button>
                   </div>
-                  <Button outline color="primary" onClick={validateCode}>
-                    {loadingDiscount ? (
-                      <Spinner style={{ width: "1rem", height: "1rem" }} />
-                    ) : (
-                      "dodaj"
-                    )}
-                  </Button>
+                  <span style={{ fontSize: "small" }}>{promoCodeText}</span>
                 </div>
-                <span style={{ fontSize: "small" }}>{promoCodeText}</span>
-              </div>
+              )}
             </Row>
           </Col>
         )}

@@ -66,6 +66,10 @@ const InstructionsModal = (props: IInstructionsModalProps) => {
                   Po wykonaniu zadań, wypełnij krótki kwestionariusz dotyczący
                   Twoich odczuć związanych z czasem odpowiedzi strony.
                 </li>
+                <li>
+                  Pamiętaj, że poza imieniem, nazwiskiem i datą urodzenia,
+                  wszystkie podane przez Ciebie dane mogą być fikcyjne.
+                </li>
               </ol>
             </span>
           </Row>

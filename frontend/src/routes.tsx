@@ -28,7 +28,9 @@ const requireInstructionsWrapper = (children: JSX.Element) => (
 );
 
 const mutliWrapper = (children: JSX.Element, basic?: boolean) =>
-  requireInstructionsWrapper(errorBoundaryWrapper(layoutWrapper(children, basic)));
+  requireInstructionsWrapper(
+    errorBoundaryWrapper(layoutWrapper(children, basic))
+  );
 
 export const AppRoutes = () => {
   return (
@@ -50,7 +52,10 @@ export const AppRoutes = () => {
           path="/"
           element={requireInstructionsWrapper(errorBoundaryWrapper(<Home />))}
         />
-        <Route path="/instrukcje" element={errorBoundaryWrapper(<Instructions />)} />
+        <Route
+          path="/instrukcje"
+          element={errorBoundaryWrapper(<Instructions />)}
+        />
         <Route path="/produkty/:id" element={mutliWrapper(<Item />)} />
         <Route
           path="/produkty/kategorie/:gender/:category?/:subcategory?/:productType?"
