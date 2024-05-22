@@ -70,7 +70,15 @@ export const AppRoutes = () => {
           element={mutliWrapper(<Items fetchItems={fetchOnSale} />)}
         />
         <Route path="/koszyk" element={mutliWrapper(<Cart />)} />
-        <Route path="/kasa" element={mutliWrapper(<Checkout />, true)} />
+        <Route
+          path="/kasa"
+          element={mutliWrapper(
+            <RequireAuth>
+              <Checkout />
+            </RequireAuth>,
+            true
+          )}
+        />
         <Route
           path="*"
           element={
