@@ -18,6 +18,7 @@ import { IRootState, AppDispatch } from "../store/store";
 import Loader from "../components/loader/loader";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import _ from "lodash";
 
 const Register = () => {
   const [errorMessage, setErrorMessage] = useState(""); // eslint-disable-line
@@ -36,6 +37,15 @@ const Register = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    if (
+      _.isEmpty(data.get("firstName")) ||
+      _.isEmpty(data.get("lastName")) ||
+      _.isEmpty(data.get("yearOfBirth")) ||
+      _.isEmpty(data.get("password"))
+    ) {
+      setErrorMessage("podaj wszystkie wymagane dane");
+      return;
+    }
     // if (!validatePassword(data.get("password")?.toString())) {
     //   setErrorMessage(
     //     "password must have at least 6 characters, 1 uppercase letter and 1 number"
@@ -90,7 +100,12 @@ const Register = () => {
       ) : (
         <Row className="justify-content-center">
           <Col xs={12} md={8} xl={4}>
-            <h1 style={{ textAlign: "center" }}>zarejestruj się</h1>
+            <div style={{ textAlign: "center" }}>
+              <h1>zarejestruj się</h1>
+              <span className="fw-bolder">
+                pamiętaj, aby podać <strong>prawdziwe</strong> dane!
+              </span>
+            </div>
             <Loader loading={status === "loading"}>
               <Form noValidate onSubmit={handleSubmit}>
                 <FormGroup>
@@ -134,13 +149,13 @@ const Register = () => {
                       />
                     </InputGroupText>
                   </InputGroup>
+                  {errorMessage && (
+                    <span className="text-danger" style={{ fontSize: "small" }}>
+                      {errorMessage}
+                    </span>
+                  )}
                 </FormGroup>
-                {errorMessage && (
-                  <span className="text-danger" style={{ fontSize: "small" }}>
-                    {errorMessage}
-                  </span>
-                )}
-                <Button className="mb-3" type="submit" color="primary" block>
+                <Button className="my-3" type="submit" color="primary" block>
                   zarejestruj się
                 </Button>
                 <div style={{ textAlign: "right" }}>

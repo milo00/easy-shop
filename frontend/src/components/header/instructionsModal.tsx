@@ -67,8 +67,13 @@ const InstructionsModal = (props: IInstructionsModalProps) => {
                   Twoich odczuć związanych z czasem odpowiedzi strony.
                 </li>
                 <li>
-                  Pamiętaj, że poza imieniem, nazwiskiem i datą urodzenia,
-                  wszystkie podane przez Ciebie dane mogą być fikcyjne.
+                  <strong>
+                    Pamiętaj, że{" "}
+                    <span className="text-danger">
+                      poza imieniem, nazwiskiem i datą urodzenia
+                    </span>
+                    , wszystkie podane przez Ciebie dane mogą być fikcyjne.
+                  </strong>
                 </li>
               </ol>
             </span>

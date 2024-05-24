@@ -16,7 +16,9 @@ import { DISCOUNT_PERCENT_TOKEN } from "../utils/localStorageTokens";
 const Cart = () => {
   const [promoCode, setPromoCode] = useState("");
   const [promoCodeText, setPromoCodeText] = useState("");
-  const [discount, setDiscount] = useState(0);
+  const [discount, setDiscount] = useState(
+    Number(sessionStorage.getItem(DISCOUNT_PERCENT_TOKEN)) ?? 0
+  );
   const [loadingDiscount, setLoadingDiscount] = useState(false);
 
   const dispatch = useDispatch();

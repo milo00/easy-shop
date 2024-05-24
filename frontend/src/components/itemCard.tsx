@@ -35,20 +35,20 @@ export const ItemCard = (props: IItemCardProps) => {
                 : "bolder",
           }}
         >
-          <span
-            className={
-              props.item.currentPrice
-                ? "text-decoration-line-through font-weight-bold"
-                : "font-weight-medium"
-            }
-          >
-            {props.item.regularPrice} PLN
-          </span>
-          {props.item.currentPrice && (
-            <span className="mx-2 text-danger font-weight-bold">
-              {props.item.currentPrice} PLN
+          {props.item.currentPrice !== props.item.regularPrice && (
+            <span className="text-decoration-line-through font-weight-bold">
+              {props.item.regularPrice} PLN
             </span>
           )}
+          <span
+            className={
+              props.item.currentPrice === props.item.regularPrice
+                ? "font-weight-medium"
+                : "mx-2 text-danger font-weight-bold"
+            }
+          >
+            {props.item.currentPrice} PLN
+          </span>
         </CardSubtitle>
         <CardText className="text-muted">
           <span>{props.item.productType?.productType?.toLowerCase()}</span>

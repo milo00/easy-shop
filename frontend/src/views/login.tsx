@@ -19,6 +19,7 @@ import Loader from "../components/loader/loader";
 import { sendBatch } from "../store/slices/userIrritationTimeSlice";
 import { faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import _ from "lodash";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -35,6 +36,14 @@ const Login = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    if (
+      _.isEmpty(data.get("firstName")) ||
+      _.isEmpty(data.get("lastName")) ||
+      _.isEmpty(data.get("password"))
+    ) {
+      setErrorMessage("podaj wszystkie wymagane dane");
+      return;
+    }
     dispatch(
       login({
         user: {
