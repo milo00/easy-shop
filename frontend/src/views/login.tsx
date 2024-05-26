@@ -12,7 +12,7 @@ import {
 } from "reactstrap";
 import { Link, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../store/slices/accountSlice";
+import { login, reset } from "../store/slices/accountSlice";
 import { isAuthenticated } from "../utils/authentication";
 import { IRootState, AppDispatch } from "../store/store";
 import Loader from "../components/loader/loader";
@@ -65,7 +65,7 @@ const Login = () => {
   return (
     <Container>
       <Row className="justify-content-center">
-        <Col xs="12" md="8" lg="4">
+        <Col xs={12} md={8} xl={4}>
           <h1 style={{ textAlign: "center" }}>zaloguj się</h1>
           <Loader loading={status === "loading"}>
             <Form onSubmit={handleSubmit}>
@@ -108,8 +108,11 @@ const Login = () => {
               <Button className="my-3" type="submit" color="primary" block>
                 zaloguj się
               </Button>
-              <div style={{ textAlign: "right" }}>
-                <Link to="/zarejestruj">
+              <div className="d-flex justify-content-between">
+                <Link onClick={() => dispatch(reset())} to="/zmien-haslo">
+                  <span style={{ fontSize: "medium" }}>nie pamiętam hasła</span>
+                </Link>
+                <Link onClick={() => dispatch(reset())} to="/zarejestruj">
                   <span style={{ fontSize: "medium" }}>
                     nie masz konta? zarejestruj się
                   </span>

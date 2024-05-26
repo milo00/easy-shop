@@ -26,9 +26,14 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<Void> register(@RequestBody User user) {
-        user.setUsername(user.getFirstName().toLowerCase() + "_" + user.getLastName().toLowerCase());
         authenticationService.register(user);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PutMapping("/users/password")
+    public ResponseEntity<Void> updatePassword(@RequestBody User user) {
+        var succeeded = authenticationService.updatePassword(user);
+        return new ResponseEntity<>(succeeded ? HttpStatus.OK : HttpStatus.FORBIDDEN);
     }
 
     @PostMapping("/login")

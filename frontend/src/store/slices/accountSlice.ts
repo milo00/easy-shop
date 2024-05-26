@@ -33,6 +33,14 @@ export const register = createAsyncThunk(
   }
 );
 
+export const changePassword = createAsyncThunk(
+  "account/changePassword",
+  async (user: IUser) => {
+    const response = await api.put(`${BASE_URL}/users/password`, user);
+    return response;
+  }
+);
+
 export const fetchLoggedIn = createAsyncThunk(
   "account/fetchLoggedIn",
   async () => {
@@ -48,7 +56,7 @@ const accountSlice = createSlice({
   name: "account",
   initialState,
   reducers: {
-    resetError(state) {
+    reset(state) {
       state.status = "idle";
     },
     logout(state) {
@@ -79,23 +87,33 @@ const accountSlice = createSlice({
         state.userId = action.payload.data.user.id;
         state.user = action.payload.data.user;
       })
-      .addCase(login.rejected, (state, action) => {
-        if (action.error.message === "Request failed with status code 403") {
-          state.status = "unauthenticated";
-        } else {
-          state.status = "failed";
-        }
-      })
-      .addCase(register.fulfilled, (state) => {
-        state.status = "succeeded";
-      })
       .addCase(fetchLoggedIn.fulfilled, (state, action) => {
         state.status = "succeeded";
-        console.log(action.payload);
         state.user = action.payload.data;
       })
       .addMatcher(
-        isAnyOf(register.pending, login.pending, fetchLoggedIn.pending),
+        isAnyOf(login.rejected, changePassword.rejected),
+        (state, action) => {
+          if (action.error.message === "Request failed with status code 403") {
+            state.status = "unauthenticated";
+          } else {
+            state.status = "failed";
+          }
+        }
+      )
+      .addMatcher(
+        isAnyOf(register.fulfilled, changePassword.fulfilled),
+        (state) => {
+          state.status = "succeeded";
+        }
+      )
+      .addMatcher(
+        isAnyOf(
+          register.pending,
+          login.pending,
+          fetchLoggedIn.pending,
+          changePassword.pending
+        ),
         (state) => {
           state.status = "loading";
         }
@@ -110,4 +128,4 @@ const accountSlice = createSlice({
 });
 
 export default accountSlice;
-export const { logout, resetError } = accountSlice.actions;
+export const { logout, reset } = accountSlice.actions;

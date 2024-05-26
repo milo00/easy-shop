@@ -1,15 +1,16 @@
-import { Container, Row, Col, Button } from "reactstrap";
-import { useNavigate } from "react-router-dom";
-import { Role } from "../models/user";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { register, reset } from "../store/slices/accountSlice";
-import { IRootState, AppDispatch } from "../store/store";
+import { useNavigate } from "react-router-dom";
+import { Container, Row, Col, Button } from "reactstrap";
 import RegisterForm from "../components/registerForm";
+import { IRootState, AppDispatch } from "../store/store";
+import { changePassword } from "../store/slices/accountSlice";
 
-const Register = () => {
+const ChangePassword = () => {
   const status = useSelector((state: IRootState) => state.account.status);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+  
 
   // const validatePassword = (password?: string) => {
   //   const validPasswordRegex = /^(?=.*[A-Z])(?=.*\d)[\w!@#$%^&*]{6,}$/;
@@ -24,19 +25,13 @@ const Register = () => {
     //   return;
     // }
     dispatch(
-      register({
+      changePassword({
         password: data.get("password")?.toString(),
         firstName: data.get("firstName")?.toString(),
         lastName: data.get("lastName")?.toString(),
         yearOfBirth: Number(data.get("yearOfBirth")),
-        role: Role.USER,
       })
     );
-  };
-
-  const navigateToLogin = () => {
-    dispatch(reset());
-    navigate("/zaloguj");
   };
 
   return (
@@ -51,12 +46,12 @@ const Register = () => {
           </Col>
           <Col>
             <Row>
-              <h1>pomyślna rejestracja</h1>
+              <h1>pomyślnie zmieniono hasło</h1>
               <h3 className="d-block">teraz możesz się zalogować</h3>
               <Button
                 className="mt-2"
                 color="primary"
-                onClick={navigateToLogin}
+                onClick={() => navigate("/zaloguj")}
                 style={{
                   width: "fit-content",
                   marginLeft: "12px",
@@ -71,16 +66,12 @@ const Register = () => {
       ) : (
         <Row className="justify-content-center">
           <Col xs={12} md={8} xl={4}>
-            <div style={{ textAlign: "center" }}>
-              <h1>zarejestruj się</h1>
-              <span className="fw-bolder">
-                pamiętaj, aby podać <strong>prawdziwe</strong> dane!
-              </span>
-            </div>
+            <h1 style={{ textAlign: "center" }}>zmień hasło</h1>
             <RegisterForm
+              newPassword
               onSubmitCallback={handleSubmit}
-              mainActionButtonText={"zarejestruj się"}
-              otherActionText={"masz już konto? zaloguj się"}
+              mainActionButtonText={"zmień hasło"}
+              otherActionText={"wróć do logowania"}
             />
           </Col>
         </Row>
@@ -89,4 +80,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default ChangePassword;

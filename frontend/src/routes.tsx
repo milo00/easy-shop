@@ -14,6 +14,7 @@ import Checkout from "./views/checkout";
 import ErrorBoundary from "./utils/errorBoundary";
 import RequireInstructions from "./utils/requireInstructions";
 import Instructions from "./views/instructions";
+import ChangePassword from "./views/changePassword";
 
 const errorBoundaryWrapper = (children: JSX.Element) => (
   <ErrorBoundary>{children}</ErrorBoundary>
@@ -38,6 +39,10 @@ export const AppRoutes = () => {
       <Routes>
         <Route path="/zaloguj" element={mutliWrapper(<Login />, true)} />
         <Route path="/zarejestruj" element={mutliWrapper(<Register />, true)} />
+        <Route
+          path="/zmien-haslo"
+          element={mutliWrapper(<ChangePassword />, true)}
+        />
         <Route
           path="/wyloguj"
           element={requireInstructionsWrapper(

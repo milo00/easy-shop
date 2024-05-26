@@ -35,6 +35,7 @@ public class SecurityConfig {
                         req -> req.requestMatchers(
                                 "/api/login",
                                         "/api/register",
+                                        "/api/users/password",
                                         "/api/menu-data",
                                         "/api/items/**",
                                         "/api/promo-code/**",

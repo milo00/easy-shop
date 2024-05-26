@@ -26,6 +26,7 @@ public class AuthenticationService {
 
     public void register(User requestUser) {
         var user = new User(requestUser);
+        user.setUsername(user.getFirstName().toLowerCase() + "_" + user.getLastName().toLowerCase());
         user.setPassword(passwordEncoder.encode(requestUser.getPassword()));
         userRepository.save(user);
         try {
@@ -33,6 +34,25 @@ public class AuthenticationService {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean updatePassword(User requestUser) {
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        var user = new User(requestUser);
+        user.setUsername(user.getFirstName().toLowerCase() + "_" + user.getLastName().toLowerCase());
+        var dbUser = userRepository.findByUsernameAndYearOfBirth(user.getUsername(), user.getYearOfBirth());
+        if (dbUser.isEmpty()) {
+            return false;
+        }
+        user.setPassword(passwordEncoder.encode(requestUser.getPassword()));
+        user.setId(dbUser.get().getId());
+        user.setRole(dbUser.get().getRole());
+        userRepository.save(user);
+        return true;
     }
 
     public AuthenticationResponse authenticate(User requestUser) {

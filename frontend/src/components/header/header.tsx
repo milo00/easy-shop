@@ -69,7 +69,7 @@ const Header = (props: { basic?: boolean }) => {
                 </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="/produkty/kategorie/kids">dzieci</NavLink>
+                <NavLink href="/produkty/kategorie/dzieci">dzieci</NavLink>
               </NavItem>
               <NavItem>
                 <NavLink href="/wyprzedaż">wyprzedaż</NavLink>

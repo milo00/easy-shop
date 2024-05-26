@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Container, Row, Col, Button } from "reactstrap";
 import { IRootState } from "../store/store";
-import { resetError as resetAccountError } from "../store/slices/accountSlice";
+import { reset as resetAccountError } from "../store/slices/accountSlice";
 import { resetError as resetItemsError } from "../store/slices/itemsSlice";
 import { resetError as resetIrritationTimeError } from "../store/slices/userIrritationTimeSlice";
 
