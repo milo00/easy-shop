@@ -21,6 +21,7 @@ interface ILoaderProps {
   basic?: boolean;
   type?: LoaderType;
   width?: number;
+  loop?: boolean;
 }
 
 // const loadersWithProcessText = [LoaderType.PROGRESS_BAR, LoaderType.SPINNER];
@@ -98,7 +99,9 @@ const Loader = (props: PropsWithChildren<ILoaderProps>) => {
         loader = <Spinner color="primary" />;
         break;
       case LoaderType.PROGRESS_BAR:
-        loader = <FastSlowProgress dataLoaded={!props.loading} />;
+        loader = (
+          <FastSlowProgress dataLoaded={!props.loading} loop={props.loop} />
+        );
         break;
       case LoaderType.GAME:
         loader = <DinoGame />;
@@ -107,15 +110,17 @@ const Loader = (props: PropsWithChildren<ILoaderProps>) => {
         loader = <MemeCarousel />;
     }
     return loader;
-  }, [type, props.loading, props.type]);
+  }, [type, props.loading, props.type, props.loop]);
 
   return props.loading ? (
     <div
-      className={`d-flex align-items-center justify-content-center h-100 w-${
-        props.width ?? 100
-      }`}
+      className={`d-flex align-items-center justify-content-center h-100 w-100`}
     >
-      <div className="d-flex flex-column align-items-center justify-content-start">
+      <div
+        className={`d-flex flex-column align-items-center justify-content-start w-${
+          props.width ?? 100
+        }`}
+      >
         {loader}
         {!props.basic ? (
           <div className={`loader-text${animationClass}`}>

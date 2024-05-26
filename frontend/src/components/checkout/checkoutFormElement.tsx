@@ -48,7 +48,7 @@ const CheckoutFormElement = (
 
   if (props.wasSubmitted) {
     return (
-      <div className="text-secondary">
+      <div className={`text-secondary ${isLoading && "mb-3"}`}>
         <div className="d-flex justify-content-between">
           <h4>{props.header}</h4>
           {!isLoading && (
@@ -59,7 +59,7 @@ const CheckoutFormElement = (
             />
           )}
         </div>
-        <Loader loading={isLoading} basic>
+        <Loader loading={isLoading} basic width={75}>
           <span style={{ fontSize: "smaller" }}>{submittedData}</span>
         </Loader>
       </div>

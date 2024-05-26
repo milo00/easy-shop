@@ -67,8 +67,8 @@ const Instructions = () => {
               </div>
             </li>
             <li>
-              Gdy pojawi się poniższy wskaźnik ładowania i odczujesz irytację,
-              naciśnij klawisz <strong>Spacji</strong>.
+              Gdy pojawi się <strong>poniższy wskaźnik ładowania</strong> i
+              odczujesz irytację, naciśnij klawisz <strong>Spacji</strong>.
               <br />
               <span style={{ fontSize: "smaller" }}>
                 Po naciśnięciu klawisza usłysz krótki dźwięk, a w prawym górnym
@@ -79,7 +79,7 @@ const Instructions = () => {
               </span>
             </li>
             <div className="my-5">
-              <Loader loading={true} basic />
+              <Loader loading={true} basic width={50} loop />
             </div>
             <li>
               Po wykonaniu zadań, wypełnij krótki kwestionariusz dotyczący

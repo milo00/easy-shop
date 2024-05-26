@@ -16,7 +16,7 @@ const OrderSummary = (props: IOrderSummaryProps) => {
   return (
     <>
       <h2>PODSUMOWANIE ZAMÓWIENIA:</h2>
-      <Loader loading={!!props.loading} basic>
+      <Loader loading={!!props.loading} basic width={75}>
         <div className="d-flex flex-column">
           <div className="d-flex justify-content-between">
             <span>{props.numOfItems} przedmiotów</span>
