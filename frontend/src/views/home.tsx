@@ -64,6 +64,7 @@ const Home = () => {
               !sessionStorage.getItem(VISITED_HOMEPAGE_TOKEN)) &&
             status === "loading"
           }
+          width={50}
         >
           <Header />
           <div className="fade-in">

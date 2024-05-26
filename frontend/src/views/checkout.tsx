@@ -118,7 +118,7 @@ const Checkout = () => {
           <Button
             color="primary"
             onClick={() =>
-              window.open("https://forms.gle/qTzTh2fTT2SoZ9ex8", "_blank")
+              window.open("https://forms.gle/TtWs7FR7sYESK7EL9", "_blank")
             }
             style={{
               width: "auto",

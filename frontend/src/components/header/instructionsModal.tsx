@@ -28,14 +28,8 @@ const InstructionsModal = (props: IInstructionsModalProps) => {
             <span>
               <ul>
                 <li>
-                  <strong>Zadanie 1:</strong> Wejdź na stronę główną aplikacji,
-                  załóż konto i zaloguj się.
-                  <br />
-                  <span style={{ fontSize: "smaller" }}>
-                    Do rejestracji wymagane jest imie i nazwisko oraz hasło -
-                    proszę abyś je zapamiętał/a do wykorzystania w następnych
-                    badaniach.
-                  </span>
+                  <strong>Zadanie 1:</strong> Wejdź na stronę główną aplikacji i{" "}
+                  <strong>zaloguj się na wcześniej założone konto</strong>
                 </li>
                 <li>
                   <strong>Zadanie 2:</strong> Wyszukaj i dodaj do koszyka 3
