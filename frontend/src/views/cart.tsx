@@ -12,6 +12,7 @@ import { MouseEvent, useState } from "react";
 import api, { BASE_URL } from "../config/axiosInterceptor";
 import { startTimer } from "../store/slices/userIrritationTimeSlice";
 import { DISCOUNT_PERCENT_TOKEN } from "../utils/localStorageTokens";
+import LoaderModal from "../components/loader/loaderModal";
 
 const Cart = () => {
   const [promoCode, setPromoCode] = useState("");
@@ -20,6 +21,7 @@ const Cart = () => {
     Number(sessionStorage.getItem(DISCOUNT_PERCENT_TOKEN)) ?? 0
   );
   const [loadingDiscount, setLoadingDiscount] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -40,6 +42,7 @@ const Cart = () => {
       e.currentTarget.blur();
       dispatch(startTimer());
       setLoadingDiscount(true);
+      setModalOpen(true);
       const response = await api.post(
         `${BASE_URL}/promo-code/validate`,
         promoCode
@@ -64,6 +67,10 @@ const Cart = () => {
 
   return (
     <Container className="mx-0 mt-5" fluid>
+      <LoaderModal
+        isOpen={loadingDiscount && modalOpen}
+        toggle={() => setModalOpen((prev) => !prev)}
+      />
       <Row>
         <Col xs={0} md={1}></Col>
         <Col className="me-5">
@@ -119,7 +126,6 @@ const Cart = () => {
                 numOfItems={totalItems}
                 totalCost={totalCost}
                 discount={discount}
-                loading={loadingDiscount}
               />
               {!loadingDiscount && (
                 <div>

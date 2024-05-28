@@ -85,21 +85,23 @@ const Home = () => {
                 przeglądaj
               </Button>
             </div>
-            <Loader loading={status === "loading"} width={50}>
-              <Carousel
-                responsive={responsive}
-                swipeable={false}
-                draggable={false}
-                infinite
-                autoPlay
-                autoPlaySpeed={4000}
-                transitionDuration={1000}
-              >
-                {items?.map((item) => (
-                  <ItemCard key={item.id} item={item} />
-                ))}
-              </Carousel>
-            </Loader>
+            <div className="pb-5">
+              <Loader loading={status === "loading"} width={50}>
+                <Carousel
+                  responsive={responsive}
+                  swipeable={false}
+                  draggable={false}
+                  infinite
+                  autoPlay
+                  autoPlaySpeed={4000}
+                  transitionDuration={1000}
+                >
+                  {items?.map((item) => (
+                    <ItemCard key={item.id} item={item} />
+                  ))}
+                </Carousel>
+              </Loader>
+            </div>
           </div>
           <Footer />
         </Loader>

@@ -121,8 +121,14 @@ const Loader = (props: PropsWithChildren<ILoaderProps>) => {
           props.width ?? 100
         }`}
       >
+        {!props.basic && (
+          <span style={{ fontSize: "smaller" }}>
+            w trakcie oczekiwania, przygotowaliśmy dla Ciebie grę :)
+          </span>
+        )}
+
         {loader}
-        {!props.basic ? (
+        {/* {!props.basic ? (
           <div className={`loader-text${animationClass}`}>
             <span>{text}</span>
             <span>
@@ -132,7 +138,7 @@ const Loader = (props: PropsWithChildren<ILoaderProps>) => {
               </span>
             </span>
           </div>
-        ) : null}
+        ) : null} */}
       </div>
     </div>
   ) : (

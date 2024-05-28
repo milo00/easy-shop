@@ -10,6 +10,7 @@ import Dino from "./dino";
 import _ from "lodash";
 import Cactus from "./cactus";
 import React from "react";
+import { DINO_GAME_HIGH_SCORE_TOKEN } from "../../../utils/localStorageTokens";
 
 const WORLD_WIDTH = 100;
 const WORLD_HEIGHT = 30;
@@ -31,7 +32,9 @@ const DinoGame = () => {
   const [delta, setDelta] = useState(0);
   const [speedScale, setSpeedScale] = useState(1);
   const score = useRef(0);
-  const highScore = useRef(0);
+  const highScore = useRef(
+    Number(sessionStorage.getItem(DINO_GAME_HIGH_SCORE_TOKEN)) ?? 0
+  );
 
   const [isJumping, setIsJumping] = useState(false);
   const [gameState, setGameState] = useState<GameState>(GameState.INITIAL);
@@ -124,6 +127,7 @@ const DinoGame = () => {
   const handleLost = () => {
     setGameState(GameState.LOST);
     highScore.current = Math.max(highScore.current, score.current);
+    sessionStorage.setItem(DINO_GAME_HIGH_SCORE_TOKEN, `${highScore.current}`);
   };
 
   const restart = () => {
@@ -137,9 +141,9 @@ const DinoGame = () => {
   };
 
   const isCollision = (fst: DOMRect, snd: DOMRect) =>
-    fst.left < snd.right &&
-    fst.top < snd.bottom &&
-    fst.right > snd.left &&
+    fst.left + 10 < snd.right &&
+    fst.top - 5 < snd.bottom &&
+    fst.right - 30 > snd.left &&
     fst.bottom > snd.top;
 
   const scaleDinoWorld = () => {
@@ -161,19 +165,22 @@ const DinoGame = () => {
     <div className="world" style={{ border: "1px solid black", width, height }}>
       <div className="score">
         {highScore.current ? (
-          <span className="me-2">hi: {Math.floor(highScore.current)}</span>
+          <span className="me-2">najwyższy wynik: {Math.floor(highScore.current)}</span>
         ) : null}
-        <span>score: {Math.floor(score.current) ?? 0}</span>
+        <span>wynik: {Math.floor(score.current) ?? 0}</span>
       </div>
       {gameState === GameState.LOST ? (
         <div className="start-screen">
-          <div style={{ fontWeight: "bold" }}>GAME OVER</div>
+          <div style={{ fontWeight: "bold" }}>KONIEC</div>
+          <div style={{ fontSize: "large" }}>
+            naciśnij {<FontAwesomeIcon icon={faArrowUp} />} by zacząć ponownie
+          </div>
           <FontAwesomeIcon icon={faSquareCaretRight} onClick={restart} />
         </div>
       ) : null}
       {gameState === GameState.INITIAL ? (
         <span className="start-screen">
-          press {<FontAwesomeIcon icon={faArrowUp} />} to start (and jump)
+          naciśnij {<FontAwesomeIcon icon={faArrowUp} />} by zacząć (i skakać!)
         </span>
       ) : null}
       <Ground left={0} delta={delta} speedScale={speedScale} />

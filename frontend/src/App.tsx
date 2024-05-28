@@ -10,7 +10,7 @@ import LoaderType from "./models/loader";
 import { ToastContainer } from "react-toastify";
 export const SidebarDataContext = createContext<IMenuData | null>(null);
 export const LoaderTypeDataContext = createContext<LoaderType>(
-  LoaderType.PROGRESS_BAR
+  LoaderType.GAME
 );
 
 function App() {
@@ -28,7 +28,7 @@ function App() {
   return (
     <Provider store={store}>
       <SidebarDataContext.Provider value={sidebarData}>
-        <LoaderTypeDataContext.Provider value={LoaderType.PROGRESS_BAR}>
+        <LoaderTypeDataContext.Provider value={LoaderType.GAME}>
           <div className="App">
             <ToastContainer autoClose={1500} hideProgressBar />
             <AppRoutes />

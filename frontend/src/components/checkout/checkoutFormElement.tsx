@@ -9,6 +9,7 @@ import CheckoutCollapse from "./checkoutCollapse";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import Loader from "../loader/loader";
+import LoaderModal from "../loader/loaderModal";
 
 interface ICheckoutFormElementProps {
   isOpen: boolean;
@@ -24,11 +25,13 @@ const CheckoutFormElement = (
 ) => {
   const [submittedData, setSubmittedData] = useState<ReactNode>();
   const [isLoading, setIsLoading] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
     if (props.wasSubmitted && props.header === "płatność") {
       setIsLoading(true);
+      setModalOpen(true);
       timer = setTimeout(() => {
         setIsLoading(false);
         props.setCardValidatedCallback && props.setCardValidatedCallback();
@@ -49,6 +52,10 @@ const CheckoutFormElement = (
   if (props.wasSubmitted) {
     return (
       <div className={`text-secondary ${isLoading && "mb-3"}`}>
+        <LoaderModal
+          isOpen={isLoading && modalOpen}
+          toggle={() => setModalOpen((prev) => !prev)}
+        />
         <div className="d-flex justify-content-between">
           <h4>{props.header}</h4>
           {!isLoading && (
@@ -59,9 +66,9 @@ const CheckoutFormElement = (
             />
           )}
         </div>
-        <Loader loading={isLoading} basic width={75}>
+        {!isLoading && (
           <span style={{ fontSize: "smaller" }}>{submittedData}</span>
-        </Loader>
+        )}
       </div>
     );
   }
