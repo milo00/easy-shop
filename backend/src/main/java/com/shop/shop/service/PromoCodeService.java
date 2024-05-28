@@ -15,7 +15,7 @@ public class PromoCodeService {
 
     public Optional<PromoCode> validateCode(String promoCode) {
         try {
-            Thread.sleep(10000);
+            Thread.sleep(12000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

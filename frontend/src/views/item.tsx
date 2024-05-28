@@ -118,19 +118,17 @@ export const Item = () => {
                 <span>{item?.gender?.toLowerCase()}</span>
                 <span>{item?.productType?.productType?.toLowerCase()}</span>
                 <div>
-                  <span
-                    className={
-                      item?.currentPrice === item?.regularPrice
-                        ? ""
-                        : "text-decoration-line-through"
-                    }
-                  >
-                    {item?.regularPrice} PLN
-                  </span>
-                  {item?.currentPrice && (
-                    <span className="mx-2 text-danger">
-                      {item?.currentPrice} PLN
-                    </span>
+                  {item?.currentPrice === item?.regularPrice ? (
+                    <span>{item?.currentPrice} PLN</span>
+                  ) : (
+                    <>
+                      <span className="text-decoration-line-through">
+                        {item?.regularPrice} PLN
+                      </span>
+                      <span className="mx-2 text-danger">
+                        {item?.currentPrice} PLN
+                      </span>
+                    </>
                   )}
                 </div>
                 <div className="d-flex gap-2 my-4">

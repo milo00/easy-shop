@@ -32,7 +32,7 @@ const CheckoutFormElement = (
       timer = setTimeout(() => {
         setIsLoading(false);
         props.setCardValidatedCallback && props.setCardValidatedCallback();
-      }, 10000);
+      }, 13000);
     }
 
     return () => {

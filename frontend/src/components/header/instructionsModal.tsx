@@ -29,7 +29,7 @@ const InstructionsModal = (props: IInstructionsModalProps) => {
               <ul>
                 <li>
                   <strong>Zadanie 1:</strong> Wejdź na stronę główną aplikacji i{" "}
-                  <strong>zaloguj się na wcześniej założone konto</strong>
+                  <strong>zaloguj się na wcześniej założone konto.</strong>
                 </li>
                 <li>
                   <strong>Zadanie 2:</strong> Wyszukaj i dodaj do koszyka 3

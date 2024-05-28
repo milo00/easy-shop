@@ -30,7 +30,7 @@ public class AuthenticationService {
         user.setPassword(passwordEncoder.encode(requestUser.getPassword()));
         userRepository.save(user);
         try {
-            Thread.sleep(10000);
+            Thread.sleep(15000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -38,7 +38,7 @@ public class AuthenticationService {
 
     public boolean updatePassword(User requestUser) {
         try {
-            Thread.sleep(10000);
+            Thread.sleep(12000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -57,7 +57,7 @@ public class AuthenticationService {
 
     public AuthenticationResponse authenticate(User requestUser) {
         try {
-            Thread.sleep(10000);
+            Thread.sleep(12000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
