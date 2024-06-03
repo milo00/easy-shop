@@ -1,6 +1,6 @@
 import { Breadcrumb, BreadcrumbItem } from "reactstrap";
 import { Gender } from "../models/item";
-import { isEnumKey, isEnumValue } from "./functions";
+import { isEnumValue } from "./functions";
 
 const singleBreadItemForPath = (
   path: string,
@@ -19,8 +19,6 @@ const singleBreadItemForPath = (
 
 const breadcrumbItemsFromPath = (paths: (string | undefined)[]) => {
   const items: JSX.Element[] = [];
-  console.log(isEnumKey(Gender, paths[0]));
-  console.log(Object.values(Gender));
   let path = isEnumValue(Gender, paths[0]) ? "/produkty/kategorie" : "";
 
   paths?.forEach((p, index) => {

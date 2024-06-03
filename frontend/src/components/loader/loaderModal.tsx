@@ -1,4 +1,4 @@
-import { Container, Modal, ModalBody, ModalHeader } from "reactstrap";
+import { Container, Modal, ModalBody } from "reactstrap";
 import Loader from "../loader/loader";
 
 interface ILoaderModalProps {
@@ -10,10 +10,12 @@ export const LOADER_MODAL_ID = "LOADER_MODAL_ID";
 
 const LoaderModal = (props: ILoaderModalProps) => {
   return (
-    <Modal id={LOADER_MODAL_ID} className="modal-xl" isOpen={props.isOpen}>
-      <ModalHeader toggle={props.toggle}>
-        w trakcie oczekiwania przygotowaliśmy dla Ciebie grę :)
-      </ModalHeader>
+    <Modal
+      id={LOADER_MODAL_ID}
+      isOpen={props.isOpen}
+      className="modal-xl"
+      // style={{ minWidth: "fit-content", overflow: "hidden" }}
+    >
       <ModalBody>
         <Container
           fluid

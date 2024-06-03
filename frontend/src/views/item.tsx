@@ -6,7 +6,6 @@ import { IRootState, AppDispatch } from "../store/store";
 import { useParams } from "react-router-dom";
 import { breadcrumbBuilder } from "../utils/breadcrumbBuilder";
 import { addItem } from "../store/slices/cartSlice";
-import Loader from "../components/loader/loader";
 import Sidebar from "../components/sidebar/sidebar";
 import { Category, Gender } from "../models/item";
 import _ from "lodash";
@@ -83,85 +82,81 @@ export const Item = () => {
             isLoading ? "center mt-5" : "start"
           }`}
         >
-          <Loader loading={isLoading} width={50}>
-            <Row className="justify-content-flex-start">
-              <Col>
-                {item &&
-                  breadcrumbBuilder([
-                    getEnumValueFromKey(Gender, item.gender),
-                    getEnumValueFromKey(Category, item.productType?.category),
-                    item.productType?.subcategory,
-                    item.productType?.productType,
-                    item.name,
-                  ])}
-              </Col>
-            </Row>
+          <Row className="justify-content-flex-start">
+            <Col>
+              {item &&
+                breadcrumbBuilder([
+                  getEnumValueFromKey(Gender, item.gender),
+                  getEnumValueFromKey(Category, item.productType?.category),
+                  item.productType?.subcategory,
+                  item.productType?.productType,
+                  item.name,
+                ])}
+            </Col>
+          </Row>
 
-            <Row>
-              <Col xs="12" md="6">
-                <img
-                  alt={item?.name + " image"}
-                  src={item?.imgUrl}
-                  style={{
-                    width: "100%",
-                    height: window.innerHeight * 0.75,
-                    objectFit: "contain",
-                  }}
-                />
-              </Col>
-              <Col
-                className="d-flex flex-column justify-content-center px-3"
-                xs="12"
-                md="6"
+          <Row>
+            <Col xs="12" md="6">
+              <img
+                alt={item?.name + " image"}
+                src={item?.imgUrl}
+                style={{
+                  width: "100%",
+                  height: window.innerHeight * 0.75,
+                  objectFit: "contain",
+                }}
+              />
+            </Col>
+            <Col
+              className="d-flex flex-column justify-content-center px-3"
+              xs="12"
+              md="6"
+            >
+              <span style={{ fontSize: "larger" }}>{item?.name}</span>
+              <span>{item?.gender?.toLowerCase()}</span>
+              <span>{item?.productType?.productType?.toLowerCase()}</span>
+              <div>
+                {item?.currentPrice === item?.regularPrice ? (
+                  <span>{item?.currentPrice} PLN</span>
+                ) : (
+                  <>
+                    <span className="text-decoration-line-through">
+                      {item?.regularPrice} PLN
+                    </span>
+                    <span className="mx-2 text-danger">
+                      {item?.currentPrice} PLN
+                    </span>
+                  </>
+                )}
+              </div>
+              <div className="d-flex gap-2 my-4">
+                {getSizes(item.productType?.category, item.gender).map((i) => (
+                  <Button
+                    key={i}
+                    color="secondary"
+                    outline
+                    active={chosenSize === i}
+                    onClick={() => onSizeChange(i)}
+                  >
+                    {i}
+                  </Button>
+                ))}
+              </div>
+
+              <Button
+                className="mt-3"
+                color="primary"
+                onClick={onAddToCard}
+                disabled={!chosenSize}
+                style={{ width: "fit-content" }}
               >
-                <span style={{ fontSize: "larger" }}>{item?.name}</span>
-                <span>{item?.gender?.toLowerCase()}</span>
-                <span>{item?.productType?.productType?.toLowerCase()}</span>
-                <div>
-                  {item?.currentPrice === item?.regularPrice ? (
-                    <span>{item?.currentPrice} PLN</span>
-                  ) : (
-                    <>
-                      <span className="text-decoration-line-through">
-                        {item?.regularPrice} PLN
-                      </span>
-                      <span className="mx-2 text-danger">
-                        {item?.currentPrice} PLN
-                      </span>
-                    </>
-                  )}
-                </div>
-                <div className="d-flex gap-2 my-4">
-                  {getSizes(item.productType?.category, item.gender).map(
-                    (i) => (
-                      <Button
-                        key={i}
-                        color="secondary"
-                        outline
-                        active={chosenSize === i}
-                        onClick={() => onSizeChange(i)}
-                      >
-                        {i}
-                      </Button>
-                    )
-                  )}
-                </div>
-
-                <Button
-                  className="mt-3"
-                  color="primary"
-                  onClick={onAddToCard}
-                  disabled={!chosenSize}
-                  style={{ width: "fit-content" }}
-                >
-                  dodaj do koszyka
-                </Button>
-                <span style={{ fontSize: "small", paddingTop: "0.5rem" }}>
-                  {cartText}
-                </span>
-              </Col>
-            </Row>
-          </Loader>
+                dodaj do koszyka
+              </Button>
+              <span style={{ fontSize: "small", paddingTop: "0.5rem" }}>
+                {cartText}
+              </span>
+            </Col>
+          </Row>
         </Col>
         {isLoading ? <Col xs={2} /> : null}
       </Row>

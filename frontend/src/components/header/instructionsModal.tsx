@@ -16,7 +16,11 @@ interface IInstructionsModalProps {
 
 const InstructionsModal = (props: IInstructionsModalProps) => {
   return (
-    <Modal className="modal-lg" isOpen={props.isOpen}>
+    <Modal
+      className="modal-lg"
+      isOpen={props.isOpen}
+      style={{ minWidth: "fit-content" }}
+    >
       <ModalHeader toggle={props.toggle}>Instrukcje</ModalHeader>
       <ModalBody>
         <Container

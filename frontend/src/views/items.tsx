@@ -58,7 +58,7 @@ const Items = (props: IItemsProps) => {
             </Col>
           </Row>
           <Row>
-            <Col className="d-flex flex-column align-items-center mt-5">
+            <Col className="d-flex flex-column align-items-center mb-5">
               <Fragment key={location.pathname}>
                 <Loader loading={status === "loading"} width={50}>
                   <Row xs={1} md={2} lg={3}>

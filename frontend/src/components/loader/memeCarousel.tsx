@@ -79,7 +79,7 @@ const MemeCarousel = () => {
       activeIndex={activeIndex}
       next={next}
       previous={previous}
-      interval={4000}
+      interval={3000}
       dark
     >
       <CarouselIndicators

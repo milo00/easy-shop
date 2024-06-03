@@ -121,11 +121,17 @@ const Loader = (props: PropsWithChildren<ILoaderProps>) => {
           props.width ?? 100
         }`}
       >
-        {!props.basic && (
-          <span style={{ fontSize: "smaller" }}>
-            w trakcie oczekiwania, przygotowaliśmy dla Ciebie grę :)
-          </span>
-        )}
+        <div style={{ textAlign: "center" }}>
+          <div style={{ fontSize: "x-large" }}>
+            ładowanie strony
+            <span>
+              <span>{".".repeat(dots)}</span>
+              <span style={{ visibility: "hidden" }}>
+                {".".repeat(3 - dots)}
+              </span>
+            </span>
+          </div>
+        </div>
 
         {loader}
         {/* {!props.basic ? (

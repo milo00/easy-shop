@@ -46,6 +46,17 @@ const DinoGame = () => {
   );
   const cactusIdCounter = useRef<number>(0);
 
+  useEffect(() => {
+    return () => {
+      if (score.current > highScore.current) {
+        sessionStorage.setItem(
+          DINO_GAME_HIGH_SCORE_TOKEN,
+          `${score.current}`
+        );
+      }
+    };
+  }, []);
+
   const onKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === "ArrowUp") {
@@ -165,7 +176,9 @@ const DinoGame = () => {
     <div className="world" style={{ border: "1px solid black", width, height }}>
       <div className="score">
         {highScore.current ? (
-          <span className="me-2">najwyższy wynik: {Math.floor(highScore.current)}</span>
+          <span className="me-2">
+            najwyższy wynik: {Math.floor(highScore.current)}
+          </span>
         ) : null}
         <span>wynik: {Math.floor(score.current) ?? 0}</span>
       </div>

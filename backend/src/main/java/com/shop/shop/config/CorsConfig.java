@@ -20,6 +20,7 @@ public class CorsConfig {
         config.addAllowedOrigin("http://localhost:3000");
         config.addAllowedOrigin("https://easy-shop-frontend-xuhxahyhha-lm.a.run.app");
         config.addAllowedOrigin("https://easy-shop-version-2-xuhxahyhha-lm.a.run.app");
+        config.addAllowedOrigin("https://easy-shop-version-3-xuhxahyhha-lm.a.run.app");
         config.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type"));
         config.addAllowedMethod("*");
         source.registerCorsConfiguration("/**", config);
